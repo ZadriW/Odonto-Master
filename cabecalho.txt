@@ -1,0 +1,80 @@
+<script src="script.js"></script>
+
+<div id="loading"></div>
+
+<a name="topo"></a>
+<div class="wrapper">
+    <div class="page">
+        <div class="header-container type4 header-newskin">
+            
+            <div class="top-links-container">
+                <div class="top-links container">
+                    <span class="textleft"><b>ATENÇÃO!</b> Os produtos desse site são restritos à Dentistas com CRO, Clínicas Odontológicas e Estudantes de Graduação em Odontologia.</span>
+                    <span class="textright">@FBITSLogin.Add()</span>
+                </div>
+            </div>
+
+            <div class="header container">
+                <h1 class="logo">
+                    <a href="/" class="logo"><img src="https://recursos.odontomaster.com.br/i/logo_odonto.png" alt="Odonto Master"></a>
+                </h1>
+
+                <div class="cart-area">
+                    <div class="custom-block">
+                        <span style="color:#787d7f;display:block;">TELEVENDAS
+                            <b style="color:#606669;font-size:16px;font-weight:600;display:block;line-height:20px;">(71) 3173-7300</b>
+                        </span>
+                    </div>
+                    
+                    <div class="icoatendimento">
+                         </div>
+                    
+                    <div class="icoconta">
+                        </div>
+
+                    <div class="mini-cart">
+                        <a href="javascript:void(0)" class="mybag-link">
+                            <i class="icon-mini-cart"></i>
+                            <span class="cart-qty">0</span><span> Item(s)</span>
+                        </a>
+                        <div class="topCartContent block-content theme-border-color">
+                            <div class="inner-wrapper">
+                                <p class="cart-empty">Sua sacola de compras está vazia</p>
+                                @FBITSCarrinho.Add()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="search-area">
+                    <a href="javascript:void(0);" class="search-icon"><i class="icon-search"></i></a>
+                    <form id="searchFormHeader" autocomplete="off" method="get" action="/busca">
+                        <div class="form-search">
+                            <div class="headerSearch">
+                                <input type="text" value="" class="inputSearch ac_input search" id="txtBuscaPrincipal" name="busca" placeholder="Busque aqui.." autocomplete="off">
+                            </div>
+                            <button type="submit" title="Search" class="button"><i class="icon-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="menu-icon"><a href="javascript:void(0)" title="Menu"><i class="fa fa-bars"></i></a></div>
+            </div>
+
+            <div class="header-wrapper">
+                <div class="main-nav">
+                    <div class="fechamenu"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
+                    <div class="container">
+                        <div class="menu-wrapper">
+                            <div class="menu-all-pages-container">
+                                <ul class="menu">
+                                    @{Html.RenderAction("MenuTopo", "Menu");}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+</div>

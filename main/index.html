@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dental Odonto Master - Materiais e equipamentos odontológicos de qualidade para profissionais da odontologia">
+    <meta name="keywords" content="odontologia, materiais odontológicos, equipamentos odontológicos, clareador dental">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+     <!-- Open Graph / Facebook -->
+     <meta property="og:type" content="website">
+     <meta property="og:url" content="https://www.odontomaster.com.br/">
+     <meta property="og:title" content="Dental Odonto Master | Você conhece e confia!">
+     <meta property="og:description" content="Materiais e equipamentos odontológicos de qualidade">
+     <meta property="og:image" content="https://recursos.odontomaster.com.br/i/logo_odonto.png">
+
+     <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.odontomaster.com.br/">
+    <meta property="twitter:title" content="Dental Odonto Master | Você conhece e confia!">
+    <meta property="twitter:description" content="Materiais e equipamentos odontológicos de qualidade">
+    <meta property="twitter:image" content="https://recursos.odontomaster.com.br/i/logo_odonto.png">
+
+    <title>Dental Odonto Master | Você conhece e confia!</title>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <!-- Top Banner -->
+        <div class="top-banner">
+            <div class="container">
+                <div class="top-banner__content">
+                    <div class="top-banner__warning">
+                        <strong>ATENÇÃO!</strong><p>Os produtos desse site são restritos à Dentistas com CRO, Clínicas Odontológicas e Estudantes de Graduação em Odontologia.</p>
+                    </div>
+                    <div class="top-banner__login">
+                        <a href="#" class="login-link">Olá Visitante, Identifique-se aqui</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Header Main -->
+        <div class="header-main">
+            <div class="container">
+                <div class="header-main__content">
+                    <!-- Logo -->
+                    <div class="header-logo">
+                        <a href="/" class="logo-link">
+                            <img src="https://recursos.odontomaster.com.br/i/logo_odonto.png" alt="Odonto Master" class="logo-image">
+                        </a>
+                    </div>
+
+                    <!-- Search Bar --> 
+                    <div class="search-bar">
+                        <form class="search-form" id="searchForm" autocomplete="off" method="get" action="/busca">
+                            <div class="search-form__wrapper">
+                                <input type="text" 
+                                       class="search-form__input" 
+                                       id="searchInput" 
+                                       name="busca" 
+                                       placeholder="Busque aqui..."
+                                       autocomplete="on">
+                                <button type="submit" class="search-form__button" aria-label="Buscar">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="search-autocomplete" id="searchAutocomplete" style="display: none;"></div>
+                        </form>
+                    </div>
+
+                    <!-- Header Actions -->
+                    <div class="header-actions">
+                        
+                        <!-- Contact Info -->
+                        <div class="contact-info">
+                            <div class="contact-info__phone">
+                                <span class="contact-info__label">TELEVENDAS</span>
+                                <strong class="contact-info__number">0800 672 1105</strong>
+                                <strong class="contact-info__number">(71) 3173-7300</strong>
+                            </div>
+                        </div>
+
+                        <!-- Customer Service -->
+                        <div class="customer-service">
+                            <button class="customer-service__trigger" aria-label="Informações de atendimento">
+                                <i class="fas fa-headset"></i>
+                            </button>
+                            <div class="customer-service__dropdown">
+                                <div class="customer-service__section">
+                                    <strong>Pelos Telefones:</strong>
+                                    <p>(71) 3173-7300 - Salvador/BA</p>
+                                    <p>(75) 3322-8498 - Feira de Santana/BA</p>
+                                    <p>(79) 3085-0710 - Aracaju/SE</p>
+                                </div>
+                                
+                                <div class="customer-service__section">
+                                    <strong>Pelo WhatsApp:</strong>
+                                    <p>(71) 9401-9924</p>
+                                </div>
+                                
+                                <div class="customer-service__section">
+                                    <strong>Horário de Atendimento:</strong>
+                                    <p>Segunda a Sexta das 08:00 às 18:00</p>
+                                    <p>Sábados 08:00 às 14:00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Shopping Cart -->
+                        <div class="shopping-cart">
+                            <button class="shopping-cart__trigger" aria-label="Carrinho de compras">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="shopping-cart__text">Carrinho</span>
+                                <span class="shopping-cart__count">0</span>
+                                <span class="shopping-cart__label">Item(s)</span>
+                            </button>
+                            <div class="shopping-cart__dropdown">
+                                <div class="shopping-cart__content">
+                                    <div class="shopping-cart__empty">
+                                        <p>Sua sacola de compras está vazia</p>
+                                        <p>Carrinho Vazio</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button class="mobile-menu-toggle" aria-label="Abrir menu" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="main-navigation">
+            <div class="container">
+                <div class="main-navigation__content">
+                    
+                    <!-- Mobile Menu Close -->
+                    <button class="mobile-menu-close" aria-label="Fechar menu" id="mobileMenuClose">
+                        <i class="fas fa-times"></i>
+                    </button>
+
+                    
+
+                    <!-- Navigation Menu -->
+                    <nav class="main-navigation">
+                        <div class="container">
+                            <div class="main-navigation__content">
+                                <div class="navigation-menu">
+                                    <ul class="menu-list">
+                                        <li class="menu-item menu-item--has-submenu">
+                                            <a href="#" class="menu-link" id="mega-menu-trigger" aria-haspopup="true" aria-expanded="false">Todas as Categorias</a>
+                                        </li>
+                                        <li class="menu-item"><a href="/categoria/cirurgia-periodontia" class="menu-link">Cirurgia e Periodontia</a></li>
+                                        <li class="menu-item"><a href="/categoria/dentistica" class="menu-link">Dentística</a></li>
+                                        <li class="menu-item"><a href="/categoria/endodontia" class="menu-link">Endodontia</a></li>
+                                        <li class="menu-item"><a href="/categoria/equipamentos" class="menu-link">Equipamentos</a></li>
+                                        <li class="menu-item"><a href="/categoria/instrumental" class="menu-link">Instrumental</a></li>
+                                        <li class="menu-item"><a href="/categoria/ortodontia" class="menu-link">Ortodontia</a></li>
+                                        <li class="menu-item"><a href="/categoria/pecas-de-mao" class="menu-link">Peças de Mão</a></li>
+                                        <li class="menu-item"><a href="/categoria/protese" class="menu-link">Prótese</a></li>
+                                        <li class="menu-item menu-item--highlighted">
+                                            <a href="/categoria/odontoverse" class="menu-link">Odontoverse</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                    
+                    <div class="submenu-overlay"></div>
+                    <div class="submenu submenu--mega" id="mega-menu-content" aria-hidden="true">
+                        <div class="submenu__header">
+                            <h2>Navegue por todas as categorias</h2>
+                            <button class="submenu__close" aria-label="Fechar menu">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="submenu__columns">
+                            <div class="submenu__column">
+                                <h3 class="submenu__title">Acessórios e Vestuários</h3>
+                                <ul class="submenu__list">
+                                    <li><a href="#" class="submenu__link">Acessórios</a></li>
+                                    <li><a href="#" class="submenu__link">Jalecos</a></li>
+                                    <li><a href="#" class="submenu__link">Toucas</a></li>
+                                </ul>
+                            </div>
+                            <div class="submenu__column">
+                                <h3 class="submenu__title">Anestésico</h3>
+                                <ul class="submenu__list">
+                                    <li><a href="#" class="submenu__link">Agulha Gengival</a></li>
+                                    <li><a href="#" class="submenu__link">Anestésico Com Vaso</a></li>
+                                    <li><a href="#" class="submenu__link">Anestésico Sem Vaso</a></li>
+                                    <li><a href="#" class="submenu__link">Anestésico Tópico</a></li>
+                                </ul>
+                            </div>
+                            <div class="submenu__column">
+                                <h3 class="submenu__title">Biossegurança</h3>
+                                <ul class="submenu__list">
+                                    <li><a href="#" class="submenu__link">Água Oxigenada</a></li>
+                                    <li><a href="#" class="submenu__link">Álcool 70%</a></li>
+                                    <li><a href="#" class="submenu__link">Embalagem para Esterilização</a></li>
+                                    <li><a href="#" class="submenu__link">Escova para Assepsia</a></li>
+                                </ul>
+                            </div>
+                            <div class="submenu__column">
+                                <h3 class="submenu__title">Brocas</h3>
+                                <ul class="submenu__list">
+                                    <li><a href="#" class="submenu__link">Broca Carbide</a></li>
+                                    <li><a href="#" class="submenu__link">Broca Cirúrgica</a></li>
+                                    <li><a href="#" class="submenu__link">Broca Comum</a></li>
+                                    <li><a href="#" class="submenu__link">Broca Diamantada</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+    </header>
+
+    <!-- Cards e Carrossel abaixo da navegação -->
+    <section class="nav-below-showcase">
+        <div class="container">
+            <!-- Cards rápidos -->
+            <div class="promo-cards">
+                <div class="promo-card">
+                    <i class="fas fa-truck-fast"></i>
+                    <div class="promo-card__content">
+                        <h4>Entrega Rápida</h4>
+                        <p>Envios ágeis para todo Brasil</p>
+                    </div>
+                </div>
+                <div class="promo-card">
+                    <i class="fas fa-shield-halved"></i>
+                    <div class="promo-card__content">
+                        <h4>Compra Segura</h4>
+                        <p>Ambiente 100% protegido</p>
+                    </div>
+                </div>
+                <div class="promo-card">
+                    <i class="fas fa-percent"></i>
+                    <div class="promo-card__content">
+                        <h4>Descontos</h4>
+                        <p>Ofertas exclusivas online</p>
+                    </div>
+                </div>
+                <div class="promo-card">
+                    <i class="fas fa-headset"></i>
+                    <div class="promo-card__content">
+                        <h4>Atendimento</h4>
+                        <p>Especializado para você</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carrossel de destaques -->
+            <div class="highlight-carousel" aria-roledescription="carousel">
+                <button class="carousel-nav carousel-nav--prev" aria-label="Anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="carousel-viewport">
+                    <ul class="carousel-track">
+                        <li class="carousel-slide is-current">
+                            <img src="https://via.placeholder.com/1200x280/1c5787/ffffff?text=Semana+de+Ofertas" alt="Semana de ofertas">
+                        </li>
+                        <li class="carousel-slide">
+                            <img src="https://via.placeholder.com/1200x280/134a6b/ffffff?text=Frete+Gr%C3%A1tis+Sul+e+Sudeste" alt="Frete grátis Sul e Sudeste">
+                        </li>
+                        <li class="carousel-slide">
+                            <img src="https://via.placeholder.com/1200x280/3434E3/ffffff?text=Novidades+em+Equipamentos" alt="Novidades em equipamentos">
+                        </li>
+                    </ul>
+                </div>
+                <button class="carousel-nav carousel-nav--next" aria-label="Próximo">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="carousel-dots" role="tablist" aria-label="Seletores de slide">
+                    <button class="carousel-dot is-active" role="tab" aria-selected="true" aria-label="Slide 1"></button>
+                    <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Slide 2"></button>
+                    <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Slide 3"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Banner -->
+        <section class="hero-banner">
+            <div class="container">
+                <div class="hero-banner__content">
+                    <img src="../images/banner-principal.png" alt="Dentista exemplo">
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="featured-products">
+            <div class="container">
+                <h2 class="section-title">Produtos em Destaque</h2>
+                
+                <div class="products-grid">
+                    <!-- Product Card 1 -->
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/ffffff/1c5787?text=Clareador+1" 
+                                 alt="Clareador Potenza Bianco Pro SS 38%" 
+                                 class="product-image">
+                            <div class="product-badge product-badge--discount">7% OFF</div>
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-title">Clareador Potenza Bianco Pro SS 38% H202 P/1 Paciente - PHS</h3>
+                            <p class="product-description">Embalagem com 1 seringa com 3g.</p>
+                            <div class="product-pricing">
+                                <span class="product-price product-price--old">R$ 21,53</span>
+                                <span class="product-price product-price--current">R$ 21,53</span>
+                                <span class="product-payment-info">à vista</span>
+                            </div>
+                            <div class="product-payment">
+                                <span class="payment-method">Cartão</span>
+                                <span class="payment-installments">1 x de R$ 21,53 sem juros no Boleto</span>
+                            </div>
+                            <button class="product-button" onclick="addToCart('prod1', 'Clareador Potenza Bianco Pro SS 38%', 21.53)">
+                                COMPRAR
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Product Card 2 -->
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/ffffff/1c5787?text=Clareador+2" 
+                                 alt="Clareador Whiteness Perfect 16% Mini Kit" 
+                                 class="product-image">
+                            <div class="product-badge product-badge--discount">22% OFF</div>
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-title">Clareador Whiteness Perfect 16% Mini Kit - FGM</h3>
+                            <p class="product-description">Mini Kit 3 seringas com 3g</p>
+                            <div class="product-pricing">
+                                <span class="product-price product-price--old">R$ 64,68</span>
+                                <span class="product-price product-price--current">R$ 49,90</span>
+                                <span class="product-payment-info">à vista</span>
+                            </div>
+                            <div class="product-payment">
+                                <span class="payment-method">Cartão</span>
+                                <span class="payment-installments">1 x de R$ 49,90 sem juros no Boleto</span>
+                            </div>
+                            <button class="product-button" onclick="addToCart('prod2', 'Clareador Whiteness Perfect 16% Mini Kit', 49.90)">
+                                COMPRAR
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Product Card 3 -->
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="https://via.placeholder.com/300x300/ffffff/1c5787?text=Clareador+3" 
+                                 alt="Clareador Whiteness Perfect 22%" 
+                                 class="product-image">
+                            <div class="product-badge product-badge--discount">27% OFF</div>
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-title">Clareador Whiteness Perfect 22% - FGM</h3>
+                            <p class="product-description">Embalagem com 1 Kit.</p>
+                            <div class="product-pricing">
+                                <span class="product-price product-price--old">R$ 109,97</span>
+                                <span class="product-price product-price--current">R$ 79,90</span>
+                                <span class="product-payment-info">à vista</span>
+                            </div>
+                            <div class="product-payment">
+                                <span class="payment-method">Cartão</span>
+                                <span class="payment-installments">1 x de R$ 79,90 sem juros no Boleto</span>
+                            </div>
+                            <button class="product-button" onclick="addToCart('prod3', 'Clareador Whiteness Perfect 22%', 79.90)">
+                                COMPRAR
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <!-- Newsletter -->
+            <section class="newsletter-section">
+                <h3 class="newsletter-title">ASSINE NOSSA NEWSLETTER</h3>
+                <p class="newsletter-description">E FIQUE POR DENTRO DAS NOVIDADES</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <div class="newsletter-form__wrapper">
+                        <input type="email" 
+                               placeholder="Seu e-mail" 
+                               class="newsletter-form__input" 
+                               required>
+                        <button type="submit" class="newsletter-form__button">Assinar</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Footer Links -->
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4 class="footer-column__title">INSTITUCIONAL</h4>
+                    <ul class="footer-column__list">
+                        <li><a href="#" class="footer-link">Nosso blog</a></li>
+                        <li><a href="#" class="footer-link">Quem Somos</a></li>
+                        <li><a href="#" class="footer-link">Estudantes</a></li>
+                        <li><a href="#" class="footer-link">Revenda</a></li>
+                        <li><a href="#" class="footer-link">Login/Cadastro</a></li>
+                        <li><a href="#" class="footer-link">Trabalhe Conosco</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4 class="footer-column__title">AJUDA</h4>
+                    <ul class="footer-column__list">
+                        <li><a href="#" class="footer-link">Como Comprar</a></li>
+                        <li><a href="#" class="footer-link">Trocas e Devoluções</a></li>
+                        <li><a href="#" class="footer-link">Política de Privacidade</a></li>
+                        <li><a href="#" class="footer-link">Cashback de Frete</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4 class="footer-column__title">ATENDIMENTO</h4>
+                    <ul class="footer-column__list">
+                        <li><a href="#" class="footer-link">Chat Online</a></li>
+                        <li><a href="tel:7131737300" class="footer-link">(71) 3173-7300</a></li>
+                        <li><a href="mailto:atendimento@odontomaster.com.br" class="footer-link">atendimento@odontomaster.com.br</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4 class="footer-column__title">HORÁRIO DE FUNCIONAMENTO</h4>
+                    <ul class="footer-column__list">
+                        <li>Segunda a Sexta das 08h às 18h</li>
+                        <li>Sábados das 08h às 12h</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-bottom__section">
+                    <h4 class="footer-bottom__title">FORMAS DE PAGAMENTO</h4>
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa" aria-label="Visa"></i>
+                        <i class="fab fa-cc-mastercard" aria-label="Mastercard"></i>
+                        <i class="fab fa-cc-amex" aria-label="American Express"></i>
+                        <i class="fab fa-pix" aria-label="PIX"></i>
+                    </div>
+                </div>
+
+                <div class="footer-bottom__section">
+                    <h4 class="footer-bottom__title">SELOS DE SEGURANÇA</h4>
+                    <div class="security-seals">
+                        <i class="fas fa-shield-alt" aria-label="Segurança"></i>
+                        <span>Wildcard SSL Certificates</span>
+                    </div>
+                </div>
+
+                <div class="footer-bottom__section">
+                    <h4 class="footer-bottom__title">REDES SOCIAIS</h4>
+                    <div class="social-media">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="copyright">
+                <p>&copy; Todos os direitos reservados - ODM COMERCIO E SERVICOS DE EQUIPAMENTOS E MATERIAIS ODONTOLOGICOS LTDA - CNPJ: 07.030.958/0001-74</p>
+                <p>Alameda das Cajazeiras, 430 - Caminho das Árvores - Salvador/BA - CEP: 41.820-470</p>
+                <p>Eventuais promoções, descontos e prazos de pagamento expostos aqui são válidos apenas para compras via internet. As fotos, textos e layout aqui veiculados são de propriedade da Loja. É proibida a utilização total ou parcial sem nossa autorização.</p>
+            </div>
+        </div>
+    </footer>
+
+     <div class="submenu-overlay"></div>
+                    <div class="submenu submenu--mega" id="mega-menu-content" aria-hidden="true">
+                        <div class="submenu__header">
+                            <h2>Navegue por todas as categorias</h2>
+                            <button class="submenu__close" aria-label="Fechar menu">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="submenu__columns">
+                            <div class="submenu__column">
+                                <h3 class="submenu__title">Acessórios e Vestuários</h3>
+                                <ul class="submenu__list">
+                                    <li><a href="#" class="submenu__link">Acessórios</a></li>
+                                    <li><a href="#" class="submenu__link">Jalecos</a></li>
+                                    <li><a href="#" class="submenu__link">Toucas</a></li>
+                                </ul>
+                            </div>
+                            <div class="submenu__column">
+                                <h3 class="submenu__title">Anestésico</h3>
+                                <ul class="submenu__list">
+                                    <li><a href="#" class="submenu__link">Agulha Gengival</a></li>
+                                    <li><a href="#" class="submenu__link">Anestésico Com Vaso</a></li>
+                                    <li><a href="#" class="submenu__link">Anestésico Sem Vaso</a></li>
+                                    <li><a href="#" class="submenu__link">Anestésico Tópico</a></li>
+                                </ul>
+                            </div>
+                            <div class="submenu__column">
+                                <h3 class="submenu__title">Biossegurança</h3>
+                                <ul class="submenu__list">
+                                    <li><a href="#" class="submenu__link">Água Oxigenada</a></li>
+                                    <li><a href="#" class="submenu__link">Álcool 70%</a></li>
+                                    <li><a href="#" class="submenu__link">Embalagem para Esterilização</a></li>
+                                    <li><a href="#" class="submenu__link">Escova para Assepsia</a></li>
+                                </ul>
+                            </div>
+                            <div class="submenu__column">
+                                <h3 class="submenu__title">Brocas</h3>
+                                <ul class="submenu__list">
+                                    <li><a href="#" class="submenu__link">Broca Carbide</a></li>
+                                    <li><a href="#" class="submenu__link">Broca Cirúrgica</a></li>
+                                    <li><a href="#" class="submenu__link">Broca Comum</a></li>
+                                    <li><a href="#" class="submenu__link">Broca Diamantada</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+           
