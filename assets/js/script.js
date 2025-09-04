@@ -1,18 +1,4 @@
 /**
- * =================================================================================
- * ODONTO MASTER - SCRIPT PRINCIPAL (VERSÃO PROFISSIONAL)
- * =================================================================================
- * 
- * Este arquivo contém toda a lógica JavaScript da aplicação Odonto Master,
- * organizada em módulos para melhor manutenibilidade e escalabilidade.
- * 
- * Estrutura:
- * 1. Configurações globais
- * 2. Utilitários e helpers
- * 3. Módulos de componentes
- * 4. Sistema de inicialização
- * 5. Event listeners globais
- * 
  * @version 2.0.0
  * @author Odonto Master Development Team
  * =================================================================================
@@ -402,7 +388,8 @@ class ShoppingCart {
     constructor() {
         this.items = this.loadFromStorage();
         this.updateDisplay();
-        this.bindEvents();
+        this.updateDisplay();
+        this.bindPageEvents();
     }
     
     /**
@@ -433,11 +420,7 @@ class ShoppingCart {
         
         Logger.info('Item adicionado ao carrinho:', { productId, name, price, quantity });
     }
-    
-    /**
-     * Remove item do carrinho
-     * @param {string} productId - ID do produto
-     */
+
     removeItem(productId) {
         this.items = this.items.filter(item => item.id !== productId);
         this.saveToStorage();
@@ -447,160 +430,117 @@ class ShoppingCart {
         Logger.info('Item removido do carrinho:', { productId });
     }
     
-    /**
-     * Atualiza quantidade de um item
-     * @param {string} productId - ID do produto
-     * @param {number} quantity - Nova quantidade
-     */
     updateQuantity(productId, quantity) {
-        const item = this.items.find(item => item.id === productId);
-        if (item) {
-            if (quantity <= 0) {
-                this.removeItem(productId);
-            } else {
-                item.quantity = quantity;
+    
+         if (newQuantity <= 0) {
+            this.removeItem(productId);
+        } else {
+            const item = this.items.find(item => item.id === productId);
+            if (item) {
+                item.quantity = newQuantity;
                 this.saveToStorage();
                 this.updateDisplay();
                 EventBus.emit('cart:updated', this.items);
             }
         }
     }
-    
-    /**
-     * Limpa o carrinho
-     */
-    clear() {
-        this.items = [];
-        this.saveToStorage();
-        this.updateDisplay();
-        EventBus.emit('cart:cleared');
-        
-        Logger.info('Carrinho limpo');
-    }
-    
-    /**
-     * Retorna total de itens
-     * @returns {number} - Total de itens
-     */
+
     getTotalItems() {
         return this.items.reduce((total, item) => total + item.quantity, 0);
     }
-    
-    /**
-     * Retorna total do carrinho
-     * @returns {number} - Total em centavos
-     */
+
     getTotalPrice() {
         return this.items.reduce((total, item) => total + (item.price * item.quantity), 0);
     }
+
+    saveToStorage() {
+        Storage.set(CONFIG.CART_STORAGE_KEY, this.items);
+    }
+
+    loadFromStorage() {
+        return Storage.get(CONFIG.CART_STORAGE_KEY, []);
+    }
     
-    /**
-     * Atualiza display do carrinho
-     */
+    
     updateDisplay() {
+        this.isUpdating = true;
         const cartCount = document.querySelector('.shopping-cart__count');
         const cartDropdown = document.querySelector('.shopping-cart__dropdown');
         
-        if (cartCount) {
-            cartCount.textContent = this.getTotalItems();
-            cartCount.setAttribute('aria-label', `${this.getTotalItems()} itens no carrinho`);
-        }
-        
-        if (cartDropdown) {
-            this.renderCartDropdown(cartDropdown);
-        }
+        if (cartCount) cartCount.textContent = this.getTotalItems();
+        if (cartDropdown) this.renderCartDropdown(cartDropdown);
+        setTimeout(() => { this.isUpdating = false; }, 0);
+
     }
     
-    /**
-     * Renderiza dropdown do carrinho
-     * @param {Element} container - Container do dropdown
-     */
     renderCartDropdown(container) {
         if (this.items.length === 0) {
-            container.innerHTML = `
-                <div class="shopping-cart__empty">
-                    <i class="fas fa-shopping-cart" aria-hidden="true"></i>
-                    <p>Sua sacola de compras está vazia</p>
-                </div>
-            `;
+            container.innerHTML = `<div class="shopping-cart__empty"><i class="fas fa-shopping-cart"></i><p>Sua sacola de compras está vazia</p></div>`;
         } else {
             container.innerHTML = `
                 <div class="shopping-cart__content">
                     <div class="shopping-cart__items">
                         ${this.items.map(item => `
                             <div class="cart-item" data-id="${item.id}">
-                                <div class="cart-item__info">
-                                    <h4>${item.name}</h4>
-                                    <p>${Utils.formatPrice(item.price)} x ${item.quantity}</p>
-                                </div>
+                                <div class="cart-item__info"><h4>${item.name}</h4><p>${Utils.formatPrice(item.price)} x ${item.quantity}</p></div>
                                 <div class="cart-item__actions">
-                                    <button class="cart-item__quantity-btn" 
-                                            onclick="cart.updateQuantity('${item.id}', ${item.quantity - 1})"
-                                            aria-label="Diminuir quantidade">
-                                        <i class="fas fa-minus" aria-hidden="true"></i>
-                                    </button>
+                                    <button class="cart-item__quantity-btn" data-action="decrease" aria-label="Diminuir"><i class="fas fa-minus"></i></button>
                                     <span class="cart-item__quantity">${item.quantity}</span>
-                                    <button class="cart-item__quantity-btn" 
-                                            onclick="cart.updateQuantity('${item.id}', ${item.quantity + 1})"
-                                            aria-label="Aumentar quantidade">
-                                        <i class="fas fa-plus" aria-hidden="true"></i>
-                                    </button>
-                                    <button class="cart-item__remove" 
-                                            onclick="cart.removeItem('${item.id}')"
-                                            aria-label="Remover item">
-                                        <i class="fas fa-trash" aria-hidden="true"></i>
-                                    </button>
+                                    <button class="cart-item__quantity-btn" data-action="increase" aria-label="Aumentar"><i class="fas fa-plus"></i></button>
+                                    <button class="cart-item__remove" data-action="remove" aria-label="Remover"><i class="fas fa-trash"></i></button>
                                 </div>
-                            </div>
-                        `).join('')}
+                            </div>`).join('')}
                     </div>
-                    <div class="shopping-cart__total">
-                        <strong>Total: ${Utils.formatPrice(this.getTotalPrice())}</strong>
-                    </div>
-                    <button class="shopping-cart__checkout" onclick="checkout()">
-                        <i class="fas fa-credit-card" aria-hidden="true"></i>
-                        Finalizar Compra
-                    </button>
-                </div>
-            `;
+                    <div class="shopping-cart__total"><strong>Total: ${Utils.formatPrice(this.getTotalPrice())}</strong></div>
+                    <button class="shopping-cart__checkout" id="cart-checkout-btn"><i class="fas fa-credit-card"></i> Finalizar Compra</button>
+                </div>`;
+            this.bindDropdownEvents(container);
         }
     }
-    
-    /**
-     * Salva carrinho no storage
-     */
-    saveToStorage() {
-        Storage.set(CONFIG.CART_STORAGE_KEY, this.items);
+
+    bindDropdownEvents(container) {
+        container.addEventListener('click', (e) => {
+            const actionButton = e.target.closest('[data-action]');
+            if (!actionButton) {
+                // Se o clique foi no botão de checkout
+                if(e.target.closest('#cart-checkout-btn')){
+                    window.checkout();
+                }
+                return;
+            };
+
+            const cartItem = actionButton.closest('.cart-item');
+            const productId = cartItem.dataset.id;
+            const item = this.items.find(i => i.id === productId);
+
+            if (!item) return;
+
+            switch (actionButton.dataset.action) {
+                case 'remove': this.removeItem(productId); break;
+                case 'increase': this.updateQuantity(productId, item.quantity + 1); break;
+                case 'decrease': this.updateQuantity(productId, item.quantity - 1); break;
+            }
+        });
     }
     
-    /**
-     * Carrega carrinho do storage
-     * @returns {Array} - Itens do carrinho
-     */
-    loadFromStorage() {
-        return Storage.get(CONFIG.CART_STORAGE_KEY, []);
-    }
-    
-    /**
-     * Bind eventos do carrinho
-     */
-    bindEvents() {
-        // Event listener para botões de adicionar ao carrinho
+    bindPageEvents() {
         document.addEventListener('click', (e) => {
-            if (e.target.closest('.product-button')) {
-                const button = e.target.closest('.product-button');
-                const productCard = button.closest('.product-card');
-                
+            const productButton = e.target.closest('.product-button');
+            if (productButton) {
+                const productCard = productButton.closest('.product-card');
                 if (productCard) {
-                    const productId = productCard.dataset.productId || Utils.generateId();
+                    // CORREÇÃO: Agora lê a identidade única do card
+                    const productId = productCard.dataset.productId;
                     const productName = productCard.querySelector('.product-title')?.textContent || 'Produto';
-                    const priceElement = productCard.querySelector('.product-price--current');
-                    const price = priceElement ? 
-                        parseInt(priceElement.textContent.replace(/[^\d]/g, '')) : 
-                        0;
+                    const price = parseInt(productCard.querySelector('.product-price--current')?.textContent.replace(/[^\d]/g, '')) || 0;
                     
+                    if (!productId) {
+                        Logger.error("Produto sem 'data-product-id'. Não foi possível adicionar ao carrinho.", productCard);
+                        return;
+                    }
+
                     this.addItem(productId, productName, price, 1);
-                    notifications.success('Produto adicionado ao carrinho!');
+                    notifications.success(`'${productName}' adicionado!`);
                 }
             }
         });
@@ -774,6 +714,119 @@ class SearchSystem {
         if (suggestions[newIndex]) {
             suggestions[newIndex].classList.add('search-suggestion--active');
         }
+    }
+}
+
+    // =================================================================================
+    // ===== NOVO MÓDULO: GERENCIADOR DE UI DO CARRINHO ================================
+    // =================================================================================
+    class CartUIManager {
+        constructor() {
+            this.cartContainer = document.querySelector('.shopping-cart');
+            if (!this.cartContainer) return;
+
+            this.dropdown = this.cartContainer.querySelector('.shopping-cart__dropdown');
+            this.hideTimeout = null;
+
+            this.init();
+        }
+
+        init() {
+            // Eventos para mostrar e esconder o dropdown
+            this.cartContainer.addEventListener('mouseenter', () => this.showDropdown());
+            this.cartContainer.addEventListener('mouseleave', () => this.startHideTimer());
+            
+            // Eventos para acessibilidade (navegação por teclado)
+            this.cartContainer.querySelector('.shopping-cart__trigger').addEventListener('focus', () => this.showDropdown());
+            this.cartContainer.addEventListener('focusout', (e) => {
+                // Esconde se o foco sair de dentro do container do carrinho
+                 if (!window.cart.isUpdating && !this.cartContainer.contains(e.relatedTarget)) {
+                this.hideDropdown();
+                }
+            });
+            
+            // Mantém o dropdown aberto se o foco estiver dentro dele
+            this.dropdown.addEventListener('mouseenter', () => this.cancelHideTimer());
+
+            Logger.info('Gerenciador de UI do Carrinho inicializado');
+        }
+
+        showDropdown() {
+            this.cancelHideTimer();
+            this.dropdown.classList.add('is-active');
+        }
+
+        hideDropdown() {
+            this.dropdown.classList.remove('is-active');
+        }
+
+        startHideTimer() {
+            // ATRASO INTELIGENTE: Espera 300ms antes de fechar
+            this.hideTimeout = setTimeout(() => {
+                this.hideDropdown();
+            }, 50);
+        }
+
+        cancelHideTimer() {
+            // Cancela o fechamento se o mouse voltar para o carrinho ou entrar no dropdown
+            clearTimeout(this.hideTimeout);
+        }
+    }
+
+// =================================================================================
+// ===== NOVO MÓDULO: GERENCIADOR DE UI DO ATENDIMENTO =============================
+// =================================================================================
+class CustomerServiceUIManager {
+    constructor() {
+        this.container = document.querySelector('.customer-service');
+        if (!this.container) return;
+
+        this.dropdown = this.container.querySelector('.customer-service__dropdown');
+        this.trigger = this.container.querySelector('.customer-service__trigger');
+        this.hideTimeout = null;
+
+        this.init();
+    }
+
+    init() {
+        // Eventos para mostrar e esconder o dropdown
+        this.container.addEventListener('mouseenter', () => this.showDropdown());
+        this.container.addEventListener('mouseleave', () => this.startHideTimer());
+
+        // Eventos para acessibilidade (navegação por teclado)
+        this.trigger.addEventListener('focus', () => this.showDropdown());
+        this.container.addEventListener('focusout', (e) => {
+             // Esconde se o foco sair de dentro do container
+            if (!this.container.contains(e.relatedTarget)) {
+                this.hideDropdown();
+            }
+        });
+
+        // Mantém o dropdown aberto se o mouse/foco estiver dentro dele
+        this.dropdown.addEventListener('mouseenter', () => this.cancelHideTimer());
+
+        Logger.info('Gerenciador de UI de Atendimento inicializado');
+    }
+
+    showDropdown() {
+        this.cancelHideTimer();
+        this.dropdown.classList.add('is-active');
+    }
+
+    hideDropdown() {
+        this.dropdown.classList.remove('is-active');
+    }
+
+    startHideTimer() {
+        // Atraso inteligente: Espera 300ms antes de fechar
+        this.hideTimeout = setTimeout(() => {
+            this.hideDropdown();
+        }, 50);
+    }
+
+    cancelHideTimer() {
+        // Cancela o fechamento se o mouse voltar ou entrar no dropdown
+        clearTimeout(this.hideTimeout);
     }
 }
 
@@ -1225,6 +1278,8 @@ class OdontoMasterApp {
         this.modules.megaMenu = new MegaMenu();
         this.modules.animations = new AnimationManager();
         this.modules.performance = new PerformanceMonitor();
+        this.modules.cartUI = new CartUIManager();
+        this.modules.customerServiceUI = new CustomerServiceUIManager();
         
         // Inicializar carrosséis
         const carousels = document.querySelectorAll('.highlight-carousel');
@@ -1237,20 +1292,20 @@ class OdontoMasterApp {
      * Configura funções globais
      */
     setupGlobalFunctions() {
-        // Expor instâncias globais para compatibilidade
-        window.cart = this.modules.cart;
-        window.notifications = this.modules.notifications;
-        window.searchSystem = this.modules.search;
-        
+     
         // Função de checkout
         window.checkout = () => {
-            if (this.modules.cart.getTotalItems() > 0) {
-                window.location.href = '/checkout';
+            const cartModule = this.modules.cart;
+            if(cartModule.getTotalItems() > 0){
+                this.modules.notifications.info('Redirecionando para o checkout...');
+                // window.location.href = '/checkout';
+                
             } else {
-                this.modules.notifications.warning('Adicione itens ao carrinho antes de finalizar a compra');
+                this.modules.notifications.warning('Adicione itens ao carrinho antes de finalizar a compra.');
             }
         };
-    }
+    }  
+
     
     /**
      * Esconde a tela de carregamento
@@ -1337,28 +1392,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar aplicação
     const app = new OdontoMasterApp();
     app.init();
-    
-    // Função cart() do código original (mantida para compatibilidade)
-    function cart() {
-        const cartQty = document.querySelector('.minicart-qtde-itens');
-        const cartEmpty = document.querySelector('.cart-empty');
-        const cartCount = document.querySelector('.cart-qty');
-        
-        if (cartQty && cartCount) {
-            const qty = cartQty.innerHTML;
-            if (qty !== "0" && qty !== "") {
-                cartCount.innerHTML = qty;
-                if (cartEmpty) cartEmpty.style.display = 'none';
-            } else {
-                cartCount.innerHTML = '0';
-                if (cartEmpty) cartEmpty.style.display = 'block';
-            }
-        }
-    }
-    
-    // Executar cart() após 1 segundo (compatibilidade)
-    setTimeout(cart, 1000);
-});
+    });
 
 // ===== EXPORTAÇÕES PARA DESENVOLVIMENTO =====
 if (typeof module !== 'undefined' && module.exports) {
@@ -1380,3 +1414,4 @@ if (typeof module !== 'undefined' && module.exports) {
         PerformanceMonitor
     };
 }
+

@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 
      <!-- Open Graph / Facebook -->
      <meta property="og:type" content="website">
@@ -40,10 +40,10 @@
             <div class="container">
                 <div class="top-banner__content">
                     <div class="top-banner__warning">
-                        <strong>ATENÇÃO!</strong><p>Os produtos desse site são restritos à Dentistas com CRO, Clínicas Odontológicas e Estudantes de Graduação em Odontologia.</p>
+                        <strong>ATENÇÃO!</strong>Os produtos desse site são restritos à Dentistas com CRO, Clínicas Odontológicas e Estudantes de Graduação em Odontologia.
                     </div>
                     <div class="top-banner__login">
-                        <a href="#" class="login-link">Olá Visitante, Identifique-se aqui</a>
+                        <a href="/login/index.html" class="login-link">Olá Visitante, Identifique-se aqui</a>
                     </div>
                 </div>
             </div>
@@ -55,14 +55,14 @@
                 <div class="header-main__content">
                     <!-- Logo -->
                     <div class="header-logo">
-                        <a href="/" class="logo-link">
-                            <img src="https://recursos.odontomaster.com.br/i/logo_odonto.png" alt="Odonto Master" class="logo-image">
+                        <a href="/index.html" class="logo-link">
+                            <img src= "/images/logo_odonto.png" alt="Odonto Master" class="logo-image">
                         </a>
                     </div>
 
                     <!-- Search Bar --> 
                     <div class="search-bar">
-                        <form class="search-form" id="searchForm" autocomplete="off" method="get" action="/busca">
+                        <form class="search-form" id="searchForm" autocomplete="off" method="get" action="/busca/index.html">
                             <div class="search-form__wrapper">
                                 <input type="text" 
                                        class="search-form__input" 
@@ -144,7 +144,7 @@
         </div>
 
         <!-- Navigation -->
-        <nav class="main-navigation">
+        <nav class="main-navigation" id="main-navigation">
             <div class="container">
                 <div class="main-navigation__content">
                     
@@ -153,33 +153,25 @@
                         <i class="fas fa-times"></i>
                     </button>
 
-                    
-
                     <!-- Navigation Menu -->
-                    <nav class="main-navigation">
-                        <div class="container">
-                            <div class="main-navigation__content">
-                                <div class="navigation-menu">
-                                    <ul class="menu-list">
-                                        <li class="menu-item menu-item--has-submenu">
-                                            <a href="#" class="menu-link" id="mega-menu-trigger" aria-haspopup="true" aria-expanded="false">Todas as Categorias</a>
-                                        </li>
-                                        <li class="menu-item"><a href="/categoria/cirurgia-periodontia" class="menu-link">Cirurgia e Periodontia</a></li>
-                                        <li class="menu-item"><a href="/categoria/dentistica" class="menu-link">Dentística</a></li>
-                                        <li class="menu-item"><a href="/categoria/endodontia" class="menu-link">Endodontia</a></li>
-                                        <li class="menu-item"><a href="/categoria/equipamentos" class="menu-link">Equipamentos</a></li>
-                                        <li class="menu-item"><a href="/categoria/instrumental" class="menu-link">Instrumental</a></li>
-                                        <li class="menu-item"><a href="/categoria/ortodontia" class="menu-link">Ortodontia</a></li>
-                                        <li class="menu-item"><a href="/categoria/pecas-de-mao" class="menu-link">Peças de Mão</a></li>
-                                        <li class="menu-item"><a href="/categoria/protese" class="menu-link">Prótese</a></li>
-                                        <li class="menu-item menu-item--highlighted">
-                                            <a href="/categoria/odontoverse" class="menu-link">Odontoverse</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </nav>
+                    <div class="navigation-menu">
+                        <ul class="menu-list">
+                            <li class="menu-item menu-item--has-submenu">
+                                <a href="#" class="menu-link" id="mega-menu-trigger" aria-haspopup="true" aria-expanded="false">Todas as Categorias</a>
+                            </li>
+                            <li class="menu-item"><a href="/categoria/cirurgia-periodontia/index.html" class="menu-link">Cirurgia e Periodontia</a></li>
+                            <li class="menu-item"><a href="/categoria/dentistica/index.html" class="menu-link">Dentística</a></li>
+                            <li class="menu-item"><a href="/categoria/endodontia/index.html" class="menu-link">Endodontia</a></li>
+                            <li class="menu-item"><a href="/categoria/equipamentos/index.html" class="menu-link">Equipamentos</a></li>
+                            <li class="menu-item"><a href="/categoria/instrumental/index.html" class="menu-link">Instrumental</a></li>
+                            <li class="menu-item"><a href="/categoria/ortodontia/index.html" class="menu-link">Ortodontia</a></li>
+                            <li class="menu-item"><a href="/categoria/pecas-de-mao/index.html" class="menu-link">Peças de Mão</a></li>
+                            <li class="menu-item"><a href="/categoria/protese/index.html" class="menu-link">Prótese</a></li>
+                            <li class="menu-item menu-item--highlighted">
+                                <a href="/categoria/odontoverse/index.html" class="menu-link">Odontoverse</a>
+                            </li>
+                        </ul>
+                    </div>
                     
                     <div class="submenu-overlay"></div>
                     <div class="submenu submenu--mega" id="mega-menu-content" aria-hidden="true">
@@ -227,6 +219,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <!-- Cards e Carrossel abaixo da navegação -->
@@ -300,7 +295,7 @@
         <section class="hero-banner">
             <div class="container">
                 <div class="hero-banner__content">
-                    <img src="../images/banner-principal.png" alt="Dentista exemplo">
+                    <img src="/images/banner-principal.png" alt="Dentista exemplo">
                 </div>
             </div>
         </section>
@@ -312,82 +307,46 @@
                 
                 <div class="products-grid">
                     <!-- Product Card 1 -->
-                    <article class="product-card">
+                    <article class="product-card" data-product-id="prod1">
                         <div class="product-card__image">
-                            <img src="https://via.placeholder.com/300x300/ffffff/1c5787?text=Clareador+1" 
-                                 alt="Clareador Potenza Bianco Pro SS 38%" 
-                                 class="product-image">
-                            <div class="product-badge product-badge--discount">7% OFF</div>
+                            <img src="..." alt="Produto 1">
+                            <div class="product-badge product-badge--discount">27% OFF</div>
                         </div>
                         <div class="product-card__content">
-                            <h3 class="product-title">Clareador Potenza Bianco Pro SS 38% H202 P/1 Paciente - PHS</h3>
-                            <p class="product-description">Embalagem com 1 seringa com 3g.</p>
-                            <div class="product-pricing">
-                                <span class="product-price product-price--old">R$ 21,53</span>
-                                <span class="product-price product-price--current">R$ 21,53</span>
-                                <span class="product-payment-info">à vista</span>
-                            </div>
-                            <div class="product-payment">
-                                <span class="payment-method">Cartão</span>
-                                <span class="payment-installments">1 x de R$ 21,53 sem juros no Boleto</span>
-                            </div>
-                            <button class="product-button" onclick="addToCart('prod1', 'Clareador Potenza Bianco Pro SS 38%', 21.53)">
+                            <h3 class="product-title">Produto 1</h3>
+                            <button class="product-button">
                                 COMPRAR
                             </button>
                         </div>
                     </article>
 
                     <!-- Product Card 2 -->
-                    <article class="product-card">
+                    <article class="product-card" data-product-id="prod2">
                         <div class="product-card__image">
-                            <img src="https://via.placeholder.com/300x300/ffffff/1c5787?text=Clareador+2" 
-                                 alt="Clareador Whiteness Perfect 16% Mini Kit" 
-                                 class="product-image">
-                            <div class="product-badge product-badge--discount">22% OFF</div>
+                            <img src="..." alt="Produto 2">
+                        <div class="product-badge product-badge--discount">27% OFF</div>
                         </div>
                         <div class="product-card__content">
-                            <h3 class="product-title">Clareador Whiteness Perfect 16% Mini Kit - FGM</h3>
-                            <p class="product-description">Mini Kit 3 seringas com 3g</p>
-                            <div class="product-pricing">
-                                <span class="product-price product-price--old">R$ 64,68</span>
-                                <span class="product-price product-price--current">R$ 49,90</span>
-                                <span class="product-payment-info">à vista</span>
-                            </div>
-                            <div class="product-payment">
-                                <span class="payment-method">Cartão</span>
-                                <span class="payment-installments">1 x de R$ 49,90 sem juros no Boleto</span>
-                            </div>
-                            <button class="product-button" onclick="addToCart('prod2', 'Clareador Whiteness Perfect 16% Mini Kit', 49.90)">
+                            <h3 class="product-title">Produto 2</h3>
+                                <button class="product-button">
                                 COMPRAR
-                            </button>
-                        </div>
+                                </button>
+                         </div>
                     </article>
 
                     <!-- Product Card 3 -->
-                    <article class="product-card">
-                        <div class="product-card__image">
-                            <img src="https://via.placeholder.com/300x300/ffffff/1c5787?text=Clareador+3" 
-                                 alt="Clareador Whiteness Perfect 22%" 
-                                 class="product-image">
-                            <div class="product-badge product-badge--discount">27% OFF</div>
-                        </div>
-                        <div class="product-card__content">
-                            <h3 class="product-title">Clareador Whiteness Perfect 22% - FGM</h3>
-                            <p class="product-description">Embalagem com 1 Kit.</p>
-                            <div class="product-pricing">
-                                <span class="product-price product-price--old">R$ 109,97</span>
-                                <span class="product-price product-price--current">R$ 79,90</span>
-                                <span class="product-payment-info">à vista</span>
-                            </div>
-                            <div class="product-payment">
-                                <span class="payment-method">Cartão</span>
-                                <span class="payment-installments">1 x de R$ 79,90 sem juros no Boleto</span>
-                            </div>
-                            <button class="product-button" onclick="addToCart('prod3', 'Clareador Whiteness Perfect 22%', 79.90)">
-                                COMPRAR
-                            </button>
-                        </div>
-                    </article>
+                    <article class="product-card" data-product-id="prod3">
+    <div class="product-card__image">
+        <img src="..." alt="Produto 3">
+        <div class="product-badge product-badge--discount">27% OFF</div>
+    </div>
+    <div class="product-card__content">
+        <h3 class="product-title">Produto 3</h3>
+        <button class="product-button">
+            COMPRAR
+        </button>
+    </div>
+</article>
                 </div>
             </div>
         </section>
@@ -416,29 +375,28 @@
                 <div class="footer-column">
                     <h4 class="footer-column__title">INSTITUCIONAL</h4>
                     <ul class="footer-column__list">
-                        <li><a href="#" class="footer-link">Nosso blog</a></li>
-                        <li><a href="#" class="footer-link">Quem Somos</a></li>
-                        <li><a href="#" class="footer-link">Estudantes</a></li>
-                        <li><a href="#" class="footer-link">Revenda</a></li>
-                        <li><a href="#" class="footer-link">Login/Cadastro</a></li>
-                        <li><a href="#" class="footer-link">Trabalhe Conosco</a></li>
+                        <li><a href="/institucional/quem-somos/index.html" class="footer-link">Quem Somos</a></li>
+                        <li><a href="/institucional/estudantes/index.html" class="footer-link">Estudantes</a></li>
+                        <li><a href="/institucional/revenda/index.html" class="footer-link">Revenda</a></li>
+                        <li><a href="/login/index.html" class="footer-link">Login/Cadastro</a></li>
+                        <li><a href="/institucional/trabalhe-conosco/index.html" class="footer-link">Trabalhe Conosco</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-column">
                     <h4 class="footer-column__title">AJUDA</h4>
                     <ul class="footer-column__list">
-                        <li><a href="#" class="footer-link">Como Comprar</a></li>
-                        <li><a href="#" class="footer-link">Trocas e Devoluções</a></li>
-                        <li><a href="#" class="footer-link">Política de Privacidade</a></li>
-                        <li><a href="#" class="footer-link">Cashback de Frete</a></li>
+                        <li><a href="/ajuda/como-comprar/index.html" class="footer-link">Como Comprar</a></li>
+                        <li><a href="/ajuda/trocas-devolucoes/index.html" class="footer-link">Trocas e Devoluções</a></li>
+                        <li><a href="/ajuda/politica-privacidade/index.html" class="footer-link">Política de Privacidade</a></li>
+                        <li><a href="/ajuda/cashback-frete/index.html" class="footer-link">Cashback de Frete</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-column">
                     <h4 class="footer-column__title">ATENDIMENTO</h4>
                     <ul class="footer-column__list">
-                        <li><a href="#" class="footer-link">Chat Online</a></li>
+                        <li><a href="https://api.whatsapp.com/send?phone=5571988670812" class="footer-link">Chat Online</a></li>
                         <li><a href="tel:7131737300" class="footer-link">(71) 3173-7300</a></li>
                         <li><a href="mailto:atendimento@odontomaster.com.br" class="footer-link">atendimento@odontomaster.com.br</a></li>
                     </ul>
@@ -539,7 +497,7 @@
                         </div>
                     </div>
 
-    <script src="script.js"></script>
+    <script src= "/assets/js/script.js"></script>
 </body>
 </html>
            
