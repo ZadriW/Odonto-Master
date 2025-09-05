@@ -300,56 +300,91 @@
             </div>
         </section>
 
-        <!-- Featured Products -->
-        <section class="featured-products">
-            <div class="container">
-                <h2 class="section-title">Produtos em Destaque</h2>
+        <!-- Carrosel Produtos -->
+
+        <div class="container">
+
+        <section class="products">
+            <h2 class="section-title">Produtos em Destaque</h2>
+            
+            <div class="products-carousel-container js-product-carousel aria" aria-roledescription="carousel" aria-label="Produtos em Destaque">
+                <button class="carousel-nav carousel-nav--prev" aria-label="Anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
                 
-                <div class="products-grid">
-                    <!-- Product Card 1 -->
-                    <article class="product-card" data-product-id="prod1">
-                        <div class="product-card__image">
-                            <img src="..." alt="Produto 1">
-                            <div class="product-badge product-badge--discount">27% OFF</div>
-                        </div>
-                        <div class="product-card__content">
-                            <h3 class="product-title">Produto 1</h3>
-                            <button class="product-button">
-                                COMPRAR
-                            </button>
-                        </div>
-                    </article>
-
-                    <!-- Product Card 2 -->
-                    <article class="product-card" data-product-id="prod2">
-                        <div class="product-card__image">
-                            <img src="..." alt="Produto 2">
-                        <div class="product-badge product-badge--discount">27% OFF</div>
-                        </div>
-                        <div class="product-card__content">
-                            <h3 class="product-title">Produto 2</h3>
-                                <button class="product-button">
-                                COMPRAR
-                                </button>
-                         </div>
-                    </article>
-
-                    <!-- Product Card 3 -->
-                    <article class="product-card" data-product-id="prod3">
-    <div class="product-card__image">
-        <img src="..." alt="Produto 3">
-        <div class="product-badge product-badge--discount">27% OFF</div>
-    </div>
-    <div class="product-card__content">
-        <h3 class="product-title">Produto 3</h3>
-        <button class="product-button">
-            COMPRAR
-        </button>
-    </div>
-</article>
+                <div class="products-carousel-wrapper">
+                    <div class="products-carousel-track" id="productsTrack">
+                        <!-- Os produtos serão inseridos aqui dinamicamente -->
+                    </div>
                 </div>
+                
+                <button class="carousel-nav carousel-nav--next" aria-label="Próximo">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="carousel-dots" id="carouselDots"></div>
             </div>
         </section>
+
+        <section class="products">
+            <h2 class="section-title">Lançamentos</h2>
+            
+            <div class="products-carousel-container js-product-carousel" 
+                 aria-roledescription="carousel" 
+                 aria-label="Lançamentos">
+                
+                <button class="carousel-nav carousel-nav--prev" aria-label="Anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                
+                <div class="products-carousel-wrapper">
+                    <div class="products-carousel-track" id="productsTrackLancamentos">
+                        </div>
+                </div>
+                
+                <button class="carousel-nav carousel-nav--next" aria-label="Próximo">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="carousel-dots" id="carouselDotsLancamentos"></div>
+            </div>
+        </section>
+
+        <section class="products">
+            <h2 class="section-title">Equipamentos em Oferta</h2>
+            
+            <div class="products-carousel-container js-product-carousel" 
+                 aria-roledescription="carousel" 
+                 aria-label="Equipamentos em Oferta">
+                
+                <button class="carousel-nav carousel-nav--prev" aria-label="Anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                
+                <div class="products-carousel-wrapper">
+                     <div class="products-carousel-track" id="productsTrackEquipamentos">
+                        </div>
+                </div>
+                
+                <button class="carousel-nav carousel-nav--next" aria-label="Próximo">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="carousel-dots" id="carouselDotsEquipamentos"></div>
+            </div>
+        </section>
+
+        
+
+    </div>
+
+    
+                <div class="notification-container" id="notificationContainer"></div>
+
+            
+
+                
+
     </main>
 
     <!-- Footer -->

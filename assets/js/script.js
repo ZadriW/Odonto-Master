@@ -387,140 +387,175 @@ class NotificationSystem {
 class ShoppingCart {
     constructor() {
         this.items = this.loadFromStorage();
-        this.updateDisplay();
-        this.updateDisplay();
+        this.dropdownContainer = document.querySelector('.shopping-cart__dropdown');
+        this.cartCountElement = document.querySelector('.shopping-cart__count');
+        
         this.bindPageEvents();
+        this.render();
+        this.bindDropdownEvents();
     }
-    
-    /**
-     * Adiciona item ao carrinho
-     * @param {string} productId - ID do produto
-     * @param {string} name - Nome do produto
-     * @param {number} price - Preço em centavos
-     * @param {number} quantity - Quantidade
-     */
+
     addItem(productId, name, price, quantity = 1) {
         const existingItem = this.items.find(item => item.id === productId);
-        
         if (existingItem) {
             existingItem.quantity += quantity;
         } else {
-            this.items.push({ 
-                id: productId, 
-                name, 
-                price, 
-                quantity,
-                addedAt: new Date().toISOString()
-            });
+            this.items.push({ id: productId, name, price, quantity });
         }
-        
-        this.saveToStorage();
-        this.updateDisplay();
-        EventBus.emit('cart:updated', this.items);
-        
-        Logger.info('Item adicionado ao carrinho:', { productId, name, price, quantity });
+        this.update();
     }
 
     removeItem(productId) {
         this.items = this.items.filter(item => item.id !== productId);
-        this.saveToStorage();
-        this.updateDisplay();
-        EventBus.emit('cart:updated', this.items);
-        
-        Logger.info('Item removido do carrinho:', { productId });
+        this.update();
     }
-    
-    updateQuantity(productId, quantity) {
-    
-         if (newQuantity <= 0) {
+
+    updateQuantity(productId, newQuantity) {
+        const item = this.items.find(i => i.id === productId);
+        if (!item) return;
+
+        // Garante que a quantidade seja um número e no mínimo 0
+        const quantity = Math.max(0, newQuantity);
+
+        if (quantity === 0) {
             this.removeItem(productId);
         } else {
-            const item = this.items.find(item => item.id === productId);
-            if (item) {
-                item.quantity = newQuantity;
-                this.saveToStorage();
-                this.updateDisplay();
-                EventBus.emit('cart:updated', this.items);
-            }
+            item.quantity = quantity;
+            this.update();
         }
     }
 
-    getTotalItems() {
-        return this.items.reduce((total, item) => total + item.quantity, 0);
+    update() {
+        this.saveToStorage();
+        this.render();
+        EventBus.emit('cart:updated', this.items);
     }
 
-    getTotalPrice() {
-        return this.items.reduce((total, item) => total + (item.price * item.quantity), 0);
-    }
-
-    saveToStorage() {
-        Storage.set(CONFIG.CART_STORAGE_KEY, this.items);
-    }
-
-    loadFromStorage() {
-        return Storage.get(CONFIG.CART_STORAGE_KEY, []);
-    }
-    
-    
-    updateDisplay() {
-        this.isUpdating = true;
-        const cartCount = document.querySelector('.shopping-cart__count');
-        const cartDropdown = document.querySelector('.shopping-cart__dropdown');
+    render() {
+        if (this.cartCountElement) {
+            this.cartCountElement.textContent = this.getTotalItems();
+        }
+        this.renderCartDropdown(this.dropdownContainer);
         
-        if (cartCount) cartCount.textContent = this.getTotalItems();
-        if (cartDropdown) this.renderCartDropdown(cartDropdown);
-        setTimeout(() => { this.isUpdating = false; }, 0);
-
+        // Garante que os valores dos inputs sejam atualizados
+        setTimeout(() => {
+            this.updateInputValues();
+        }, 0);
+    }
+    
+    updateInputValues() {
+        if (!this.dropdownContainer) return;
+        
+        const inputs = this.dropdownContainer.querySelectorAll('.cart-item__quantity-input');
+        inputs.forEach(input => {
+            const cartItem = input.closest('.cart-item');
+            if (cartItem) {
+                const productId = cartItem.dataset.id;
+                const item = this.items.find(i => i.id === productId);
+                if (item) {
+                    input.value = item.quantity;
+                }
+            }
+        });
     }
     
     renderCartDropdown(container) {
+        if (!container) return;
         if (this.items.length === 0) {
             container.innerHTML = `<div class="shopping-cart__empty"><i class="fas fa-shopping-cart"></i><p>Sua sacola de compras está vazia</p></div>`;
         } else {
             container.innerHTML = `
                 <div class="shopping-cart__content">
                     <div class="shopping-cart__items">
-                        ${this.items.map(item => `
-                            <div class="cart-item" data-id="${item.id}">
-                                <div class="cart-item__info"><h4>${item.name}</h4><p>${Utils.formatPrice(item.price)} x ${item.quantity}</p></div>
-                                <div class="cart-item__actions">
-                                    <button class="cart-item__quantity-btn" data-action="decrease" aria-label="Diminuir"><i class="fas fa-minus"></i></button>
-                                    <span class="cart-item__quantity">${item.quantity}</span>
-                                    <button class="cart-item__quantity-btn" data-action="increase" aria-label="Aumentar"><i class="fas fa-plus"></i></button>
-                                    <button class="cart-item__remove" data-action="remove" aria-label="Remover"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </div>`).join('')}
+                        ${this.items.map(item => this.getCartItemHTML(item)).join('')}
                     </div>
-                    <div class="shopping-cart__total"><strong>Total: ${Utils.formatPrice(this.getTotalPrice())}</strong></div>
-                    <button class="shopping-cart__checkout" id="cart-checkout-btn"><i class="fas fa-credit-card"></i> Finalizar Compra</button>
+                    <div class="shopping-cart__total">
+                        <strong>Total: ${Utils.formatPrice(this.getTotalPrice())}</strong>
+                    </div>
+                    <button class="shopping-cart__checkout" id="cart-checkout-btn">
+                        <i class="fas fa-credit-card"></i> Finalizar Compra
+                    </button>
                 </div>`;
-            this.bindDropdownEvents(container);
         }
     }
 
-    bindDropdownEvents(container) {
-        container.addEventListener('click', (e) => {
+    getCartItemHTML(item) {
+        
+        return `
+            <div class="cart-item" data-id="${item.id}">
+                <div class="cart-item__info">
+                    <h4>${item.name}</h4>
+                    <p>${Utils.formatPrice(item.price)} &times; ${item.quantity}</p>
+                </div>
+                <div class="cart-item__actions">
+                    <button class="cart-item__quantity-btn" data-action="decrease" aria-label="Diminuir"><i class="fas fa-minus"></i></button>
+                    <input type="number" class="cart-item__quantity-input" value="${item.quantity}" min="0" aria-label="Quantidade">
+                    <button class="cart-item__quantity-btn" data-action="increase" aria-label="Aumentar"><i class="fas fa-plus"></i></button>
+                    <button class="cart-item__remove" data-action="remove" aria-label="Remover"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>`;
+    }
+
+    bindDropdownEvents() {
+        // Remove listeners anteriores para evitar duplicação
+        if (this.dropdownClickHandler) {
+            this.dropdownContainer.removeEventListener('click', this.dropdownClickHandler);
+        }
+        if (this.dropdownChangeHandler) {
+            this.dropdownContainer.removeEventListener('change', this.dropdownChangeHandler);
+        }
+
+        // Handler para cliques
+        this.dropdownClickHandler = (e) => {
             const actionButton = e.target.closest('[data-action]');
-            if (!actionButton) {
-                // Se o clique foi no botão de checkout
-                if(e.target.closest('#cart-checkout-btn')){
-                    window.checkout();
+            if (actionButton) {
+                const cartItemElement = actionButton.closest('.cart-item');
+                if (!cartItemElement) return;
+                
+                const productId = cartItemElement.dataset.id;
+                const item = this.items.find(i => i.id === productId);
+                if (!item) return;
+
+                switch (actionButton.dataset.action) {
+                    case 'remove': 
+                        this.removeItem(productId); 
+                        break;
+                    case 'increase': 
+                        this.updateQuantity(productId, item.quantity + 1); 
+                        break;
+                    case 'decrease': 
+                        this.updateQuantity(productId, item.quantity - 1); 
+                        break;
                 }
-                return;
-            };
-
-            const cartItem = actionButton.closest('.cart-item');
-            const productId = cartItem.dataset.id;
-            const item = this.items.find(i => i.id === productId);
-
-            if (!item) return;
-
-            switch (actionButton.dataset.action) {
-                case 'remove': this.removeItem(productId); break;
-                case 'increase': this.updateQuantity(productId, item.quantity + 1); break;
-                case 'decrease': this.updateQuantity(productId, item.quantity - 1); break;
+            } else if (e.target.closest('#cart-checkout-btn')) {
+                window.checkout();
             }
-        });
+        };
+
+        // Handler para mudanças no input
+        this.dropdownChangeHandler = (e) => {
+            if (e.target.classList.contains('cart-item__quantity-input')) {
+                const cartItemElement = e.target.closest('.cart-item');
+                if (!cartItemElement) return;
+                
+                const productId = cartItemElement.dataset.id;
+                const newQuantity = parseInt(e.target.value, 10);
+                
+                if (!isNaN(newQuantity) && newQuantity >= 0) {
+                    this.updateQuantity(productId, newQuantity);
+                } else {
+                    // Se o valor for inválido, restaura o valor original
+                    const item = this.items.find(i => i.id === productId);
+                    if (item) {
+                        e.target.value = item.quantity;
+                    }
+                }
+            }
+        };
+
+        // Adiciona os novos listeners
+        this.dropdownContainer.addEventListener('click', this.dropdownClickHandler);
+        this.dropdownContainer.addEventListener('change', this.dropdownChangeHandler);
     }
     
     bindPageEvents() {
@@ -544,8 +579,18 @@ class ShoppingCart {
                 }
             }
         });
+
+        
     }
-}
+
+
+
+    getTotalItems() { return this.items.reduce((total, item) => total + item.quantity, 0); }
+    getTotalPrice() { return this.items.reduce((total, item) => total + (item.price * item.quantity), 0); }
+    saveToStorage() { Storage.set(CONFIG.CART_STORAGE_KEY, this.items); }
+    loadFromStorage() { return Storage.get(CONFIG.CART_STORAGE_KEY, []); }
+
+    }
 
 // ===== SISTEMA DE BUSCA =====
 class SearchSystem {
@@ -1039,6 +1084,187 @@ class Carousel {
     }
 }
 
+// =================================================================================
+// ===== CARROSSEL DE PRODUTOS (VERSÃO REVISADA E MULTI-INSTÂNCIA) ================
+// =================================================================================
+class ProductsCarousel {
+    /**
+     * @param {string} trackId - O ID do elemento 'track' do carrossel.
+     * @param {string} dotsId - O ID do container dos 'dots'.
+     * @param {Array} productsData - O array de produtos para este carrossel.
+     */
+    constructor(trackId, dotsId, productsData) {
+        this.track = document.getElementById(trackId);
+        this.dotsContainer = document.getElementById(dotsId);
+        this.container = this.track ? this.track.closest('.products-carousel-container') : null;
+        
+        if (!this.container || !this.track || !this.dotsContainer) {
+            Logger.warn(`Carrossel com trackId '${trackId}' não pôde ser inicializado.`);
+            return;
+        }
+
+        this.products = productsData;
+        this.prevBtn = this.container.querySelector('.carousel-nav--prev');
+        this.nextBtn = this.container.querySelector('.carousel-nav--next');
+
+        this.currentIndex = 0;
+        this.itemsPerView = this.getItemsPerView();
+        this.isTransitioning = false;
+
+        this.init();
+    }
+
+    init() {
+        this.renderProducts();
+        this.renderDots();
+        this.bindEvents();
+        this.updateNavButtons();
+    }
+
+    getItemsPerView() {
+        const width = window.innerWidth;
+        if (width <= 480) return 1;
+        if (width <= 768) return 1;
+        if (width <= 992) return 2;
+        if (width <= 1200) return 3;
+        return 4;
+    }
+
+    renderProducts() {
+        const allProducts = [...this.products, ...this.products, ...this.products];
+        this.track.innerHTML = allProducts.map((product, index) => `
+            <div class="product-slide" data-index="${index}">
+                <article class="product-card" data-product-id="${product.id}">
+                    <div class="product-card__image">
+                        <img src="${product.image}" alt="${product.name}">
+                        <div class="product-badge product-badge--discount">${product.discount}% OFF</div>
+                    </div>
+                    <div class="product-card__content">
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-pricing">
+                            <span class="product-price--current">${Utils.formatPrice(product.price * 100)}</span>
+                        </div>
+                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                    </div>
+                </article>
+            </div>
+        `).join('');
+        this.currentIndex = this.products.length;
+        this.updatePosition(false);
+    }
+
+    
+
+    renderDots() {
+        const totalGroups = Math.ceil(this.products.length / this.itemsPerView);
+        this.dotsContainer.innerHTML = Array.from({ length: totalGroups }, (_, i) => `
+            <button class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}" aria-label="Ir para grupo ${i + 1}"></button>
+        `).join('');
+    }
+
+    bindEvents() {
+        this.prevBtn.addEventListener('click', () => this.prev());
+        this.nextBtn.addEventListener('click', () => this.next());
+        this.dotsContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('carousel-dot')) {
+                const index = parseInt(e.target.dataset.index);
+                this.goToGroup(index);
+            }
+        });
+        window.addEventListener('resize', Utils.debounce(() => {
+            const newItemsPerView = this.getItemsPerView();
+            if (newItemsPerView !== this.itemsPerView) {
+                this.itemsPerView = newItemsPerView;
+                this.renderDots();
+                this.updatePosition(false);
+            }
+        }, 250));
+    }
+
+    prev() {
+        if (this.isTransitioning) return;
+        this.currentIndex -= this.itemsPerView;
+        this.updatePosition();
+        if (this.currentIndex < 0) {
+            this.isTransitioning = true;
+            setTimeout(() => {
+                this.currentIndex = this.products.length + this.currentIndex;
+                this.updatePosition(false);
+            }, 400);
+        }
+    }
+
+    next() {
+        if (this.isTransitioning) return;
+        this.currentIndex += this.itemsPerView;
+        this.updatePosition();
+        if (this.currentIndex >= this.products.length * 2) {
+            this.isTransitioning = true;
+            setTimeout(() => {
+                this.currentIndex -= this.products.length;
+                this.updatePosition(false);
+            }, 400);
+        }
+    }
+
+    goToGroup(groupIndex) {
+        if (this.isTransitioning) return;
+        this.currentIndex = this.products.length + (groupIndex * this.itemsPerView);
+        this.updatePosition();
+    }
+
+    updatePosition(animate = true) {
+        this.isTransitioning = true;
+        const slideWidth = 100 / this.itemsPerView;
+        const offset = -(this.currentIndex * slideWidth);
+        this.track.style.transition = animate ? 'transform 0.4s cubic-bezier(0.2, 0.6, 0.2, 1)' : 'none';
+        this.track.style.transform = `translateX(${offset}%)`;
+        setTimeout(() => { this.isTransitioning = false; }, animate ? 400 : 0);
+        this.updateDots();
+    }
+
+    updateDots() {
+        const dots = this.dotsContainer.querySelectorAll('.carousel-dot');
+        const currentGroup = Math.floor((this.currentIndex % this.products.length) / this.itemsPerView);
+        dots.forEach((dot, index) => dot.classList.toggle('active', index === currentGroup));
+    }
+
+    updateNavButtons() { /* Botões sempre habilitados no modo infinito */ }
+}
+
+
+
+// =================================================================================
+// ===== DADOS E INICIALIZAÇÃO DOS CARROSSÉIS (ADICIONE AO FINAL DO SCRIPT.JS) ====
+// =================================================================================
+
+// Dados Mock para os carrosséis
+const mockProductsDestaques = [
+    { id: 'prod1', name: 'Kit Clareamento Dental Whiteness HP', price: 189.90, discount: 27, image: 'https://via.placeholder.com/300x300/1c5787/ffffff?text=Destaque+1' },
+    { id: 'prod2', name: 'Resina Composta Z350 XT', price: 245.90, discount: 15, image: 'https://via.placeholder.com/300x300/134a6b/ffffff?text=Destaque+2' },
+    { id: 'prod3', name: 'Anestésico Mepivacaína 3%', price: 89.90, discount: 30, image: 'https://via.placeholder.com/300x300/4CAF50/ffffff?text=Destaque+3' },
+    { id: 'prod4', name: 'Broca Carbide FG 245', price: 34.90, discount: 10, image: 'https://via.placeholder.com/300x300/CA69F5/ffffff?text=Destaque+4' },
+    { id: 'prod5', name: 'Fotopolimerizador LED Radii Plus', price: 899.00, discount: 20, image: 'https://via.placeholder.com/300x300/dc3545/ffffff?text=Destaque+5' },
+];
+
+const mockProductsLancamentos = [
+    { id: 'prod6', name: 'Cimento de Ionômero de Vidro', price: 56.90, discount: 18, image: 'https://via.placeholder.com/300x300/ffc107/ffffff?text=Lan%C3%A7amento+1' },
+    { id: 'prod7', name: 'Kit Endodontia Rotatória Avançado', price: 1450.00, discount: 25, image: 'https://via.placeholder.com/300x300/17a2b8/ffffff?text=Lan%C3%A7amento+2' },
+    { id: 'prod8', name: 'Ácido Fosfórico 37% Gel', price: 22.90, discount: 12, image: 'https://via.placeholder.com/300x300/28a745/ffffff?text=Lan%C3%A7amento+3' }
+];
+
+const mockProductsEquipamentos = [
+    { id: 'prod9', name: 'Autoclave Vitale Class CD 21 Litros', price: 4500.00, discount: 10, image: 'https://via.placeholder.com/300x300/6f42c1/ffffff?text=Equipamento+1' },
+    { id: 'prod10', name: 'Cadeira Odontológica Kavo Unik', price: 25000.00, discount: 15, image: 'https://via.placeholder.com/300x300/e83e8c/ffffff?text=Equipamento+2' },
+];
+
+// Inicialização dentro do DOMContentLoaded para garantir que os elementos existam
+document.addEventListener('DOMContentLoaded', () => {
+    new ProductsCarousel('productsTrack', 'carouselDots', mockProductsDestaques);
+    new ProductsCarousel('productsTrackLancamentos', 'carouselDotsLancamentos', mockProductsLancamentos);
+    new ProductsCarousel('productsTrackEquipamentos', 'carouselDotsEquipamentos', mockProductsEquipamentos);
+});
+
 // ===== SISTEMA DE MEGA MENU =====
 class MegaMenu {
     constructor() {
@@ -1285,6 +1511,7 @@ class OdontoMasterApp {
         const carousels = document.querySelectorAll('.highlight-carousel');
         this.modules.carousels = Array.from(carousels).map(carousel => new Carousel(carousel));
         
+        
         Logger.info(`${Object.keys(this.modules).length} módulos inicializados`);
     }
     
@@ -1411,7 +1638,7 @@ if (typeof module !== 'undefined' && module.exports) {
         Carousel,
         MegaMenu,
         AnimationManager,
-        PerformanceMonitor
+        PerfomanceMonitor
     };
 }
 
