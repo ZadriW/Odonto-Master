@@ -29,7 +29,7 @@ const CONFIG = {
     },
     
     // Carrossel
-    CAROUSEL_AUTOPLAY_INTERVAL: 5000,
+    CAROUSEL_AUTOPLAY_INTERVAL: 4000,
     CAROUSEL_TRANSITION_DURATION: 400
 };
 
@@ -559,29 +559,37 @@ class ShoppingCart {
     }
     
     bindPageEvents() {
-        document.addEventListener('click', (e) => {
-            const productButton = e.target.closest('.product-button');
-            if (productButton) {
-                const productCard = productButton.closest('.product-card');
-                if (productCard) {
-                    // CORREÇÃO: Agora lê a identidade única do card
-                    const productId = productCard.dataset.productId;
-                    const productName = productCard.querySelector('.product-title')?.textContent || 'Produto';
-                    const price = parseInt(productCard.querySelector('.product-price--current')?.textContent.replace(/[^\d]/g, '')) || 0;
-                    
-                    if (!productId) {
-                        Logger.error("Produto sem 'data-product-id'. Não foi possível adicionar ao carrinho.", productCard);
-                        return;
-                    }
-
-                    this.addItem(productId, productName, price, 1);
-                    notifications.success(`'${productName}' adicionado!`);
-                }
+    document.addEventListener('click', (e) => {
+        const productButton = e.target.closest('.product-button');
+        if (productButton) {
+            // Previne que o botão seja clicado várias vezes rapidamente
+            if (productButton.classList.contains('added')) {
+                return;
             }
-        });
 
-        
-    }
+            const productCard = productButton.closest('.product-card');
+            if (productCard && productCard.dataset.productId) {
+                const productId = productCard.dataset.productId;
+                const productName = productCard.querySelector('.product-title')?.textContent || 'Produto';
+                const price = parseInt(productCard.querySelector('.product-price--current')?.textContent.replace(/[^\d]/g, '')) || 0;
+                
+                // Adiciona o item ao carrinho
+                this.addItem(productId, productName, price, 1);
+                
+                // --- Feedback visual no botão ---
+                productButton.classList.add('added');
+                productButton.innerHTML = `<i class="fas fa-check"></i> Adicionado`;
+
+                setTimeout(() => {
+                    productButton.classList.remove('added');
+                    productButton.innerHTML = 'ADICIONAR AO CARRINHO';
+                }, 2000);
+
+
+            }
+        }
+    });
+}
 
 
 
@@ -1088,11 +1096,7 @@ class Carousel {
 // ===== CARROSSEL DE PRODUTOS (VERSÃO REVISADA E MULTI-INSTÂNCIA) ================
 // =================================================================================
 class ProductsCarousel {
-    /**
-     * @param {string} trackId - O ID do elemento 'track' do carrossel.
-     * @param {string} dotsId - O ID do container dos 'dots'.
-     * @param {Array} productsData - O array de produtos para este carrossel.
-     */
+    
     constructor(trackId, dotsId, productsData) {
         this.track = document.getElementById(trackId);
         this.dotsContainer = document.getElementById(dotsId);
@@ -1229,7 +1233,11 @@ class ProductsCarousel {
         dots.forEach((dot, index) => dot.classList.toggle('active', index === currentGroup));
     }
 
-    updateNavButtons() { /* Botões sempre habilitados no modo infinito */ }
+    updateNavButtons() {
+        this.prevBtn.disabled = false;
+        this.nextBtn.disabled = false;
+    }
+
 }
 
 
@@ -1391,7 +1399,7 @@ class AnimationManager {
         }, options);
         
         // Observe elements
-        const elements = document.querySelectorAll('.product-card, .section-title, .promo-card');
+        const elements = document.querySelectorAll('.product-card, .section-title, .home-card');
         elements.forEach(el => this.observer.observe(el));
     }
     
@@ -1642,3 +1650,6 @@ if (typeof module !== 'undefined' && module.exports) {
     };
 }
 
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { OdontoMasterApp, CONFIG, Utils, Logger, EventBus, Storage, CookieManager, NotificationSystem, ShoppingCart, SearchSystem, MobileMenu, Carousel, MegaMenu, AnimationManager, PerformanceMonitor };
+}
