@@ -1,8 +1,61 @@
 @import url(/assets/css/style.css);
 
+.menu-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #CA69F5, #F4E8FF);
+    transform: translateX(-50%);
+    border-radius: 2px 2px 0 0;
+    transition: width 0.3 ease-out;
+    z-index: 0;
+}
+
+.search-form__input:focus {
+    outline: none;
+    border-color: var(--cor-secundaria);
+}
+
+.search-form__button {
+    position: absolute;
+    right: 5px;
+    background: var(--cor-secundaria);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color var(--transition-normal);
+}
+
+.shopping-cart__trigger:hover {
+    border-color: var(--cor-secundaria);
+    background-color: var(--cor-fundo-secundaria);
+}
+
+.shopping-cart__count {
+    background: var(--cor-secundaria);
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 20px;
+}
+
 .odontoverse-page {
     background-color: var(--cor-fundo-primaria);
 }
+
+
+
 
 /* Seção Hero */
 .odontoverse-hero {
@@ -73,6 +126,7 @@
             transform: translateY(-8px);
             box-shadow: var(--shadow-xl);
             border-color: var(--cor-secundaria);
+            
         }
 
 .product-button {
@@ -89,6 +143,10 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-top: auto;
+        }
+
+        .product-button:hover {
+            background-color: var(--cor-secundaria);
         }
 
 /* Formulário de Validação */
@@ -162,6 +220,8 @@
     color: var(--cor-primaria);
 
 }
+
+
 
 /* Responsividade */
 @media (max-width: 1200px) {

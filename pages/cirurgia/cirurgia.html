@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cirurgia e Periodontia | Odonto Master</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/cirurgia.css">
+    <meta name="description" content="Produtos para Cirurgia e Periodontia. Encontre os melhores instrumentos e materiais na Odonto Master.">
+</head>
+<body>
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <header class="main-header">
+
+        <!-- Top Banner -->
+        <div class="top-banner">
+            <div class="container">
+                <div class="top-banner__content">
+                    <div class="top-banner__warning">
+                        <strong>ATENÇÃO!</strong>Os produtos desse site são restritos à Dentistas com CRO, Clínicas Odontológicas e Estudantes de Graduação em Odontologia.
+                    </div>
+                    <div class="top-banner__login">
+                        <a href="/login/index.html" class="login-link">Olá Visitante, Identifique-se aqui</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <main class="main-content category-page">
+        <div class="container">
+            <div class="category-header">
+                <h1 class="category-title">Cirurgia e Periodontia</h1>
+                <p class="category-description">Equipamentos e materiais essenciais para procedimentos de cirurgia e periodontia.</p>
+            </div>
+
+            <!--Filtros-->
+            <div class="category-content-area">
+                <aside class="filters-sidebar" id="filters-sidebar">
+                    <h3 class="filters-title">Filtros</h3>
+
+                     <div class="filter-group">
+                        <h4 class="filter-group__title">Categorias</h4>
+
+                        <div class="filter-group__options" id="category-filters">
+
+                            <div class="checkbox-filter">
+                                <input type="checkbox" id="cat-suturas" value="Fio de Sutura">
+                                <label for="cat-suturas">Fio de Sutura</label>
+                            </div>
+
+                            <div class="checkbox-filter">
+                                <input type="checkbox" id="cat-bolsa-termica" value="Bolsa Termica">
+                                <label for="cat-bolsa-termica">Bolsa Térmica</label>
+                            </div>
+
+                            <div class="checkbox-filter">
+                                <input type="checkbox" id="cat-curativo-alveolar" value="Curativo Alveolar">
+                                <label for="cat-curativo-alveolar">Curativo Alveolar</label>
+                            </div>
+
+                            <div class="checkbox-filter">
+                                <input type="checkbox" id="cat-hemostasia" value="Hemostasia">
+                                <label for="cat-hemostasia">Hemostasia</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4 class="filter-group__title">Marcas</h4>
+
+                        <div class="filter-group__options" id="brand-filters">
+
+                             <div class="checkbox-filter">
+                                <input type="checkbox" id="brand-techg" value="Techg">
+                                <label for="brand-techg">Techg</label>
+                            </div>
+
+                            <div class="checkbox-filter">
+                                <input type="checkbox" id="brand-golgran" value="Golgran">
+                                <label for="brand-golgran">Golgran</label>
+                            </div>
+
+                            <div class="checkbox-filter">
+                                <input type="checkbox" id="brand-biomaterials" value="Biomaterials">
+                                <label for="brand-biomaterials">Biomaterials</label>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Produtos -->    
+                <section class="products-grid-container">
+                    <div id="no-results-message" class="no-results-message" style="display: none;">
+                        <p>Nenhum produto encontrado com os filtros selecionados.</p>
+                    </div>
+                    <div class="products-grid" id="products-grid">
+                        <article class="product-card" data-category="Suturas" data-brand="Techg">
+                            </article>
+                        <article class="product-card" data-category="Instrumentos Cirúrgicos" data-brand="Golgran">
+                            </article>
+                        <article class="product-card" data-category="Biomateriais" data-brand="Biomaterials">
+                            </article>
+                        <article class="product-card" data-category="Suturas" data-brand="Golgran">
+                             </article>
+                        <article class="product-card" data-category="Instrumentos Cirúrgicos" data-brand="Techg">
+                             </article>
+                        <article class="product-card" data-category="Biomateriais" data-brand="Golgran">
+                             </article>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+
+            <!-- Newsletter -->
+            <section class="newsletter-section">
+                <h3 class="newsletter-title">ASSINE NOSSA NEWSLETTER</h3>
+                <p class="newsletter-description">E FIQUE POR DENTRO DAS NOVIDADES</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <div class="newsletter-form__wrapper">
+                        <input type="email" 
+                               placeholder="Seu e-mail" 
+                               class="newsletter-form__input" 
+                               required>
+                        <button type="submit" class="newsletter-form__button">Assinar</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Footer Links -->
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4 class="footer-column__title">INSTITUCIONAL</h4>
+                    <ul class="footer-column__list">
+                        <li><a href="/institucional/quem-somos/index.html" class="footer-link">Quem Somos</a></li>
+                        <li><a href="/institucional/estudantes/index.html" class="footer-link">Estudantes</a></li>
+                        <li><a href="/institucional/revenda/index.html" class="footer-link">Revenda</a></li>
+                        <li><a href="/login/index.html" class="footer-link">Login/Cadastro</a></li>
+                        <li><a href="/institucional/trabalhe-conosco/index.html" class="footer-link">Trabalhe Conosco</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4 class="footer-column__title">AJUDA</h4>
+                    <ul class="footer-column__list">
+                        <li><a href="/ajuda/como-comprar/index.html" class="footer-link">Como Comprar</a></li>
+                        <li><a href="/ajuda/trocas-devolucoes/index.html" class="footer-link">Trocas e Devoluções</a></li>
+                        <li><a href="/ajuda/politica-privacidade/index.html" class="footer-link">Política de Privacidade</a></li>
+                        <li><a href="/ajuda/cashback-frete/index.html" class="footer-link">Cashback de Frete</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4 class="footer-column__title">ATENDIMENTO</h4>
+                    <ul class="footer-column__list">
+                        <li><a href="https://api.whatsapp.com/send?phone=5571988670812" class="footer-link">Chat Online</a></li>
+                        <li><a href="tel:7131737300" class="footer-link">(71) 3173-7300</a></li>
+                        <li><a href="mailto:atendimento@odontomaster.com.br" class="footer-link">atendimento@odontomaster.com.br</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4 class="footer-column__title">HORÁRIO DE FUNCIONAMENTO</h4>
+                    <ul class="footer-column__list">
+                        <li>Segunda a Sexta das 08h às 18h</li>
+                        <li>Sábados das 08h às 12h</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-bottom__section">
+                    <h4 class="footer-bottom__title">FORMAS DE PAGAMENTO</h4>
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa" aria-label="Visa"></i>
+                        <i class="fab fa-cc-mastercard" aria-label="Mastercard"></i>
+                        <i class="fab fa-cc-amex" aria-label="American Express"></i>
+                        <i class="fab fa-pix" aria-label="PIX"></i>
+                    </div>
+                </div>
+
+                <div class="footer-bottom__section">
+                    <h4 class="footer-bottom__title">SELOS DE SEGURANÇA</h4>
+                    <div class="security-seals">
+                        <i class="fas fa-shield-alt" aria-label="Segurança"></i>
+                        <span>Wildcard SSL Certificates</span>
+                    </div>
+                </div>
+
+                <div class="footer-bottom__section">
+                    <h4 class="footer-bottom__title">REDES SOCIAIS</h4>
+                    <div class="social-media">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="copyright">
+                <p>&copy; Todos os direitos reservados - ODM COMERCIO E SERVICOS DE EQUIPAMENTOS E MATERIAIS ODONTOLOGICOS LTDA - CNPJ: 07.030.958/0001-74</p>
+                <p>Alameda das Cajazeiras, 430 - Caminho das Árvores - Salvador/BA - CEP: 41.820-470</p>
+                <p>Eventuais promoções, descontos e prazos de pagamento expostos aqui são válidos apenas para compras via internet. As fotos, textos e layout aqui veiculados são de propriedade da Loja. É proibida a utilização total ou parcial sem nossa autorização.</p>
+            </div>
+        </div>
+    </footer>
+     
+    <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/cirurgia.js"></script>
+    
+</body>
+</html>
