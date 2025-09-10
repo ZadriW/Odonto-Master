@@ -1625,9 +1625,9 @@ class OdontoMasterApp {
 // ===== INICIALIZAÇÃO =====
 document.addEventListener('DOMContentLoaded', () => {
     // Inicializar aplicação
-    const app = new OdontoMasterApp();
-    app.init();
-    });
+    window.app = new OdontoMasterApp();
+    window.app.init();
+});
 
 // ===== EXPORTAÇÕES PARA DESENVOLVIMENTO =====
 if (typeof module !== 'undefined' && module.exports) {

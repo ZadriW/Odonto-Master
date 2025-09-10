@@ -1,17 +1,9 @@
-/* ============================================= */
-/* ESTILOS DA PÁGINA DE CATEGORIA       */
-/* ============================================= */
+@import url(/assets/css/style.css);
+
 
 .category-page {
     background-color: var(--cor-fundo-primaria);
-    padding: var(--spacing-2xl) 0;
-}
-
-.category-header {
-    text-align: center;
-    margin-bottom: var(--spacing-2xl);
-    padding-bottom: var(--spacing-lg);
-    border-bottom: 1px solid var(--cor-borda-media);
+    padding: var(--spacing-xl) 0; /* Reduce padding to move content up */
 }
 
 .category-title {
@@ -33,6 +25,8 @@
     grid-template-columns: 260px 1fr; /* Coluna para filtros e outra para produtos */
     gap: var(--spacing-2xl);
     align-items: flex-start;
+    position: relative;
+    margin-top: var(--spacing-lg); /* Reduce top margin to move content up */
 }
 
 /* Sidebar de Filtros */
@@ -41,8 +35,34 @@
     padding: var(--spacing-xl);
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-md);
-    position: sticky; /* Mantém os filtros visíveis ao rolar a página */
-    top: 140px; 
+    position: sticky;
+    position: -webkit-sticky;
+    top: 80px; /* Move filters sidebar up slightly */
+    max-height: calc(100vh - 140px); /* Adjust max height accordingly */
+    overflow: hidden;
+}
+
+.filters-sidebar:hover {
+    overflow: auto;
+}
+
+/* Custom scrollbar for filters */
+.filters-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.filters-sidebar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.filters-sidebar::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.filters-sidebar::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
 }
 
 .filters-title {
@@ -75,6 +95,69 @@
     gap: var(--spacing-sm);
 }
 
+.filter-group__visible {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.filter-group__hidden {
+    display: none;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.filter-group__hidden.expanded {
+    display: flex;
+}
+
+/* Filtro de Preço */
+.price-filter {
+    padding: var(--spacing-md) 0;
+}
+
+.price-range-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.price-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.price-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--cor-primaria);
+    cursor: pointer;
+}
+
+.price-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--cor-primaria);
+    cursor: pointer;
+}
+
+.price-display {
+    text-align: center;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--cor-primaria);
+}
+
 .checkbox-filter {
     display: flex;
     align-items: center;
@@ -89,6 +172,11 @@
     cursor: pointer;
 }
 
+.checkbox-filter input[type="checkbox"]:focus {
+    outline: none;
+    
+}
+
 .checkbox-filter label {
     font-size: var(--font-size-sm);
     color: var(--cor-texto-secundaria);
@@ -100,6 +188,35 @@
     color: var(--cor-primaria);
 }
 
+.filter-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: var(--cor-primaria);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    padding: 8px 0;
+    margin-top: 4px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    width: 100%;
+}
+
+.filter-toggle-btn:hover {
+    color: var(--cor-primaria-escura);
+}
+
+.filter-toggle-btn .toggle-icon {
+    transition: transform var(--transition-fast);
+}
+
+.filter-toggle-btn[aria-expanded="true"] .toggle-icon {
+    transform: rotate(180deg);
+}
+
 /* Grid de Produtos */
 .products-grid-container {
     width: 100%;
@@ -109,6 +226,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 produtos por linha */
     gap: var(--spacing-xl);
+    margin-top: var(--spacing-lg); /* Reduce top margin to move products up */
 }
 
 /* Mensagem de "Nenhum resultado" */
@@ -135,10 +253,69 @@
     transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
+.product-button.added {
+    background: var(--cor-destaque);
+    transform: translateY(0); 
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4); /* Sombra verde */
+    animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.97); }
+    100% { transform: scale(1); }
+}
+
+/* Hidden class for filtering */
 .product-card.hidden {
     display: none;
 }
 
+/* Botão de limpar filtros */
+.clear-filters-btn {
+    width: 100%;
+    background: var(--cor-erro);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    outline: none;
+}
+
+.clear-filters-btn:hover {
+    background: var(--cor-primaria-escura);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.clear-filters-btn:active {
+    transform: translateY(0);
+}
+
+.clear-filters-btn:focus {
+    outline: none;
+}
+
+/* Remove outline from all filter buttons */
+.filter-toggle-btn:focus,
+.checkbox-filter input[type="checkbox"]:focus + label,
+.price-slider:focus,
+.product-button:focus {
+    outline: none;
+}
+
+/* Hidden class for filtering */
+.product-card.hidden {
+    display: none;
+}
 
 /* Responsividade */
 @media (max-width: 992px) {
