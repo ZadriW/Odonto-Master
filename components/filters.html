@@ -1,0 +1,69 @@
+<!-- Filters Component -->
+<div class="filters-sidebar">
+  <h3 class="filters-title">Filtros</h3>
+  
+  <!-- Filter Group - Category -->
+  <div class="filter-group">
+    <h4 class="filter-group__title">Categorias</h4>
+    <div class="filter-group__options">
+      <div class="checkbox-filter">
+        <input type="checkbox" id="categoria-1">
+        <label for="categoria-1">Categoria 1</label>
+      </div>
+      <div class="checkbox-filter">
+        <input type="checkbox" id="categoria-2">
+        <label for="categoria-2">Categoria 2</label>
+      </div>
+      <div class="checkbox-filter">
+        <input type="checkbox" id="categoria-3">
+        <label for="categoria-3">Categoria 3</label>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Filter Group - Price -->
+  <div class="filter-group">
+    <h4 class="filter-group__title">Preço</h4>
+    <div class="price-filter">
+      <div class="price-range-container">
+        <input type="range" class="price-slider" min="0" max="1000" value="0">
+        <input type="range" class="price-slider" min="0" max="1000" value="1000">
+      </div>
+      <div class="price-display">R$ 0 - R$ 1000</div>
+    </div>
+  </div>
+  
+  <!-- Filter Group - Brand -->
+  <div class="filter-group">
+    <div class="filter-group__visible">
+      <h4 class="filter-group__title">Marcas</h4>
+      <div class="checkbox-filter">
+        <input type="checkbox" id="marca-1">
+        <label for="marca-1">Marca 1</label>
+      </div>
+      <div class="checkbox-filter">
+        <input type="checkbox" id="marca-2">
+        <label for="marca-2">Marca 2</label>
+      </div>
+    </div>
+    <div class="filter-group__hidden">
+      <div class="checkbox-filter">
+        <input type="checkbox" id="marca-3">
+        <label for="marca-3">Marca 3</label>
+      </div>
+      <div class="checkbox-filter">
+        <input type="checkbox" id="marca-4">
+        <label for="marca-4">Marca 4</label>
+      </div>
+    </div>
+    <button class="filter-toggle-btn" aria-expanded="false">
+      <span>Ver mais</span>
+      <i class="fas fa-chevron-down toggle-icon"></i>
+    </button>
+  </div>
+  
+  <!-- Clear Filters Button -->
+  <button class="clear-filters-btn">
+    <i class="fas fa-times"></i> Limpar Filtros
+  </button>
+</div>
