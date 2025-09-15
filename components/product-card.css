@@ -124,23 +124,3 @@
   50% { transform: scale(0.97); }
   100% { transform: scale(1); }
 }
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .product-card__image {
-    height: 200px;
-  }
-  
-  .product-title {
-    font-size: 14px;
-  }
-  
-  .product-price--current {
-    font-size: 18px;
-  }
-  
-  .product-button {
-    padding: 12px;
-    font-size: 12px;
-  }
-}

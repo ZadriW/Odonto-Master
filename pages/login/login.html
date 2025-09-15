@@ -3,25 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OdontoVerse | Exclusivo para Estudantes - Odonto Master</title>
+    <meta name="description" content="Faça login na Odonto Master para acessar sua conta">
+    <meta name="keywords" content="login, conta, acesso, odontologia">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/pages/odontoverse/odontoverse.css">
-    <meta name="description" content="Bem-vindo ao OdontoVerse, o universo de vantagens e produtos com descontos exclusivos para estudantes de odontologia.">
+    <link rel="stylesheet" href="/pages/login/login.css">
+    
+    <title>Login | Odonto Master</title>
 </head>
 <body>
+    <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="loading-spinner"></div>
     </div>
 
+    <!-- Main Header -->
     <header class="main-header">
         <!-- Top Banner -->
         <div class="top-banner">
             <div class="container">
                 <div class="top-banner__content">
                     <div class="top-banner__warning">
-                        <strong>ATENÇÃO!</strong>Os produtos desse site são restritos à Dentistas com CRO, Clínicas Odontológicas e Estudantes de Graduação em Odontologia.
+                        <strong>ATENÇÃO!</strong> Os produtos desse site são restritos à Dentistas com CRO, Clínicas Odontológicas e Estudantes de Graduação em Odontologia.
                     </div>
                     <div class="top-banner__login">
                         <a href="/login/index.html" class="login-link">Olá Visitante, Identifique-se aqui</a>
@@ -37,7 +41,7 @@
                     <!-- Logo -->
                     <div class="header-logo">
                         <a href="/pages/home/index.html" class="logo-link">
-                            <img src= "https://recursos.odontomaster.com.br/i/logo_odonto.png" alt="Odonto Master" class="logo-image">
+                            <img src="https://recursos.odontomaster.com.br/i/logo_odonto.png" alt="Odonto Master" class="logo-image">
                         </a>
                     </div>
 
@@ -103,7 +107,7 @@
                                 <a class="my-account__link" href="#"></a>
                         </div>
 
-                        <!--Carrinho -->
+                        <!-- Carrinho -->
                         <div class="shopping-cart">
                             <button class="shopping-cart__trigger" aria-label="Carrinho de compras">
                                 <i class="fas fa-shopping-cart"></i>
@@ -130,7 +134,7 @@
             </div>
         </div>
 
-        <!-- Barra de navegação -->
+        <!-- Navigation Bar -->
         <nav class="main-navigation" id="main-navigation">
             <div class="container">
                 <div class="main-navigation__content">
@@ -197,235 +201,58 @@
         </nav>
     </header>
 
-    <!-- Breadcrumb -->
+     <!-- Breadcrumb -->
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <ol class="breadcrumb__list">
         <li class="breadcrumb__item">
           <a href="/pages/home/index.html" class="breadcrumb__link">Home</a>
         </li>
         <li class="breadcrumb__item">
-          <span class="breadcrumb__link">Odontoverse</span>
+          <span class="breadcrumb__link">Login</span>
         </li>
       </ol>
     </nav>
 
-    <main class="main-content odontoverse-page">
-        <section class="odontoverse-hero">
-            <div class="container">
-                <h1 class="odontoverse-hero__title">Bem-vindo ao OdontoVerse</h1>
-                <p class="odontoverse-hero__subtitle">O universo de vantagens e produtos com descontos exclusivos para estudantes de odontologia.</p>
-            </div>
-        </section>
-
-        <section class="nav-highlight-carousel">
-
-            <!-- Carrossel de destaques -->
-            <div class="highlight-carousel" aria-roledescription="carousel">
-                <button class="carousel-nav carousel-nav--prev" aria-label="Anterior">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="carousel-viewport">
-                    <ul class="carousel-track">
-                        <li class="carousel-slide">
-                            <img src="https://odontomaster.fbitsstatic.net/img/b/ac1b86e7-2a65-4418-9864-909d163fdb57.png" alt="Kit Academico">
-                        </li>
-                        <li class="carousel-slide">
-                            <img src="https://odontomaster.fbitsstatic.net/img/b/bfc589d2-39d8-46d9-b6d2-9f5aa5cf1408.png" alt="Cupom Estudante">
-                        </li>
-                    </ul>
-                </div>
-                <button class="carousel-nav carousel-nav--next" aria-label="Próximo">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-
-                <div class="carousel-dots" role="tablist" aria-label="Seletores de slide">
-                    <button class="carousel-dot is-active" role="tab" aria-selected="true" aria-label="Slide 1"></button>
-                    <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Slide 2"></button>
+    <!-- Main Content -->
+    <main class="main-content login-page">
+        <div class="container">
+            <div class="login-container">
+                <div class="login-card">
+                    <div class="login-header">
+                        <h1 class="login-title">Acesse sua conta</h1>
+                        <p class="login-subtitle">Informe seus dados para acessar sua conta</p>
+                    </div>
+                    
+                    <form class="login-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="email" class="form-label">E-mail</label>
+                            <input type="email" id="email" name="email" class="form-input" placeholder="exemplo@email.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password" class="form-label">Senha</label>
+                            <input type="password" id="password" name="password" class="form-input" placeholder="••••••••" required>
+                        </div>
+                        
+                        <div class="form-options">
+                            <div class="remember-me">
+                                <input type="checkbox" id="remember" name="remember">
+                                <label for="remember" class="form-checkbox-label">Lembrar-me</label>
+                            </div>
+                            <a href="#" class="forgot-password">Esqueceu sua senha?</a>
+                        </div>
+                        
+                        <button type="submit" class="login-button">Entrar</button>
+                    </form>
+                    
+                    <div class="login-footer">
+                        <p class="login-register-text">
+                            Não tem uma conta? <a href="/cadastro/index.html" class="login-register-link">Cadastre-se</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-            </section>
-
-            <section class="odontomaster-content">
-            <div class="container">
-                <div class="odontoverse-grid">
-
-                    <a href="#" class="promo-card promo-card--vertical">
-                        <img src="https://odontomaster.fbitsstatic.net/img/b/131d46d5-9432-4d0b-b9a7-6f5e6fe6a5c9.png" alt="Brinde estudante 1">
-                    </a>
-
-                    <div class="odontoverse-form-container">
-                        <h2 class="form-title">Valide seu cadastro de estudante</h2>
-                        <p class="form-description">Preencha os dados abaixo para ter acesso aos descontos e benefícios exclusivos do OdontoVerse.</p>
-                        <form id="student-validation-form" class="student-form">
-                            <div class="form-group">
-                                <label for="student-name" class="form-label">Nome Completo</label>
-                                <input type="text" id="student-name" name="name" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="student-email" class="form-label">E-mail</label>
-                                <input type="email" id="student-email" name="email" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="student-university" class="form-label">Universidade</label>
-                                <input type="text" id="student-university" name="university" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="student-client-number" class="form-label">Número Pessoal</label>
-                                <input type="text" id="student-client-number" name="client_number" class="form-input">
-                            </div>
-                            <button type="submit" class="form-submit-button">Validar Cadastro</button>
-                        </form>
-                    </div>
-                    <a href="#" class="promo-card promo-card--left">
-                        <img src="https://odontomaster.fbitsstatic.net/img/b/131d46d5-9432-4d0b-b9a7-6f5e6fe6a5c9.png" alt="Brinde estudante 1">
-                    </a>
-                    </div>
-                </div>
-        </section>
-
-
-
-        <section class="odontoverse-products">
-    <div class="container">
-        <h2 class="section-title">Produtos Exclusivos para Estudantes</h2>
-        <div class="products-grid">
-
-            <article class="product-card" data-product-id="ov-prod1">
-                <div class="product-card__image">
-                    <img src="https://odontomaster.fbitsstatic.net/img/p/kit-de-academico-handpieces-nsk-74328/265159.jpg?w=420&h=420&v=no-change&qs=ignore" alt="Kit Acadêmico NSK">
-                    <div class="product-badge product-badge--discount">17% OFF</div>
-                </div>
-                <div class="product-card__content">
-                    <h3 class="product-title">KIT DE ACADÊMICO HANDPIECES-NSK</h3>
-                    <div class="product-pricing">
-                        <span class="product-price--old">De R$ 3.880,00 por</span>
-                        <span class="product-price--current">R$ 3.200,00</span>
-                        <span class="product-price--installments">10 x sem juros de R$ 320,00</span>
-                    </div>
-                    <button class="product-button">ADICIONAR AO CARRINHO</button>
-                </div>
-            </article>
-
-            <article class="product-card" data-product-id="ov-prod2">
-                 <div class="product-card__image">
-                    <img src="https://odontomaster.fbitsstatic.net/img/p/kit-academico-s4-classic-schuster-74327/265158.jpg?w=420&h=420&v=no-change&qs=ignore" 
-                    alt="Kit Acadêmico S4 Classic">
-                    <div class="product-badge product-badge--discount">3% OFF</div>
-                </div>
-                <div class="product-card__content">
-                    <h3 class="product-title">Kit Acadêmico S4 Classic - Schuster</h3>
-                     <div class="product-pricing">
-                        <span class="product-price--old">De R$ 2.989,00 por</span>
-                        <span class="product-price--current">R$ 2.890,00</span>
-                        <span class="product-price--installments">10 x sem juros de R$ 289,00</span>
-                    </div>
-                    <button class="product-button">ADICIONAR AO CARRINHO</button>
-                </div>
-            </article>
-
-            <article class="product-card" data-product-id="ov-prod3">
-                 <div class="product-card__image">
-                    <img src="https://odontomaster.fbitsstatic.net/img/p/kit-academico-s4-push-lite-schuster-74326/265157.jpg?w=420&h=420&v=no-change&qs=ignore"
-                    alt="Kit Acadêmico S4 Push Lite">
-                    <div class="product-badge product-badge--discount">9% OFF</div>
-                </div>
-                <div class="product-card__content">
-                    <h3 class="product-title">KIT ACADÊMICO S4 PUSH LITE - SCHUSTER</h3>
-                     <div class="product-pricing">
-                        <span class="product-price--old">De R$ 2.620,00 por</span>
-                        <span class="product-price--current">R$ 2.390,00</span>
-                        <span class="product-price--installments">10 x sem juros de R$ 239,00</span>
-                    </div>
-                    <button class="product-button">ADICIONAR AO CARRINHO</button>
-                </div>
-            </article>
-
-            <article class="product-card product-card--highlighted" data-product-id="ov-prod4">
-                 <div class="product-card__image">
-                    <img src="https://odontomaster.fbitsstatic.net/img/p/kit-academico-prime-gnatus-73045/263168-4.jpg?w=420&h=420&v=202502051119&qs=ignore" 
-                    alt="Kit Acadêmico Prime">
-                    <div class="product-badge product-badge--discount">26% OFF</div>
-                </div>
-                <div class="product-card__content">
-                    <h3 class="product-title">Kit Acadêmico Prime - GNATUS</h3>
-                     <div class="product-pricing">
-                        <span class="product-price--old">De R$ 2.717,20 por</span>
-                        <span class="product-price--current">R$ 1.999,00</span>
-                        <span class="product-price--installments">10 x sem juros de R$ 199,90</span>
-                    </div>
-                    <button class="product-button">ADICIONAR AO CARRINHO</button>
-                </div>
-            </article>
-
-            <article class="product-card" data-product-id="ov-prod5">
-                 <div class="product-card__image">
-                    <img src="https://odontomaster.fbitsstatic.net/img/p/kit-invicta-uniruy-american-burrs-73614/264014.jpg?w=420&h=420&v=no-change&qs=ignore" 
-                    alt="Kit Invicta Uniruy">
-                    <div class="product-badge product-badge--discount">1% OFF</div>
-                </div>
-                <div class="product-card__content">
-                    <h3 class="product-title">KIT INVICTA UNIRUY AMERICAN BURRS</h3>
-                     <div class="product-pricing">
-                        <span class="product-price--old">De R$ 332,42 por</span>
-                        <span class="product-price--current">R$ 326,00</span>
-                        <span class="product-price--installments">3 x sem juros de R$ 108,67</span>
-                    </div>
-                    <button class="product-button">ADICIONAR AO CARRINHO</button>
-                </div>
-            </article>
-
-            <article class="product-card" data-product-id="ov-prod6">
-                 <div class="product-card__image">
-                    <img src="https://odontomaster.fbitsstatic.net/img/p/kit-dentistica-unirios-prof-caroline-souza-microdont-74217/264990.jpg?w=420&h=420&v=no-change&qs=ignore" 
-                    alt="Kit Dentística Uniros">
-                </div>
-
-                <div class="product-card__content">
-                    <h3 class="product-title">Kit Dentística Uniros Prof Caroline Souza - MICRODONT</h3>
-                     <div class="product-pricing">
-                        <span class="product-price--current">Por até R$ 212,03</span>
-                        <span class="product-price--installments">2 x sem juros de R$ 106,02</span>
-                    </div>
-                    <button class="product-button">ADICIONAR AO CARRINHO</button>
-                </div>
-            </article>
-
-            <article class="product-card" data-product-id="ov-prod7">
-                 <div class="product-card__image">
-                    <img src="https://odontomaster.fbitsstatic.net/img/p/kit-ortho-gloss-pro-max-american-burrs-73804/264385.jpg?w=420&h=420&v=no-change&qs=ignore" 
-                    alt="Kit Ortho-Gloss Pro Max">
-                </div>
-                <div class="product-card__content">
-                    <h3 class="product-title">Kit Ortho-Gloss Pro Max- AMERICAN BURRS</h3>
-                     <div class="product-pricing">
-                        <span class="product-price--current">Por até R$ 308,22</span>
-                        <span class="product-price--installments">3 x sem juros de R$ 102,74</span>
-                    </div>
-                    <button class="product-button">ADICIONAR AO CARRINHO</button>
-                </div>
-            </article>
-
-            <article class="product-card" data-product-id="ov-prod8">
-                 <div class="product-card__image">
-                    <img src="https://odontomaster.fbitsstatic.net/img/p/kit-de-protese-unef-american-burrs-72964/262964-1.jpg?w=420&h=420&v=no-change&qs=ignore" alt="Kit de Prótese Unef">
-                    <div class="product-badge product-badge--discount">15% OFF</div>
-                </div>
-                <div class="product-card__content">
-                    <h3 class="product-title">KIT DE PROTESE UNEF - AMERICAN BURRS</h3>
-                     <div class="product-pricing">
-                        <span class="product-price--old">De R$ 422,76 por</span>
-                        <span class="product-price--current">R$ 341,90</span>
-                        <span class="product-price--installments">3 x sem juros de R$ 113,97</span>
-                    </div>
-                    <button class="product-button">ADICIONAR AO CARRINHO</button>
-                </div>
-            </article>
-
-        </div>
-    </div>
-</section>
-                
     </main>
 
     <!-- Footer -->
@@ -527,5 +354,6 @@
     </footer>
 
     <script src="/assets/js/script.js"></script>
+    <script src="/pages/login/login.js"></script>
 </body>
 </html>

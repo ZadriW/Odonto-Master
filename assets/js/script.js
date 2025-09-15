@@ -1139,17 +1139,19 @@ class ProductsCarousel {
         this.track.innerHTML = allProducts.map((product, index) => `
             <div class="product-slide" data-index="${index}">
                 <article class="product-card" data-product-id="${product.id}">
-                    <div class="product-card__image">
-                        <img src="${product.image}" alt="${product.name}">
-                        <div class="product-badge product-badge--discount">${product.discount}% OFF</div>
-                    </div>
-                    <div class="product-card__content">
-                        <h3 class="product-title">${product.name}</h3>
-                        <div class="product-pricing">
-                            <span class="product-price--current">${Utils.formatPrice(product.price * 100)}</span>
+                    <a href="/pages/produto/produto.html?category=${encodeURIComponent(product.name)}&brand=${encodeURIComponent('Marca Exemplo')}&id=${product.id}" class="product-link">
+                        <div class="product-card__image">
+                            <img src="${product.image}" alt="${product.name}">
+                            <div class="product-badge product-badge--discount">${product.discount}% OFF</div>
                         </div>
-                        <button class="product-button">ADICIONAR AO CARRINHO</button>
-                    </div>
+                        <div class="product-card__content">
+                            <h3 class="product-title">${product.name}</h3>
+                            <div class="product-pricing">
+                                <span class="product-price--current">${Utils.formatPrice(product.price * 100)}</span>
+                            </div>
+                            <button class="product-button">ADICIONAR AO CARRINHO</button>
+                        </div>
+                    </a>
                 </article>
             </div>
         `).join('');
@@ -1539,6 +1541,28 @@ class OdontoMasterApp {
                 this.modules.notifications.warning('Adicione itens ao carrinho antes de finalizar a compra.');
             }
         };
+        
+        // Função de breadcrumb
+        window.updateBreadcrumb = (items) => {
+            const breadcrumbList = document.querySelector('.breadcrumb__list');
+            if (breadcrumbList) {
+                breadcrumbList.innerHTML = '';
+                
+                // Adiciona o item Home por padrão
+                const homeItem = document.createElement('li');
+                homeItem.className = 'breadcrumb__item';
+                homeItem.innerHTML = '<a href="/pages/home/index.html" class="breadcrumb__link">Home</a>';
+                breadcrumbList.appendChild(homeItem);
+                
+                // Adiciona os itens fornecidos
+                items.forEach((item, index) => {
+                    const separator = document.createElement('li');
+                    separator.className = 'breadcrumb__item';
+                    separator.innerHTML = '<span class="breadcrumb__link">' + item.text + '</span>';
+                    breadcrumbList.appendChild(separator);
+                });
+            }
+        };
     }  
 
     
@@ -1620,6 +1644,24 @@ class OdontoMasterApp {
             });
         });
     }
+}
+
+// ===== FUNÇÃO DE LOGIN =====
+function login() {
+    // Esta função pode ser expandida conforme necessário
+    window.location.href = '/pages/login/login.html';
+}
+
+// ===== FUNÇÃO PARA VISUALIZAR DETALHES DO PRODUTO =====
+function viewProduct(category, brand, id) {
+    // Esta função pode ser expandida para carregar dados dinamicamente
+    // Por enquanto, redireciona para a página de produto com parâmetros
+    const params = new URLSearchParams({
+        category: category,
+        brand: brand,
+        id: id
+    });
+    window.location.href = `/pages/produto/produto.html?${params.toString()}`;
 }
 
 // ===== INICIALIZAÇÃO =====

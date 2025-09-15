@@ -253,17 +253,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (brand === "Dentsply") price = "139,90";
         
         card.innerHTML = `
-            <div class="product-card__image">
-                <img src="https://via.placeholder.com/300x300/e8ece9/333?text=${category.replace(/\s+/g, '+')}" alt="Produto ${index + 1}">
-                <div class="product-badge product-badge--discount">${discount}</div>
-            </div>
-            <div class="product-card__content">
-                <h3 class="product-title">${category} Exemplo ${index + 1} - ${brand}</h3>
-                <div class="product-pricing">
-                    <span class="product-price--current">R$ ${price}</span>
+            <a href="/pages/produto/produto.html?category=${encodeURIComponent(category)}&brand=${encodeURIComponent(brand)}&id=prod${index + 1}" class="product-link">
+                <div class="product-card__image">
+                    <img src="https://via.placeholder.com/300x300/e8ece9/333?text=${category.replace(/\s+/g, '+')}" alt="Produto ${index + 1}">
+                    <div class="product-badge product-badge--discount">${discount}</div>
                 </div>
-                <button class="product-button">ADICIONAR AO CARRINHO</button>
-            </div>
+                <div class="product-card__content">
+                    <h3 class="product-title">${category} Exemplo ${index + 1} - ${brand}</h3>
+                    <div class="product-pricing">
+                        <span class="product-price--current">R$ ${price}</span>
+                    </div>
+                    <button class="product-button">ADICIONAR AO CARRINHO</button>
+                </div>
+            </a>
         `;
     }
     });
@@ -302,8 +304,6 @@ function clearFilters() {
     // Força uma pequena pausa para garantir que o DOM seja atualizado antes de filtrar
     setTimeout(() => {
         // Aplica os filtros (mostrar todos os produtos)
-        if (typeof filterProducts === 'function') {
-            filterProducts();
-        }
+        filterProducts();
     }, 10);
 }

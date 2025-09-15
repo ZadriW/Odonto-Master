@@ -50,6 +50,12 @@
     min-width: 20px;
 }
 
+.breadcrumb__link:hover {
+    color: var(--cor-secundaria);
+    text-decoration: underline;
+    outline: none;
+}
+
 .odontoverse-page {
     background-color: var(--cor-fundo-primaria);
 }

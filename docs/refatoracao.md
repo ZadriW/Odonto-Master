@@ -1,136 +1,74 @@
-# Estrutura Final do Projeto Após Refatoração
+# Refatoração de Templates - Wake Commerce
 
-## Visão Geral
-
-Após a refatoração, o projeto terá uma estrutura mais organizada e modular, com componentes reutilizáveis que podem ser compartilhados entre diferentes páginas e sistemas.
-
-## Estrutura de Diretórios
+## Estrutura Atual do Projeto
 
 ```
 code/
 ├── assets/
 │   ├── css/
-│   │   ├── style.css           # Estilos globais e variáveis
-│   │   └── components/         # Estilos dos componentes
-│   │       ├── header.css
-│   │       ├── footer.css
-│   │       ├── product-card.css
-│   │       ├── filters.css
-│   │       └── carousel.css
+│   │   └── style.css
 │   └── js/
-│       ├── script.js           # JavaScript principal
-│       └── components/         # Componentes JavaScript
-│           ├── header.js
-│           ├── footer.js
-│           ├── product-card.js
-│           ├── filters.js
-│           └── carousel.js
-├── components/                 # Componentes HTML reutilizáveis
-│   ├── header.html
-│   ├── footer.html
-│   ├── product-card.html
-│   ├── filters.html
-│   └── carousel.html
+│       └── script.js
 ├── pages/
 │   ├── home/
 │   │   └── index.html
 │   ├── cirurgia/
-│   │   ├── index.html
+│   │   ├── cirurgia.html
 │   │   ├── cirurgia.css
 │   │   └── cirurgia.js
 │   ├── dentistica/
-│   │   ├── index.html
+│   │   ├── dentistica.html
 │   │   ├── dentistica.css
 │   │   └── dentistica.js
 │   └── odontoverse/
-│       └── index.html
-├── templates/                  # Templates da Wake Commerce (refatorados)
-│   ├── header.html
-│   ├── footer.html
-│   ├── product-grid.html
-│   ├── product-card.html
-│   └── category-page.html
-└── docs/
-    ├── refatoracao.md
-    ├── guia-refatoracao.md
-    └── correcoes-mobile.md
+│       └── odontoverse.html
 ```
 
-## Componentes Reutilizáveis
+## Componentes Essenciais Identificados
 
-### 1. Header (`components/header.html`)
-Componente unificado que pode ser usado em todas as páginas, tanto do sistema atual quanto dos templates da Wake.
+### 1. Header Principal
+- Logo
+- Barra de busca
+- Menu de navegação
+- Carrinho de compras
+- Área de login
 
-### 2. Footer (`components/footer.html`)
-Componente de rodapé padronizado com todas as seções necessárias.
+### 2. Sistema de Filtros
+- Filtros por categoria
+- Filtros por marca
+- Filtros por preço
 
-### 3. Product Card (`components/product-card.html`)
-Componente de card de produto reutilizável com variantes para diferentes contextos.
+### 3. Grid de Produtos
+- Cards de produtos
+- Sistema de paginação/carrossel
 
-### 4. Filters (`components/filters.html`)
-Sistema de filtros modular que pode ser configurado para diferentes categorias.
+### 4. Footer
+- Links institucionais
+- Informações de contato
+- Redes sociais
+- Formas de pagamento
 
-### 5. Carousel (`components/carousel.html`)
-Componente de carrossel genérico que pode ser usado para destaques, produtos, etc.
+## Estratégia de Refatoração
 
-## Benefícios da Refatoração
+### 1. Consolidar CSS
+- Manter variáveis CSS globais no style.css
+- Criar componentes reutilizáveis
+- Remover duplicações
 
-### 1. Consistência
-- Design unificado em toda a plataforma
-- Comportamento consistente dos componentes
-- Manutenção facilitada
+### 2. Modularizar JavaScript
+- Criar módulos para cada funcionalidade
+- Implementar sistema de eventos
+- Padronizar componentes
 
-### 2. Reutilização
-- Componentes podem ser compartilhados entre sistemas
-- Redução de código duplicado
-- Desenvolvimento mais rápido
-
-### 3. Manutenibilidade
-- Estrutura organizada e clara
-- Componentes independentes
-- Facilidade de atualização
-
-### 4. Performance
-- Código otimizado
-- Carregamento mais rápido
-- Menos requisições HTTP
-
-## Processo de Integração
-
-### 1. Mapeamento de Componentes
-- Identificar componentes equivalentes entre os sistemas
-- Mapear diferenças de funcionalidade
-- Priorizar componentes críticos
-
-### 2. Criação de Componentes Unificados
-- Desenvolver versões padronizadas dos componentes
-- Garantir compatibilidade com ambos os sistemas
-- Testar funcionalidades em diferentes contextos
-
-### 3. Integração Gradual
-- Substituir componentes da WakeCommerce um a um
-- Manter funcionalidades existentes durante a transição
-- Testar cada etapa da migração
-
-### 4. Validação Final
-- Verificar todas as funcionalidades
-- Testar em diferentes dispositivos e navegadores
-- Garantir performance adequada
-
-## Correções de Funcionalidades Mobile
-
-### 1. Rolagem Exclusiva dos Filtros
-- Corrigida a rolagem dentro da sidebar de filtros para não afetar toda a página
-- Adicionada propriedade CSS `overscroll-behavior: contain;` para conter a rolagem
-
-### 2. Funcionalidade do Botão "Limpar Filtros"
-- Implementado evento personalizado para resetar corretamente os filtros
-- Adicionada funcionalidade para limpar todos os checkboxes e sliders de preço
+### 3. Otimizar HTML
+- Criar templates reutilizáveis
+- Implementar boas práticas de semântica
+- Garantir acessibilidade
 
 ## Próximos Passos
 
-1. Receber os templates da Wake Commerce
-2. Analisar diferenças de estrutura e funcionalidade
-3. Criar plano de migração detalhado
-4. Implementar refatoração incremental
-5. Testar e validar integração
+1. Analisar templates da Wake Commerce
+2. Identificar componentes que devem ser mantidos
+3. Mapear diferenças entre os sistemas
+4. Criar plano de migração
+5. Implementar fusão incremental

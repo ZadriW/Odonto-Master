@@ -1,5 +1,6 @@
 @import url(/assets/css/style.css);
 
+
 .category-page {
     background-color: var(--cor-fundo-primaria);
     padding: var(--spacing-xl) 0; /* Reduce padding to move content up */

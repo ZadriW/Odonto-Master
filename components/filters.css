@@ -20,11 +20,6 @@
   width: 6px;
 }
 
-/* Custom scrollbar for filters */
-.filters-sidebar::-webkit-scrollbar {
-  width: 6px;
-}
-
 .filters-sidebar::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 3px;
@@ -37,11 +32,6 @@
 
 .filters-sidebar::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
-}
-
-/* Ensure scroll is contained within the sidebar */
-.filters-sidebar {
-  overscroll-behavior: contain;
 }
 
 .filters-title {
@@ -234,24 +224,4 @@
 .price-slider:focus,
 .product-button:focus {
   outline: none;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .filters-sidebar {
-    padding: var(--spacing-lg);
-    top: 60px;
-  }
-  
-  .filters-title {
-    font-size: var(--font-size-lg);
-  }
-  
-  .filter-group {
-    margin-bottom: var(--spacing-lg);
-  }
-  
-  .filter-group__title {
-    font-size: var(--font-size-base);
-  }
 }
