@@ -1,18 +1,36 @@
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded and parsed');
     // Initialize product spot functionality
+    console.log('Initializing product gallery...');
     initProductGallery();
+    console.log('Initializing variations...');
     initVariations();
+    console.log('Initializing quantity controls...');
     initQuantityControls();
+    console.log('Initializing tabs...');
     initTabs();
+    console.log('Initializing review form...');
+    initReviewForm();
+    console.log('Initializing shipping calculator...');
     initShippingCalculator();
+    console.log('Initializing add to cart...');
     initAddToCart();
+    console.log('Initializing buy now...');
     initBuyNow();
-
-    // Load related products
-    loadRelatedProducts();
     
+    // Initialize cart count
+    initializeCartCount();
+
     // Load product data from URL parameters
+    console.log('Loading product from URL...');
     loadProductFromUrl();
+    console.log('All initialization functions called');
+    
+    // Add a simple test function to window for debugging
+    window.testTabSwitch = function(tabId) {
+        console.log('Testing tab switch to:', tabId);
+        switchTab(tabId);
+    };
 });
 
 // ===== PRODUCT DATA LOADING FROM URL =====
@@ -288,22 +306,136 @@ function initQuantityControls() {
 
 // ===== PRODUCT TABS FUNCTIONALITY =====
 function initTabs() {
+    console.log('Initializing tabs...');
+    
+    // Get individual tab buttons
+    const descriptionTab = document.querySelector('.tab-button[data-tab="description"]');
+    const specificationsTab = document.querySelector('.tab-button[data-tab="specifications"]');
+    const reviewsTab = document.querySelector('.tab-button[data-tab="reviews"]');
+    
+    // Get tab panes
+    const descriptionPane = document.getElementById('description');
+    const specificationsPane = document.getElementById('specifications');
+    const reviewsPane = document.getElementById('reviews');
+    
+    console.log('Found tab buttons:', {descriptionTab, specificationsTab, reviewsTab});
+    console.log('Found tab panes:', {descriptionPane, specificationsPane, reviewsPane});
+    
+    // Attach event listeners to each tab button
+    if (descriptionTab && descriptionPane) {
+        descriptionTab.addEventListener('click', function(e) {
+            console.log('Description tab clicked');
+            e.preventDefault();
+            activateTab('description');
+        });
+    }
+    
+    if (specificationsTab && specificationsPane) {
+        specificationsTab.addEventListener('click', function(e) {
+            console.log('Specifications tab clicked');
+            e.preventDefault();
+            activateTab('specifications');
+        });
+    }
+    
+    if (reviewsTab && reviewsPane) {
+        reviewsTab.addEventListener('click', function(e) {
+            console.log('Reviews tab clicked');
+            e.preventDefault();
+            activateTab('reviews');
+        });
+    }
+    
+    console.log('Tabs initialized');
+}
+
+function activateTab(tabId) {
+    console.log('Activating tab:', tabId);
+    
+    // Get all tab buttons and panes
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanes = document.querySelectorAll('.tab-pane');
+    
+    // Remove active class from all buttons and panes
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabPanes.forEach(pane => pane.classList.remove('active'));
+    
+    // Add active class to clicked button and corresponding pane
+    const clickedButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+    const targetPane = document.getElementById(tabId);
+    
+    if (clickedButton && targetPane) {
+        clickedButton.classList.add('active');
+        targetPane.classList.add('active');
+        console.log('Activated tab:', tabId);
+    } else {
+        console.error('Could not activate tab:', tabId);
+    }
+}
 
-    tabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const tabId = this.dataset.tab;
-
-            // Remove active class from all buttons and panes
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabPanes.forEach(pane => pane.classList.remove('active'));
-
-            // Add active class to clicked button and corresponding pane
-            this.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
+// ===== REVIEW FORM FUNCTIONALITY =====
+function initReviewForm() {
+    const reviewForm = document.getElementById('reviewForm');
+    
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('reviewName').value;
+            const email = document.getElementById('reviewEmail').value;
+            const rating = document.querySelector('input[name="reviewRating"]:checked');
+            const title = document.getElementById('reviewTitle').value;
+            const comment = document.getElementById('reviewComment').value;
+            
+            // Validate form
+            if (!name || !email || !rating || !title || !comment) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Por favor, insira um e-mail válido.');
+                return;
+            }
+            
+            // Simulate review submission
+            submitReview(name, email, rating.value, title, comment);
         });
-    });
+    }
+}
+
+function submitReview(name, email, rating, title, comment) {
+    // In a real implementation, this would send the review to a server
+    // For now, we'll just show a success message
+    
+    // Show success message
+    alert('Avaliação enviada com sucesso! Obrigado pela sua contribuição.');
+    
+    // Reset form
+    document.getElementById('reviewForm').reset();
+}
+
+function generateStarRating(rating) {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+            stars += '<i class="fas fa-star rated"></i>';
+        } else {
+            stars += '<i class="fas fa-star"></i>';
+        }
+    }
+    return stars;
+}
+
+function getCurrentDate() {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = now.getFullYear();
+    return `${day}/${month}/${year}`;
 }
 
 // ===== SHIPPING CALCULATOR =====
@@ -386,24 +518,45 @@ function initAddToCart() {
     
     if (addToCartBtn) {
         addToCartBtn.addEventListener('click', function() {
-            const quantity = document.getElementById('quantity').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const productName = document.getElementById('productDetailTitle').textContent;
+            const priceElement = document.querySelector('.price-current .price-value');
+            const priceText = priceElement ? priceElement.textContent : '0,00';
+            const price = parseFloat(priceText.replace('R$ ', '').replace(',', '.')) * 100; // Convert to cents
+            
+            // Get product ID from URL or generate one
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id') || 'prod-' + Date.now();
+            
+            // Get product image
+            const mainImage = document.getElementById('mainImage');
+            const imageUrl = mainImage ? mainImage.src : 'https://placehold.co/100x100';
+            
+            // Create product object
+            const product = {
+                id: productId,
+                name: productName,
+                price: price,
+                quantity: quantity,
+                image: imageUrl,
+                sku: 'SKU-' + productId.substring(0, 8)
+            };
             
             // Add loading state
             const originalText = this.innerHTML;
             this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adicionando...';
             this.disabled = true;
             
-            // Simulate adding to cart
+            // Add to cart
+            addToCart(product);
+            
+            // Restore button after a short delay
             setTimeout(() => {
-                // Restore button
                 this.innerHTML = originalText;
                 this.disabled = false;
                 
                 // Show success feedback
                 showNotification('Produto adicionado ao carrinho!', 'success');
-                
-                // Update cart count (in a real implementation)
-                updateCartCount(1);
             }, 1000);
         });
     }
@@ -415,12 +568,37 @@ function initBuyNow() {
     
     if (buyNowBtn) {
         buyNowBtn.addEventListener('click', function() {
-            const quantity = document.getElementById('quantity').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const productName = document.getElementById('productDetailTitle').textContent;
+            const priceElement = document.querySelector('.price-current .price-value');
+            const priceText = priceElement ? priceElement.textContent : '0,00';
+            const price = parseFloat(priceText.replace('R$ ', '').replace(',', '.')) * 100; // Convert to cents
+            
+            // Get product ID from URL or generate one
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id') || 'prod-' + Date.now();
+            
+            // Get product image
+            const mainImage = document.getElementById('mainImage');
+            const imageUrl = mainImage ? mainImage.src : 'https://placehold.co/100x100';
+            
+            // Create product object
+            const product = {
+                id: productId,
+                name: productName,
+                price: price,
+                quantity: quantity,
+                image: imageUrl,
+                sku: 'SKU-' + productId.substring(0, 8)
+            };
             
             // Add loading state
             const originalText = this.innerHTML;
             this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
             this.disabled = true;
+            
+            // Add to cart first
+            addToCart(product);
             
             // Simulate checkout process
             setTimeout(() => {
@@ -428,109 +606,14 @@ function initBuyNow() {
                 this.innerHTML = originalText;
                 this.disabled = false;
                 
-                // Redirect to checkout (in a real implementation)
-                alert('Redirecionando para o checkout...');
-                // window.location.href = '/checkout';
+                // Redirect to checkout
+                window.location.href = '/pages/checkout/index.html';
             }, 1500);
         });
     }
 }
 
 // ===== RELATED PRODUCTS =====
-function initRelatedProducts() {
-    // Initialize carousel for related products
-    const container = document.querySelector('.related-products-carousel');
-    const prevBtn = container ? container.querySelector('.carousel-nav--prev') : null;
-    const nextBtn = container ? container.querySelector('.carousel-nav--next') : null;
-    const track = document.getElementById('relatedProductsTrack');
-    const dotsContainer = document.getElementById('relatedProductsDots');
-    
-    if (prevBtn && nextBtn && track) {
-        let currentIndex = 0;
-        const slides = track.querySelectorAll('.product-slide');
-        const totalSlides = slides.length;
-        const itemsPerView = getItemsPerView();
-        const totalGroups = Math.ceil(totalSlides / itemsPerView);
-        
-        // Create dots
-        if (dotsContainer) {
-            dotsContainer.innerHTML = Array.from({ length: totalGroups }, (_, i) => `
-                <button class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}" aria-label="Ir para grupo ${i + 1}"></button>
-            `).join('');
-        }
-        
-        // Update button states
-        function updateButtons() {
-            prevBtn.disabled = currentIndex === 0;
-            nextBtn.disabled = currentIndex >= totalSlides - itemsPerView;
-        }
-        
-        // Update dots
-        function updateDots() {
-            if (dotsContainer) {
-                const dots = dotsContainer.querySelectorAll('.carousel-dot');
-                const currentGroup = Math.floor(currentIndex / itemsPerView);
-                dots.forEach((dot, index) => {
-                    if (index === currentGroup) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
-                });
-            }
-        }
-        
-        prevBtn.addEventListener('click', function() {
-            if (currentIndex > 0) {
-                currentIndex = Math.max(0, currentIndex - itemsPerView);
-                updateCarousel();
-            }
-        });
-        
-        nextBtn.addEventListener('click', function() {
-            if (currentIndex < totalSlides - itemsPerView) {
-                currentIndex = Math.min(totalSlides - itemsPerView, currentIndex + itemsPerView);
-                updateCarousel();
-            }
-        });
-        
-        // Dot click events
-        if (dotsContainer) {
-            dotsContainer.addEventListener('click', function(e) {
-                if (e.target.classList.contains('carousel-dot')) {
-                    const index = parseInt(e.target.dataset.index);
-                    currentIndex = index * itemsPerView;
-                    updateCarousel();
-                }
-            });
-        }
-        
-        function updateCarousel() {
-            const slideWidth = 100 / itemsPerView;
-            const offset = -currentIndex * (slideWidth / itemsPerView);
-            track.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.6, 0.2, 1)';
-            track.style.transform = `translateX(${offset}%)`;
-            
-            updateButtons();
-            updateDots();
-        }
-        
-        // Initialize
-        updateButtons();
-        updateDots();
-        
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            const newItemsPerView = getItemsPerView();
-            if (newItemsPerView !== itemsPerView) {
-                // Reinitialize carousel with new items per view
-                currentIndex = 0;
-                updateCarousel();
-            }
-        });
-    }
-}
-
 function getItemsPerView() {
     const width = window.innerWidth;
     if (width <= 480) return 1;
@@ -539,110 +622,39 @@ function getItemsPerView() {
     return 4;
 }
 
-function loadRelatedProducts() {
-    const track = document.getElementById('relatedProductsTrack');
+// Helper functions for extracting category and brand
+function extractCategoryFromTitle(title) {
+    // This is a simplified approach - in a real implementation, 
+    // this would come from the product data itself
+    const categories = [
+        'Clareamento Dental', 'Resina Composta', 'Anestésico', 'Broca', 
+        'Fotopolimerizador', 'Cimento', 'Kit Endodontia', 'Ácido Fosfórico',
+        'Autoclave', 'Cadeira Odontológica', 'Kit', 'Sugador'
+    ];
     
-    if (track) {
-        // Mock related products data
-        const relatedProducts = [
-            {
-                id: 'prod1',
-                name: 'Kit Clareamento Dental Whiteness HP',
-                price: 189.90,
-                discount: 27,
-                image: 'https://via.placeholder.com/300x300/1c5787/ffffff?text=Relacionado+1'
-            },
-            {
-                id: 'prod2',
-                name: 'Resina Composta Z350 XT',
-                price: 245.90,
-                discount: 15,
-                image: 'https://via.placeholder.com/300x300/134a6b/ffffff?text=Relacionado+2'
-            },
-            {
-                id: 'prod3',
-                name: 'Anestésico Mepivacaína 3%',
-                price: 89.90,
-                discount: 30,
-                image: 'https://via.placeholder.com/300x300/4CAF50/ffffff?text=Relacionado+3'
-            },
-            {
-                id: 'prod4',
-                name: 'Broca Carbide FG 245',
-                price: 34.90,
-                discount: 10,
-                image: 'https://via.placeholder.com/300x300/CA69F5/ffffff?text=Relacionado+4'
-            },
-            {
-                id: 'prod5',
-                name: 'Fotopolimerizador LED Radii Plus',
-                price: 899.00,
-                discount: 20,
-                image: 'https://via.placeholder.com/300x300/dc3545/ffffff?text=Relacionado+5'
-            },
-            {
-                id: 'prod6',
-                name: 'Cimento de Ionômero de Vidro',
-                price: 56.90,
-                discount: 18,
-                image: 'https://via.placeholder.com/300x300/ffc107/ffffff?text=Relacionado+6'
-            },
-            {
-                id: 'prod7',
-                name: 'Kit Endodontia Rotatória Avançado',
-                price: 1450.00,
-                discount: 25,
-                image: 'https://via.placeholder.com/300x300/17a2b8/ffffff?text=Relacionado+7'
-            },
-            {
-                id: 'prod8',
-                name: 'Ácido Fosfórico 37% Gel',
-                price: 22.90,
-                discount: 12,
-                image: 'https://via.placeholder.com/300x300/28a745/ffffff?text=Relacionado+8'
-            }
-        ];
-        
-        // Render related products
-        track.innerHTML = relatedProducts.map(product => `
-            <div class="product-slide">
-                <article class="product-card" data-product-id="${product.id}">
-                    <div class="product-card__image">
-                        <img src="${product.image}" alt="${product.name}">
-                        <div class="product-badge product-badge--discount">${product.discount}% OFF</div>
-                    </div>
-                    <div class="product-card__content">
-                        <h3 class="product-title">${product.name}</h3>
-                        <div class="product-pricing">
-                            <span class="product-price--current">${formatPrice(product.price * 100)}</span>
-                        </div>
-                        <button class="product-button">ADICIONAR AO CARRINHO</button>
-                    </div>
-                </article>
-            </div>
-        `).join('');
-        
-        // Add event listeners to related product buttons
-        const productButtons = track.querySelectorAll('.product-button');
-        productButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const productCard = this.closest('.product-card');
-                const productId = productCard.dataset.productId;
-                const productName = productCard.querySelector('.product-title').textContent;
-                const priceText = productCard.querySelector('.product-price--current').textContent;
-                const price = parseFloat(priceText.replace(/[^\d,]/g, '').replace(',', '.'));
-                
-                // Add to cart
-                addToCart(productId, productName, price, 1);
-            });
-        });
-        
-        // Small delay to ensure DOM is fully updated before initializing carousel
-        setTimeout(() => {
-            // Initialize the carousel after products are loaded
-            initRelatedProducts();
-        }, 100);
+    for (const category of categories) {
+        if (title.toLowerCase().includes(category.toLowerCase())) {
+            return category;
+        }
     }
+    
+    // Default fallback
+    return 'Produto';
+}
+
+function extractBrandFromTitle(title) {
+    // This is a simplified approach - in a real implementation,
+    // this would come from the product data itself
+    const brands = ['Whiteness', 'Z350', 'Mepivacaína', 'Carbide', 'Radii', 'FGM', 'Ultradent', 'Angelus', 'Dentsply', 'Kavo', 'Vitale'];
+    
+    for (const brand of brands) {
+        if (title.toLowerCase().includes(brand.toLowerCase())) {
+            return brand;
+        }
+    }
+    
+    // Default fallback
+    return 'Marca';
 }
 
 // ===== UTILITY FUNCTIONS =====
@@ -692,19 +704,68 @@ function showNotification(message, type = 'info') {
     });
 }
 
-function updateCartCount(increment) {
-    const cartCountElement = document.querySelector('.shopping-cart__count');
-    if (cartCountElement) {
-        let currentCount = parseInt(cartCountElement.textContent) || 0;
-        cartCountElement.textContent = currentCount + increment;
+function initializeCartCount() {
+    try {
+        const cartData = localStorage.getItem('odonto_cart');
+        if (cartData) {
+            const cart = JSON.parse(cartData);
+            const totalCount = cart.reduce((total, item) => total + item.quantity, 0);
+            updateCartCount(totalCount);
+        }
+    } catch (error) {
+        console.error('Error initializing cart count:', error);
     }
 }
 
-function addToCart(productId, productName, price, quantity) {
-    // This would typically make an API call to add the product to the cart
-    // For now, we'll just show a notification
-    showNotification(`${productName} adicionado ao carrinho!`, 'success');
-    updateCartCount(quantity);
+function updateCartCount(count) {
+    const cartCountElement = document.querySelector('.shopping-cart__count');
+    if (cartCountElement) {
+        cartCountElement.textContent = count;
+    }
+    
+    // Also update the cart dropdown if it exists
+    const cartDropdown = document.querySelector('.shopping-cart__dropdown');
+    if (cartDropdown) {
+        // This would typically update the dropdown content
+        // For now, we'll just log the update
+        console.log('Cart updated with', count, 'items');
+    }
+}
+
+function addToCart(product) {
+    try {
+        // Get existing cart from localStorage
+        let cart = [];
+        const cartData = localStorage.getItem('odonto_cart');
+        if (cartData) {
+            cart = JSON.parse(cartData);
+        }
+        
+        // Check if product already exists in cart
+        const existingItemIndex = cart.findIndex(item => item.id === product.id);
+        
+        if (existingItemIndex !== -1) {
+            // If item exists, increase quantity
+            cart[existingItemIndex].quantity += product.quantity;
+        } else {
+            // If item doesn't exist, add it to cart
+            cart.push(product);
+        }
+        
+        // Save updated cart to localStorage
+        localStorage.setItem('odonto_cart', JSON.stringify(cart));
+        
+        // Update cart count in UI
+        updateCartCount(cart.reduce((total, item) => total + item.quantity, 0));
+        
+        // Dispatch event to notify other parts of the app
+        window.dispatchEvent(new CustomEvent('cartUpdated', { detail: cart }));
+        
+        return true;
+    } catch (error) {
+        console.error('Error adding to cart:', error);
+        return false;
+    }
 }
     }
 }

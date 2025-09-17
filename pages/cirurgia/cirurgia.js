@@ -76,21 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
         clearFiltersBtn.addEventListener('click', clearFilters);
     }
 
-    // Implementa a funcionalidade dos checkboxes de categoria
-    document.querySelectorAll('#category-filters input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', filterProducts);
-    });
-
-    // Implementa a funcionalidade dos checkboxes de marca
-    document.querySelectorAll('#brand-filters input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', filterProducts);
-    });
-
     // Função para inicializar os filtros após o carregamento completo da página
     function initializeFilters() {
         const checkboxes = filtersSidebar.querySelectorAll('input[type="checkbox"]');
-        const productCards = Array.from(productsGrid.querySelectorAll('.product-card'));
-        
+        const productCards = Array.from(productsGrid.getElementsByClassName('product-card'));
+
         // Adiciona um listener de evento para cada checkbox
         checkboxes.forEach((checkbox) => {
             checkbox.addEventListener('change', filterProducts);
@@ -104,23 +94,22 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(initializeFilters, 100);
 
     function filterProducts() {
-        const selectedCategories = getSelectedCategories();
-        const selectedBrands = getSelectedBrands();
+        const selectedFilters = getSelectedFilters();
         const priceRange = getPriceRange();
         let visibleProductsCount = 0;
 
-        const productCards = Array.from(productsGrid.querySelectorAll('.product-card'));
+        const productCards = Array.from(productsGrid.getElementsByClassName('product-card'));
         
         // Se nenhum filtro estiver selecionado e o range de preço estiver no padrão, mostrar todos os produtos
-        const showAll = selectedCategories.length === 0 && 
-                       selectedBrands.length === 0 && 
+        const showAll = selectedFilters.categories.length === 0 && 
+                       selectedFilters.brands.length === 0 && 
                        priceRange.min === 0 && 
                        priceRange.max === 500;
         
         if (showAll) {
             // Mostrar todos os produtos
             productCards.forEach(card => {
-                card.style.display = 'block';
+                card.classList.remove('hidden');
             });
             visibleProductsCount = productCards.length;
         } else {
@@ -128,21 +117,23 @@ document.addEventListener('DOMContentLoaded', () => {
             productCards.forEach((card, index) => {
                 const cardCategory = card.dataset.category || '';
                 const cardBrand = card.dataset.brand || '';
+                const priceText = card.querySelector('.product-price--current')?.textContent || '';
+                const price = priceText ? parseFloat(priceText.replace('R$ ', '').replace(',', '.')) : 0;
                 
                 // Verificar se o produto corresponde aos filtros selecionados
                 // Um produto é mostrado se:
                 // 1. Nenhuma categoria está selecionada OU a categoria do produto está selecionada
                 // 2. Nenhuma marca está selecionada OU a marca do produto está selecionada
                 // 3. O preço do produto está dentro do range selecionado
-                const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(cardCategory);
-                const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(cardBrand);
-                // Note: This simplified version doesn't filter by price since we don't have price data in the HTML
+                const categoryMatch = selectedFilters.categories.length === 0 || selectedFilters.categories.includes(cardCategory);
+                const brandMatch = selectedFilters.brands.length === 0 || selectedFilters.brands.includes(cardBrand);
+                const priceMatch = price >= priceRange.min && price <= priceRange.max;
 
-                if (categoryMatch && brandMatch) {
-                    card.style.display = 'block';
+                if (categoryMatch && brandMatch && priceMatch) {
+                    card.classList.remove('hidden');
                     visibleProductsCount++;
                 } else {
-                    card.style.display = 'none';
+                    card.classList.add('hidden');
                 }
             });
         }
@@ -159,20 +150,24 @@ document.addEventListener('DOMContentLoaded', () => {
         return visibleProductsCount;
     }
 
-    function getSelectedCategories() {
+    function getSelectedFilters() {
         const selectedCategories = [];
+        const selectedBrands = [];
+
+        // Itera sobre os checkboxes de categoria
         document.querySelectorAll('#category-filters input:checked').forEach(input => {
             selectedCategories.push(input.value);
         });
-        return selectedCategories;
-    }
 
-    function getSelectedBrands() {
-        const selectedBrands = [];
+        // Itera sobre os checkboxes de marca
         document.querySelectorAll('#brand-filters input:checked').forEach(input => {
             selectedBrands.push(input.value);
         });
-        return selectedBrands;
+
+        return {
+            categories: selectedCategories,
+            brands: selectedBrands
+        };
     }
     
     function getPriceRange() {
@@ -199,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const productCard = e.target.closest('.product-card');
             if (productCard) {
-                const productId = `product-${Date.now()}`;
+                const productId = `${productCard.dataset.category}-${productCard.dataset.brand}-${Date.now()}`;
                 const productName = productCard.querySelector('.product-title').textContent;
                 const priceText = productCard.querySelector('.product-price--current').textContent;
                 const price = parseFloat(priceText.replace('R$ ', '').replace(',', '.')) * 100; // Convert to cents
@@ -220,12 +215,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     e.target.classList.remove('added');
                     e.target.innerHTML = 'ADICIONAR AO CARRINHO';
                 }, 2000);
+                
+                // Prevent the click from propagating to the link
+                e.preventDefault();
+                e.stopPropagation();
             }
         }
     });
     
     // Preenche os cards de produto com conteúdo de exemplo
-    const productCards = Array.from(productsGrid.querySelectorAll('.product-card'));
+    const productCards = Array.from(productsGrid.getElementsByClassName('product-card'));
     productCards.forEach((card, index) => {
     const category = card.dataset.category;
     const brand = card.dataset.brand;
@@ -262,9 +261,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Create a unique product ID
         const productId = `prod-${index + 1}`;
+        const urlCategory = encodeURIComponent(category);
+        const urlBrand = encodeURIComponent(brand);
         
         card.innerHTML = `
-            <a href="/pages/produto/produto.html?category=${encodeURIComponent(category)}&brand=${encodeURIComponent(brand)}&id=${productId}" class="product-link">
+            <a href="/pages/produto/produto.html?category=${urlCategory}&brand=${urlBrand}&id=${productId}" class="product-card-link">
                 <div class="product-card__image">
                     <img src="https://via.placeholder.com/300x300/e8ece9/333?text=${category.replace(/\s+/g, '+')}" alt="${category} - ${brand}">
                     <div class="product-badge product-badge--discount">${discount}</div>
@@ -283,39 +284,49 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Inicializa os filtros após preencher os product cards
     setTimeout(initializeFilters, 100);
+});
 
-    // Função para limpar todos os filtros
-    function clearFilters() {
-        // Limpa todos os checkboxes de categoria
-        document.querySelectorAll('#category-filters input[type="checkbox"]').forEach(checkbox => {
-            checkbox.checked = false;
-        });
+function clearFilters() {
+    // Limpa todos os checkboxes de categoria
+    const categoryCheckboxes = document.querySelectorAll('#category-filters input[type="checkbox"]');
+    const brandCheckboxes = document.querySelectorAll('#brand-filters input[type="checkbox"]');
+    
+    categoryCheckboxes.forEach(checkbox => {
+        checkbox.checked = false;
+        // Trigger the change event manually to ensure filterProducts is called
+        checkbox.dispatchEvent(new Event('change'));
+    });
+    
+    // Limpa todos os checkboxes de marca
+    brandCheckboxes.forEach(checkbox => {
+        checkbox.checked = false;
+        // Trigger the change event manually to ensure filterProducts is called
+        checkbox.dispatchEvent(new Event('change'));
+    });
+    
+    // Reseta os sliders de preço para os valores padrão
+    const priceSliderMin = document.getElementById('price-slider-min');
+    const priceSliderMax = document.getElementById('price-slider-max');
+    const priceMinDisplay = document.getElementById('price-min-display');
+    const priceMaxDisplay = document.getElementById('price-max-display');
+    
+    if (priceSliderMin && priceSliderMax) {
+        priceSliderMin.value = 0;
+        priceSliderMax.value = 500;
         
-        // Limpa todos os checkboxes de marca
-        document.querySelectorAll('#brand-filters input[type="checkbox"]').forEach(checkbox => {
-            checkbox.checked = false;
-        });
-        
-        // Reseta os sliders de preço para os valores padrão
-        const priceSliderMin = document.getElementById('price-slider-min');
-        const priceSliderMax = document.getElementById('price-slider-max');
-        const priceMinDisplay = document.getElementById('price-min-display');
-        const priceMaxDisplay = document.getElementById('price-max-display');
-        
-        if (priceSliderMin && priceSliderMax) {
-            priceSliderMin.value = 0;
-            priceSliderMax.value = 500;
-            
-            if (priceMinDisplay && priceMaxDisplay) {
-                priceMinDisplay.textContent = 'R$ 0';
-                priceMaxDisplay.textContent = 'R$ 500';
-            }
+        if (priceMinDisplay && priceMaxDisplay) {
+            priceMinDisplay.textContent = 'R$ 0';
+            priceMaxDisplay.textContent = 'R$ 500';
         }
         
-        // Força uma pequena pausa para garantir que o DOM seja atualizado antes de filtrar
-        setTimeout(() => {
-            // Aplica os filtros (mostrar todos os produtos)
-            filterProducts();
-        }, 10);
+        // Trigger the input event manually to ensure filterProducts is called
+        priceSliderMin.dispatchEvent(new Event('input'));
+        priceSliderMax.dispatchEvent(new Event('input'));
     }
-});
+    
+    // Força uma pequena pausa para garantir que o DOM seja atualizado antes de filtrar
+    setTimeout(() => {
+        // Aplica os filtros (mostrar todos os produtos)
+        filterProducts();
+    }, 100); // Increase the timeout to ensure all changes are processed
+}

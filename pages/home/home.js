@@ -14,19 +14,36 @@ function initHomepage() {
 function initCarouselProductLinks() {
     // Add click event listeners to all product cards in carousels
     document.addEventListener('click', function(e) {
-        // Check if the clicked element is within a product card in a carousel
-        const productCard = e.target.closest('.product-card');
-        if (productCard) {
+        // Check if the clicked element is the product button within a product card in a carousel
+        const productButton = e.target.closest('.product-button');
+        if (productButton) {
             // Prevent default behavior for links within the product card
             e.preventDefault();
+            e.stopPropagation();
             
             // Get product information
-            const productId = productCard.dataset.productId;
-            const productTitle = productCard.querySelector('.product-title')?.textContent || 'Produto';
-            
-            // Redirect to product spot page
-            redirectToProductSpot(productId, productTitle);
+            const productCard = productButton.closest('.product-card');
+            if (productCard) {
+                const productId = productCard.dataset.productId;
+                const productTitle = productCard.querySelector('.product-title')?.textContent || 'Produto';
+                const priceText = productCard.querySelector('.product-price--current')?.textContent || '0';
+                const price = parseFloat(priceText.replace(/[^\d,]/g, '').replace(',', '.')) * 100 || 0;
+                
+                // Add to cart
+                addToCart(productId, productTitle, price, 1);
+                
+                // Visual feedback
+                productButton.classList.add('added');
+                productButton.innerHTML = '<i class="fas fa-check"></i> Adicionado';
+                
+                setTimeout(() => {
+                    productButton.classList.remove('added');
+                    productButton.innerHTML = 'ADICIONAR AO CARRINHO';
+                }, 2000);
+            }
         }
+        // For product card clicks (not on the button), let the default behavior happen
+        // which will follow the link to the product page
     });
     
     Logger.info('Links de produtos nos carrosséis inicializados');

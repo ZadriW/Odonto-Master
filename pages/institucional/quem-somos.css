@@ -869,7 +869,7 @@ input:focus, textarea:focus, select:focus {
     left: 0;
     width: 60px;
     height: 3px;
-    background: var(--cor-secundaria);
+    background: var(--cor-aviso);
     border-radius: 2px;
 }
 
@@ -903,7 +903,7 @@ input:focus, textarea:focus, select:focus {
     border-radius: var(--border-radius-md);
     padding: 25px;
     position: relative;
-    border-left: 4px solid var(--cor-secundaria);
+    border-left: 4px solid var(--cor-aviso);
 }
 
 .history-year {
@@ -919,7 +919,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 /* ===== FOOTER ===== */
-.site-footer {
+.main-footer {
     background: var(--cor-fundo-escura);
     color: #fff;
     padding: 60px 0 30px;

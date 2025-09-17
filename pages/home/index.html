@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
+    
 
      <!-- Open Graph / Facebook -->
      <meta property="og:type" content="website">
@@ -62,7 +63,7 @@
 
                     <!-- Search Bar --> 
                     <div class="search-bar">
-                        <form class="search-form" id="searchForm" autocomplete="off" method="get" action="/busca/index.html">
+                        <form class="search-form" id="searchForm" autocomplete="off" method="get" action="/pages/busca/index.html">
                             <div class="search-form__wrapper">
                                 <input type="text" 
                                        class="search-form__input" 
@@ -133,8 +134,7 @@
                             <div class="shopping-cart__dropdown">
                                 <div class="shopping-cart__content">
                                     <div class="shopping-cart__empty">
-                                        <p>Sua sacola de compras está vazia</p>
-                                        <p>Carrinho Vazio</p>
+                                        <p>Sua sacola de compras está vazia</p>                                    
                                     </div>
                                 </div>
                             </div>
@@ -163,7 +163,7 @@
                                 <a href="#" class="menu-link" id="mega-menu-trigger" aria-haspopup="true" aria-expanded="false">Todas as Categorias</a>
                             </li>
                             <li class="menu-item"><a href="/pages/cirurgia/cirurgia.html" class="menu-link">Cirurgia e Periodontia</a></li>
-                            <li class="menu-item"><a href="/categoria/dentistica/index.html" class="menu-link">Dentística</a></li>
+                            <li class="menu-item"><a href="/pages/dentistica/dentistica.html" class="menu-link">Dentística</a></li>
                             <li class="menu-item"><a href="/categoria/endodontia/index.html" class="menu-link">Endodontia</a></li>
                             <li class="menu-item"><a href="/categoria/equipamentos/index.html" class="menu-link">Equipamentos</a></li>
                             <li class="menu-item"><a href="/categoria/instrumental/index.html" class="menu-link">Instrumental</a></li>
@@ -214,15 +214,15 @@
     </header>
 
      <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <ol class="breadcrumb__list">
-        <li class="breadcrumb__item">
-          <a href="/pages/home/index.html" class="breadcrumb__link">Home</a>
-        </li>
-      </ol>
-    </nav>
-
-
+    <div class="breadcrumbs">
+        <div class="container">
+            <ul class="breadcrumb__list">
+                <li class="breadcrumb__item">
+                    <a href="/pages/home/index.html" class="breadcrumb__link">Home</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <!-- Cards e Carrossel abaixo da navegação -->
     

@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dentística | Odonto Master</title>
+    <title>Resultados da Pesquisa | Odonto Master</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/pages/dentistica/dentistica.css">
-    <meta name="description" content="Produtos para Dentística. Encontre os melhores instrumentos e materiais na Odonto Master.">
+    <link rel="stylesheet" href="/pages/busca/busca.css">
+    <meta name="description" content="Resultados da pesquisa. Encontre os melhores produtos odontológicos na Odonto Master.">
 </head>
 <body>
     <div id="loading-screen" class="loading-screen">
@@ -25,7 +25,7 @@
                         <strong>ATENÇÃO!</strong>Os produtos desse site são restritos à Dentistas com CRO, Clínicas Odontológicas e Estudantes de Graduação em Odontologia.
                     </div>
                     <div class="top-banner__login">
-                        <a href="/login/index.html" class="login-link">Olá Visitante, Identifique-se aqui</a>
+                        <a href="/pages/login/login.html" class="login-link">Olá Visitante, Identifique-se aqui</a>
                     </div>
                 </div>
             </div>
@@ -206,7 +206,7 @@
                     <a href="/pages/home/index.html" class="breadcrumb__link">Home</a>
                 </li>
                 <li class="breadcrumb__item">
-                    <span class="breadcrumb__link">Dentística</span>
+                    <span class="breadcrumb__link">Resultados da Pesquisa</span>
                 </li>
             </ul>
         </div>
@@ -420,30 +420,16 @@
 
                 <!-- Produtos -->    
                 <section class="products-grid-container">
+                    <div class="search-results-header">
+                        <h2 class="search-results-title">Resultados da Pesquisa</h2>
+                        <p class="search-results-count" id="search-results-count">Encontramos <span id="results-count">0</span> produtos para "<span id="search-term-display"></span>"</p>
+                    </div>
+                    
                     <div id="no-results-message" class="no-results-message" style="display: none;">
                         <p>Nenhum produto encontrado com os filtros selecionados.</p>
                     </div>
                     <div class="products-grid" id="products-grid">
-                        <article class="product-card" data-category="Resina Composta" data-brand="3M ESPE"></article>
-                        <article class="product-card" data-category="Sistema Adesivo" data-brand="FGM"></article>
-                        <article class="product-card" data-category="Ácido Fosfórico" data-brand="Ultradent"></article>
-                        <article class="product-card" data-category="Matriz Metálica" data-brand="Angelus"></article>
-                        <article class="product-card" data-category="Resina Composta" data-brand="Ultradent"></article>
-                        <article class="product-card" data-category="Sistema Adesivo" data-brand="Dentsply"></article>
-                        <article class="product-card" data-category="Matriz Circunferencial" data-brand="FGM"></article>
-                        <article class="product-card" data-category="Produtos em Oferta" data-brand="Angelus"></article>
-                        <article class="product-card" data-category="Instrumental Dentística" data-brand="Hu-Friedy"></article>
-                        <article class="product-card" data-category="Cunhas de Espessamento" data-brand="Microdont"></article>
-                        <article class="product-card" data-category="Diques de Matriz" data-brand="Joinville"></article>
-                        <article class="product-card" data-category="Matriz Circunferencial" data-brand="Millenium"></article>
-                        <article class="product-card" data-category="Instrumental Dentística" data-brand="Tecno Empire"></article>
-                        <article class="product-card" data-category="Cunhas de Espessamento" data-brand="Primera Dental"></article>
-                        <article class="product-card" data-category="Diques de Matriz" data-brand="Shofu"></article>
-                        <article class="product-card" data-category="Produtos em Oferta" data-brand="Tokuyama"></article>
-                        <article class="product-card" data-category="Matriz Metálica" data-brand="VOCO"></article>
-                        <article class="product-card" data-category="Resina Composta" data-brand="Heraeus"></article>
-                        <article class="product-card" data-category="Ácido Fosfórico" data-brand="Bisco"></article>
-                        <article class="product-card" data-category="Sistema Adesivo" data-brand="Ivoclar"></article>
+                        <!-- Products will be dynamically inserted here -->
                     </div>
                 </section>
             </div>
@@ -550,7 +536,7 @@
     </footer>
      
     <script src="/assets/js/script.js"></script>
-    <script src="/pages/dentistica/dentistica.js"></script>
+    <script src="/pages/busca/busca.js"></script>
     
 </body>
 </html>

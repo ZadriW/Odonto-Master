@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dentística | Odonto Master</title>
+    <title>Confirmação do Pedido | Odonto Master</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/pages/dentistica/dentistica.css">
-    <meta name="description" content="Produtos para Dentística. Encontre os melhores instrumentos e materiais na Odonto Master.">
+    <link rel="stylesheet" href="/pages/confirmacao/confirmacao.css">
+    <meta name="description" content="Confirme seu pedido na Odonto Master. Revise suas informações pessoais, endereço de entrega, forma de envio e resumo do pedido.">
 </head>
 <body>
     <div id="loading-screen" class="loading-screen">
@@ -44,7 +44,7 @@
 
         <!-- Search Bar --> 
                     <div class="search-bar">
-                        <form class="search-form" id="searchForm" autocomplete="off" method="get" action="/pages/busca/index.html">
+                        <form class="search-form" id="searchForm" autocomplete="off" method="get" action="/busca/index.html">
                             <div class="search-form__wrapper">
                                 <input type="text" 
                                        class="search-form__input" 
@@ -154,7 +154,6 @@
                             <li class="menu-item"><a href="/categoria/instrumental/index.html" class="menu-link">Instrumental</a></li>
                             <li class="menu-item"><a href="/categoria/ortodontia/index.html" class="menu-link">Ortodontia</a></li>
                             <li class="menu-item"><a href="/categoria/pecas-de-mao/index.html" class="menu-link">Peças de Mão</a></li>
-                            <li class="menu-item"><a href="/categoria/protese/index.html" class="menu-link">Prótese</a></li>
                             <li class="menu-item menu-item--highlighted">
                                 <a href="/pages/odontoverse/odontoverse.html" class="menu-link">Odontoverse</a>
                             </li>
@@ -206,251 +205,227 @@
                     <a href="/pages/home/index.html" class="breadcrumb__link">Home</a>
                 </li>
                 <li class="breadcrumb__item">
-                    <span class="breadcrumb__link">Dentística</span>
+                    <a href="/pages/carrinho/carrinho.html" class="breadcrumb__link">Carrinho</a>
+                </li>
+                <li class="breadcrumb__item">
+                    <span class="breadcrumb__link">Confirmação do Pedido</span>
                 </li>
             </ul>
         </div>
     </div>
 
-        <!-- Conteúdo Principal -->
-        <main class="main-content category-page">
+    <!-- Conteúdo Principal -->
+    <main class="main-content confirmation-page">
         <div class="container">
-
-            <!--Filtros-->
-            <div class="category-content-area">
-                <aside class="filters-sidebar" id="filters-sidebar">
-                    <h3 class="filters-title">Filtros</h3>
-
-                     <div class="filter-group">
-                        <h4 class="filter-group__title">Categorias</h4>
-
-                        <div class="filter-group__options" id="category-filters">
-                            <div class="filter-group__visible">
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="cat-resina-composta" value="Resina Composta">
-                                    <label for="cat-resina-composta">Resina Composta</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="cat-sistema-adesivo" value="Sistema Adesivo">
-                                    <label for="cat-sistema-adesivo">Sistema Adesivo</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="cat-acido-fosforico" value="Ácido Fosfórico">
-                                    <label for="cat-acido-fosforico">Ácido Fosfórico</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="cat-matriz-metalica" value="Matriz Metálica">
-                                    <label for="cat-matriz-metalica">Matriz Metálica</label>
-                                </div>
-                            </div>
-                            
-                            <div class="filter-group__hidden" id="category-filters-hidden">
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="cat-matriz-circunferencial" value="Matriz Circunferencial">
-                                    <label for="cat-matriz-circunferencial">Matriz Circunferencial</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="cat-instrumental-dentistica" value="Instrumental Dentística">
-                                    <label for="cat-instrumental-dentistica">Instrumental Dentística</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="cat-produtos-oferta" value="Produtos em Oferta">
-                                    <label for="cat-produtos-oferta">Produtos em Oferta</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="cat-cunhas-espessamento" value="Cunhas de Espessamento">
-                                    <label for="cat-cunhas-espessamento">Cunhas de Espessamento</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="cat-diques-matriz" value="Diques de Matriz">
-                                    <label for="cat-diques-matriz">Diques de Matriz</label>
-                                </div>
-                            </div>
-                            
-                            <button class="filter-toggle-btn" id="category-toggle-btn" aria-expanded="false">
-                                <span class="toggle-text">Ver mais</span>
-                                <i class="fas fa-chevron-down toggle-icon"></i>
-                            </button>
+            <h1 class="page-title">Confirmação do Pedido</h1>
+            
+            <div class="confirmation-content">
+                <!-- Informações do Cliente e Entrega -->
+                <section class="customer-info-section">
+                    <h2 class="section-title">Informações do Cliente</h2>
+                    
+                    <div class="customer-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Nome Completo:</span>
+                            <span class="detail-value" id="customer-name">Dr. João Silva Santos</span>
                         </div>
-                    </div>
-
-                    <div class="filter-group">
-                        <h4 class="filter-group__title">Marcas</h4>
-
-                        <div class="filter-group__options" id="brand-filters">
-                            <div class="filter-group__visible">
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-angelus" value="Angelus">
-                                    <label for="brand-angelus">Angelus</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-fgm" value="FGM">
-                                    <label for="brand-fgm">FGM</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-ultradent" value="Ultradent">
-                                    <label for="brand-ultradent">Ultradent</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-dental-clear" value="Dental Clear">
-                                    <label for="brand-dental-clear">Dental Clear</label>
-                                </div>
-                            </div>
-                            
-                            <div class="filter-group__hidden" id="brand-filters-hidden">
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-biodinamica" value="Biodinâmica">
-                                    <label for="brand-biodinamica">Biodinâmica</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-dentsply" value="Dentsply">
-                                    <label for="brand-dentsply">Dentsply</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-voco" value="VOCO">
-                                    <label for="brand-voco">VOCO</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-kerr" value="Kerr">
-                                    <label for="brand-kerr">Kerr</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-heraeus" value="Heraeus">
-                                    <label for="brand-heraeus">Heraeus</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-ivoclar" value="Ivoclar">
-                                    <label for="brand-ivoclar">Ivoclar</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-3m-espe" value="3M ESPE">
-                                    <label for="brand-3m-espe">3M ESPE</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-bisco" value="Bisco">
-                                    <label for="brand-bisco">Bisco</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-shofu" value="Shofu">
-                                    <label for="brand-shofu">Shofu</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-tokuyama" value="Tokuyama">
-                                    <label for="brand-tokuyama">Tokuyama</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-primera-dental" value="Primera Dental">
-                                    <label for="brand-primera-dental">Primera Dental</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-hu-friedy" value="Hu-Friedy">
-                                    <label for="brand-hu-friedy">Hu-Friedy</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-microdont" value="Microdont">
-                                    <label for="brand-microdont">Microdont</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-joinville" value="Joinville">
-                                    <label for="brand-joinville">Joinville</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-millenium" value="Millenium">
-                                    <label for="brand-millenium">Millenium</label>
-                                </div>
-
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="brand-tecno-empire" value="Tecno Empire">
-                                    <label for="brand-tecno-empire">Tecno Empire</label>
-                                </div>
-                            </div>
-                            
-                            <button class="filter-toggle-btn" id="brand-toggle-btn" aria-expanded="false">
-                                <span class="toggle-text">Ver mais</span>
-                                <i class="fas fa-chevron-down toggle-icon"></i>
-                            </button>
+                        <div class="detail-row">
+                            <span class="detail-label">CPF/CNPJ:</span>
+                            <span class="detail-value" id="customer-document">123.456.789-00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">E-mail:</span>
+                            <span class="detail-value" id="customer-email">joao.silva@email.com</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Telefone:</span>
+                            <span class="detail-value" id="customer-phone">(71) 99999-9999</span>
                         </div>
                     </div>
                     
-                    <!-- Filtro de Preço -->
-                    <div class="filter-group">
-                        <h4 class="filter-group__title">Preço</h4>
-                        <div class="price-filter">
-                            <div class="price-range-container">
-                                <input type="range" class="price-slider" id="price-slider-min" min="0" max="500" value="0">
-                                <input type="range" class="price-slider" id="price-slider-max" min="0" max="500" value="500">
-                            </div>
-                            <div class="price-display">
-                                <span id="price-min-display">R$ 0</span> - <span id="price-max-display">R$ 500</span>
-                            </div>
-                        </div>
-                    </div>
+                    <h3 class="subsection-title">Endereço de Entrega</h3>
                     
-                    <!-- Botão para limpar filtros -->
-                    <div class="filter-group">
-                        <button class="clear-filters-btn" id="clear-filters-btn">
-                            <i class="fas fa-times-circle"></i> Limpar Filtros
-                        </button>
-                    </div>
-                </aside>
-
-                <!-- Produtos -->    
-                <section class="products-grid-container">
-                    <div id="no-results-message" class="no-results-message" style="display: none;">
-                        <p>Nenhum produto encontrado com os filtros selecionados.</p>
-                    </div>
-                    <div class="products-grid" id="products-grid">
-                        <article class="product-card" data-category="Resina Composta" data-brand="3M ESPE"></article>
-                        <article class="product-card" data-category="Sistema Adesivo" data-brand="FGM"></article>
-                        <article class="product-card" data-category="Ácido Fosfórico" data-brand="Ultradent"></article>
-                        <article class="product-card" data-category="Matriz Metálica" data-brand="Angelus"></article>
-                        <article class="product-card" data-category="Resina Composta" data-brand="Ultradent"></article>
-                        <article class="product-card" data-category="Sistema Adesivo" data-brand="Dentsply"></article>
-                        <article class="product-card" data-category="Matriz Circunferencial" data-brand="FGM"></article>
-                        <article class="product-card" data-category="Produtos em Oferta" data-brand="Angelus"></article>
-                        <article class="product-card" data-category="Instrumental Dentística" data-brand="Hu-Friedy"></article>
-                        <article class="product-card" data-category="Cunhas de Espessamento" data-brand="Microdont"></article>
-                        <article class="product-card" data-category="Diques de Matriz" data-brand="Joinville"></article>
-                        <article class="product-card" data-category="Matriz Circunferencial" data-brand="Millenium"></article>
-                        <article class="product-card" data-category="Instrumental Dentística" data-brand="Tecno Empire"></article>
-                        <article class="product-card" data-category="Cunhas de Espessamento" data-brand="Primera Dental"></article>
-                        <article class="product-card" data-category="Diques de Matriz" data-brand="Shofu"></article>
-                        <article class="product-card" data-category="Produtos em Oferta" data-brand="Tokuyama"></article>
-                        <article class="product-card" data-category="Matriz Metálica" data-brand="VOCO"></article>
-                        <article class="product-card" data-category="Resina Composta" data-brand="Heraeus"></article>
-                        <article class="product-card" data-category="Ácido Fosfórico" data-brand="Bisco"></article>
-                        <article class="product-card" data-category="Sistema Adesivo" data-brand="Ivoclar"></article>
+                    <div class="address-details">
+                        <div class="detail-row">
+                            <span class="detail-label">CEP:</span>
+                            <span class="detail-value" id="address-zipcode">40000-000</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Logradouro:</span>
+                            <span class="detail-value" id="address-street">Rua Exemplo</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Número:</span>
+                            <span class="detail-value" id="address-number">123</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Complemento:</span>
+                            <span class="detail-value" id="address-complement">Apto 456</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Bairro:</span>
+                            <span class="detail-value" id="address-neighborhood">Bairro Exemplo</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Cidade/Estado:</span>
+                            <span class="detail-value" id="address-city-state">Salvador/BA</span>
+                        </div>
                     </div>
                 </section>
+                
+                <!-- Forma de Envio -->
+                <section class="shipping-section">
+                    <h2 class="section-title">Forma de Envio</h2>
+                    
+                    <div class="shipping-options">
+                        <div class="shipping-option selected">
+                            <input type="radio" id="shipping-standard" name="shipping" value="standard" checked>
+                            <label for="shipping-standard" class="shipping-label">
+                                <div class="shipping-header">
+                                    <span class="shipping-name">Entrega Padrão</span>
+                                    <span class="shipping-price">R$ 25,00</span>
+                                </div>
+                                <div class="shipping-description">
+                                    Entrega em 3-5 dias úteis
+                                </div>
+                                <div class="shipping-eta">
+                                    Chega até <strong>20/09/2025</strong>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <div class="shipping-option">
+                            <input type="radio" id="shipping-express" name="shipping" value="express">
+                            <label for="shipping-express" class="shipping-label">
+                                <div class="shipping-header">
+                                    <span class="shipping-name">Entrega Expressa</span>
+                                    <span class="shipping-price">R$ 45,00</span>
+                                </div>
+                                <div class="shipping-description">
+                                    Entrega em 1-2 dias úteis
+                                </div>
+                                <div class="shipping-eta">
+                                    Chega até <strong>18/09/2025</strong>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <div class="shipping-option">
+                            <input type="radio" id="shipping-scheduled" name="shipping" value="scheduled">
+                            <label for="shipping-scheduled" class="shipping-label">
+                                <div class="shipping-header">
+                                    <span class="shipping-name">Agendamento de Entrega</span>
+                                    <span class="shipping-price">R$ 35,00</span>
+                                </div>
+                                <div class="shipping-description">
+                                    Escolha a data e horário da entrega
+                                </div>
+                                <div class="shipping-eta">
+                                    Agende sua entrega
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Resumo do Pedido -->
+                <section class="order-summary-section">
+                    <h2 class="section-title">Resumo do Pedido</h2>
+                    
+                    <div class="order-items">
+                        <!-- Item de exemplo 1 -->
+                        <div class="order-item">
+                            <div class="item-image">
+                                <img src="https://via.placeholder.com/80x80/e8ece9/333?text=Resina+Composta" alt="Resina Composta Z350 XT">
+                            </div>
+                            <div class="item-details">
+                                <h3 class="item-name">Resina Composta Z350 XT</h3>
+                                <div class="item-brand">3M ESPE</div>
+                                <div class="item-quantity">Quantidade: 2 unidades</div>
+                            </div>
+                            <div class="item-price">
+                                <span class="price-original">R$ 379,80</span>
+                                <span class="price-current">R$ 322,83</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Item de exemplo 2 -->
+                        <div class="order-item">
+                            <div class="item-image">
+                                <img src="https://via.placeholder.com/80x80/e8ece9/333?text=Sistema+Adesivo" alt="Sistema Adesivo Single Bond Universal">
+                            </div>
+                            <div class="item-details">
+                                <h3 class="item-name">Sistema Adesivo Single Bond Universal</h3>
+                                <div class="item-brand">3M ESPE</div>
+                                <div class="item-quantity">Quantidade: 1 unidade</div>
+                            </div>
+                            <div class="item-price">
+                                <span class="price-original">R$ 99,90</span>
+                                <span class="price-current">R$ 89,91</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Item de exemplo 3 -->
+                        <div class="order-item">
+                            <div class="item-image">
+                                <img src="https://via.placeholder.com/80x80/e8ece9/333?text=Ácido+Fosfórico" alt="Ácido Fosfórico 37% Gel">
+                            </div>
+                            <div class="item-details">
+                                <h3 class="item-name">Ácido Fosfórico 37% Gel</h3>
+                                <div class="item-brand">FGM</div>
+                                <div class="item-quantity">Quantidade: 1 unidade</div>
+                            </div>
+                            <div class="item-price">
+                                <span class="price-original">R$ 25,00</span>
+                                <span class="price-current">R$ 23,75</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cupom de Desconto -->
+                    <div class="discount-section">
+                        <h3 class="subsection-title">Cupom de Desconto</h3>
+                        <div class="discount-applied">
+                            <span class="discount-code">ODONTO10</span>
+                            <span class="discount-value">- R$ 53,44 (10% OFF)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Totais -->
+                    <div class="order-totals">
+                        <div class="total-row">
+                            <span class="total-label">Subtotal:</span>
+                            <span class="total-value" id="subtotal">R$ 507,50</span>
+                        </div>
+                        <div class="total-row">
+                            <span class="total-label">Desconto:</span>
+                            <span class="total-value negative" id="discount">- R$ 53,44</span>
+                        </div>
+                        <div class="total-row">
+                            <span class="total-label">Frete:</span>
+                            <span class="total-value" id="shipping-cost">R$ 25,00</span>
+                        </div>
+                        <div class="total-row grand-total">
+                            <span class="total-label">Total:</span>
+                            <span class="total-value" id="grand-total">R$ 479,06</span>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Ações -->
+                <div class="confirmation-actions">
+                    <button class="btn btn--secondary" id="edit-order-btn">
+                        <i class="fas fa-edit"></i> Editar Pedido
+                    </button>
+                    <button class="btn btn--primary" id="confirm-order-btn">
+                        <i class="fas fa-check-circle"></i> Confirmar Pedido
+                    </button>
+                </div>
             </div>
         </div>
     </main>
 
-        <!-- Footer -->
+    <!-- Footer -->
     <footer class="main-footer">
         <div class="container">
 
@@ -550,7 +525,7 @@
     </footer>
      
     <script src="/assets/js/script.js"></script>
-    <script src="/pages/dentistica/dentistica.js"></script>
+    <script src="/pages/confirmacao/confirmacao.js"></script>
     
 </body>
 </html>

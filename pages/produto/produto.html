@@ -44,7 +44,7 @@
 
         <!-- Search Bar --> 
                     <div class="search-bar">
-                        <form class="search-form" id="searchForm" autocomplete="off" method="get" action="/busca/index.html">
+                        <form class="search-form" id="searchForm" autocomplete="off" method="get" action="/pages/busca/index.html">
                             <div class="search-form__wrapper">
                                 <input type="text" 
                                        class="search-form__input" 
@@ -199,19 +199,21 @@
     </header>
 
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <ol class="breadcrumb__list">
-        <li class="breadcrumb__item">
-          <a href="/pages/home/index.html" class="breadcrumb__link">Home</a>
-        </li>
-        <li class="breadcrumb__item">
-          <a href="/categoria/dentistica/index.html" class="breadcrumb__link" id="categoryBreadcrumb">Categoria</a>
-        </li>
-        <li class="breadcrumb__item">
-          <span class="breadcrumb__link" id="productNameBreadcrumb">Nome do Produto</span>
-        </li>
-      </ol>
-    </nav>
+    <div class="breadcrumbs">
+        <div class="container">
+            <ul class="breadcrumb__list">
+                <li class="breadcrumb__item">
+                    <a href="/pages/home/index.html" class="breadcrumb__link">Home</a>
+                </li>
+                <li class="breadcrumb__item">
+                    <a href="/categoria/dentistica/index.html" class="breadcrumb__link" id="categoryBreadcrumb">Categoria</a>
+                </li>
+                <li class="breadcrumb__item">
+                    <span class="breadcrumb__link" id="productNameBreadcrumb">Nome do Produto</span>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <!-- Main Content -->
     <main class="main-content product-spot-page">
@@ -420,113 +422,54 @@
                         </table>
                     </div>
                     <div class="tab-pane" id="reviews">
-                        <h3>Avaliações dos Clientes</h3>
-                        <div class="reviews-summary">
-                            <div class="average-rating">
-                                <span class="rating-value">4.5</span>
-                                <div class="rating-stars">
-                                    <i class="fas fa-star rated"></i>
-                                    <i class="fas fa-star rated"></i>
-                                    <i class="fas fa-star rated"></i>
-                                    <i class="fas fa-star rated"></i>
-                                    <i class="fas fa-star-half-alt rated"></i>
+                        <!-- Review Form -->
+                        <div class="review-form-container">
+                            <h3>Deixe sua Avaliação</h3>
+                            <form class="review-form" id="reviewForm">
+                                <div class="form-group">
+                                    <label for="reviewName">Nome Completo *</label>
+                                    <input type="text" id="reviewName" class="form-control" placeholder="Digite seu nome" required>
                                 </div>
-                                <span class="reviews-count">Baseado em 128 avaliações</span>
-                            </div>
-                            <div class="rating-distribution">
-                                <div class="rating-bar">
-                                    <span class="rating-label">5 estrelas</span>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 70%"></div>
+                                
+                                <div class="form-group">
+                                    <label for="reviewEmail">E-mail *</label>
+                                    <input type="email" id="reviewEmail" class="form-control" placeholder="Digite seu e-mail" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="reviewRating">Nota *</label>
+                                    <div class="rating-input">
+                                        <input type="radio" id="star5" name="reviewRating" value="5">
+                                        <label for="star5" class="star-label"><i class="fas fa-star"></i></label>
+                                        
+                                        <input type="radio" id="star4" name="reviewRating" value="4">
+                                        <label for="star4" class="star-label"><i class="fas fa-star"></i></label>
+                                        
+                                        <input type="radio" id="star3" name="reviewRating" value="3">
+                                        <label for="star3" class="star-label"><i class="fas fa-star"></i></label>
+                                        
+                                        <input type="radio" id="star2" name="reviewRating" value="2">
+                                        <label for="star2" class="star-label"><i class="fas fa-star"></i></label>
+                                        
+                                        <input type="radio" id="star1" name="reviewRating" value="1">
+                                        <label for="star1" class="star-label"><i class="fas fa-star"></i></label>
                                     </div>
-                                    <span class="rating-percentage">70%</span>
                                 </div>
-                                <div class="rating-bar">
-                                    <span class="rating-label">4 estrelas</span>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 20%"></div>
-                                    </div>
-                                    <span class="rating-percentage">20%</span>
+                                
+                                <div class="form-group">
+                                    <label for="reviewTitle">Título da Avaliação *</label>
+                                    <input type="text" id="reviewTitle" class="form-control" placeholder="Resumo da sua avaliação" required>
                                 </div>
-                                <div class="rating-bar">
-                                    <span class="rating-label">3 estrelas</span>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 7%"></div>
-                                    </div>
-                                    <span class="rating-percentage">7%</span>
+                                
+                                <div class="form-group">
+                                    <label for="reviewComment">Comentário *</label>
+                                    <textarea id="reviewComment" class="form-control" rows="5" placeholder="Conte detalhes sobre sua experiência com o produto" required></textarea>
                                 </div>
-                                <div class="rating-bar">
-                                    <span class="rating-label">2 estrelas</span>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 2%"></div>
-                                    </div>
-                                    <span class="rating-percentage">2%</span>
-                                </div>
-                                <div class="rating-bar">
-                                    <span class="rating-label">1 estrela</span>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 1%"></div>
-                                    </div>
-                                    <span class="rating-percentage">1%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="reviews-list">
-                            <div class="review-item">
-                                <div class="review-header">
-                                    <div class="reviewer-info">
-                                        <strong>Dr. João Silva</strong>
-                                        <div class="rating-stars">
-                                            <i class="fas fa-star rated"></i>
-                                            <i class="fas fa-star rated"></i>
-                                            <i class="fas fa-star rated"></i>
-                                            <i class="fas fa-star rated"></i>
-                                            <i class="fas fa-star rated"></i>
-                                        </div>
-                                    </div>
-                                    <span class="review-date">15/08/2023</span>
-                                </div>
-                                <h4 class="review-title">Excelente produto!</h4>
-                                <p class="review-content">Produto de excelente qualidade, chegou antes do previsto e exatamente como descrito. Super recomendo para colegas da área.</p>
-                            </div>
-                            <div class="review-item">
-                                <div class="review-header">
-                                    <div class="reviewer-info">
-                                        <strong>Dra. Maria Oliveira</strong>
-                                        <div class="rating-stars">
-                                            <i class="fas fa-star rated"></i>
-                                            <i class="fas fa-star rated"></i>
-                                            <i class="fas fa-star rated"></i>
-                                            <i class="fas fa-star rated"></i>
-                                            <i class="fas fa-star-half-alt rated"></i>
-                                        </div>
-                                    </div>
-                                    <span class="review-date">10/08/2023</span>
-                                </div>
-                                <h4 class="review-title">Muito bom, mas poderia ser melhor</h4>
-                                <p class="review-content">Produto muito bom, porém achei um pouco mais caro do que o esperado. Mas a qualidade compensa o preço.</p>
-                            </div>
+                                
+                                <button type="submit" class="submit-review-btn">Enviar Avaliação</button>
+                            </form>
                         </div>
                     </div>
-                </div>
-            </section>
-
-            <!-- Related Products Carousel -->
-            <section class="related-products">
-                <h2 class="section-title">Produtos Relacionados</h2>
-                <div class="products-carousel-container related-products-carousel">
-                    <button class="carousel-nav carousel-nav--prev" aria-label="Anterior">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <div class="products-carousel-wrapper related-products-wrapper">
-                        <div class="products-carousel-track related-products-track" id="relatedProductsTrack">
-                            <!-- Related products will be loaded here -->
-                        </div>
-                    </div>
-                    <button class="carousel-nav carousel-nav--next" aria-label="Próximo">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                    <div class="carousel-dots related-products-dots" id="relatedProductsDots"></div>
                 </div>
             </section>
         </div>
