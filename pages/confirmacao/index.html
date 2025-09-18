@@ -15,204 +15,16 @@
         <div class="loading-spinner"></div>
     </div>
 
-    <header class="main-header">
-
-        <!-- Top Banner -->
-        <div class="top-banner">
-            <div class="container">
-                <div class="top-banner__content">
-                    <div class="top-banner__warning">
-                        <strong>ATENÇÃO!</strong>Os produtos desse site são restritos à Dentistas com CRO, Clínicas Odontológicas e Estudantes de Graduação em Odontologia.
-                    </div>
-                    <div class="top-banner__login">
-                        <a href="/login/index.html" class="login-link">Olá Visitante, Identifique-se aqui</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Header Area -->
-        <div class="header-area">
-            <div class="container">
-                <div class="header-area__content">
-                    <!-- Logo -->
-                    <div class="header-logo">
-                        <a href="/pages/home/index.html" class="logo-link">
-                            <img src= "https://recursos.odontomaster.com.br/i/logo_odonto.png" alt="Odonto Master" class="logo-image">
-                        </a>
-                    </div>
-
-        <!-- Search Bar --> 
-                    <div class="search-bar">
-                        <form class="search-form" id="searchForm" autocomplete="off" method="get" action="/busca/index.html">
-                            <div class="search-form__wrapper">
-                                <input type="text" 
-                                       class="search-form__input" 
-                                       id="searchInput" 
-                                       name="busca" 
-                                       placeholder="Busque aqui..."
-                                       autocomplete="on">
-                                <button type="submit" class="search-form__button" aria-label="Buscar">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                            <div class="search-autocomplete" id="searchAutocomplete" style="display: none;"></div>
-                        </form>
-                    </div>
-                    
-        <!-- Header Actions -->
-                    <section class="header-actions">
-                        
-                        <!-- Contact Info -->
-                        <div class="contact-info">
-                            <div class="contact-info__phone">
-                                <span class="contact-info__label">TELEVENDAS</span>
-                                <strong class="contact-info__number">0800 672 1105</strong>
-                                <strong class="contact-info__number">(71) 3173-7300</strong>
-                            </div>
-                        </div>
-
-                        <!-- Customer Service -->
-                        <div class="customer-service">
-                            <button class="customer-service__trigger" aria-label="Informações de atendimento">
-                                <i class="fas fa-headset"></i>
-                            </button>
-                            <div class="customer-service__dropdown">
-                                <div class="customer-service__section">
-                                    <strong>Pelos Telefones:</strong>
-                                    <p>(71) 3173-7300 - Salvador/BA</p>
-                                    <p>(75) 3322-8498 - Feira de Santana/BA</p>
-                                    <p>(79) 3085-0710 - Aracaju/SE</p>
-                                </div>
-                                
-                                <div class="customer-service__section">
-                                    <strong>Pelo WhatsApp:</strong>
-                                    <p>(71) 9 9401-9924</p>
-                                </div>
-                                
-                                <div class="customer-service__section">
-                                    <strong>Horário de Atendimento:</strong>
-                                    <p>Segunda a Sexta das 08:00 às 18:00</p>
-                                    <p>Sábados 08:00 às 14:00</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="my-account">
-                            <button class="my-account__trigger" aria-label="Minha conta">
-                                <i class="fas fa-user"></i>
-                                <a class="my-account__link" href="#"></a>
-                        </div>
-
-                        <!--Carrinho -->
-                        <div class="shopping-cart">
-                            <button class="shopping-cart__trigger" aria-label="Carrinho de compras">
-                                <i class="fas fa-shopping-cart"></i>
-                                <span class="shopping-cart__text">Carrinho</span>
-                                <span class="shopping-cart__count">0</span>
-                                <span class="shopping-cart__label">Item(s)</span>
-                            </button>
-                            <div class="shopping-cart__dropdown">
-                                <div class="shopping-cart__content">
-                                    <div class="shopping-cart__empty">
-                                        <p>Sua sacola de compras está vazia</p>
-                                        <p>Carrinho Vazio</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Mobile Menu Toggle -->
-                    <button class="mobile-menu-toggle" aria-label="Abrir menu" id="mobileMenuToggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Barra de navegação -->
-        <nav class="main-navigation" id="main-navigation">
-            <div class="container">
-                <div class="main-navigation__content">
-                    
-                    <!-- Mobile Menu Close -->
-                    <button class="mobile-menu-close" aria-label="Fechar menu" id="mobileMenuClose">
-                        <i class="fas fa-times"></i>
-                    </button>
-
-                    <!-- Menu de Navegação -->
-                    <div class="navigation-menu">
-                        <ul class="menu-list">
-                            <li class="menu-item menu-item--has-submenu">
-                                <a href="#" class="menu-link" id="mega-menu-trigger" aria-haspopup="true" aria-expanded="false">Todas as Categorias</a>
-                            </li>
-                            <li class="menu-item"><a href="/pages/cirurgia/cirurgia.html" class="menu-link">Cirurgia e Periodontia</a></li>
-                            <li class="menu-item"><a href="/pages/dentistica/dentistica.html" class="menu-link">Dentística</a></li>
-                            <li class="menu-item"><a href="/categoria/endodontia/index.html" class="menu-link">Endodontia</a></li>
-                            <li class="menu-item"><a href="/categoria/equipamentos/index.html" class="menu-link">Equipamentos</a></li>
-                            <li class="menu-item"><a href="/categoria/instrumental/index.html" class="menu-link">Instrumental</a></li>
-                            <li class="menu-item"><a href="/categoria/ortodontia/index.html" class="menu-link">Ortodontia</a></li>
-                            <li class="menu-item"><a href="/categoria/pecas-de-mao/index.html" class="menu-link">Peças de Mão</a></li>
-                            <li class="menu-item menu-item--highlighted">
-                                <a href="/pages/odontoverse/odontoverse.html" class="menu-link">Odontoverse</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="submenu-overlay"></div>
-                    <div class="submenu submenu--mega" id="mega-menu-content" aria-hidden="true">
-                    <div class="submenu__header">
-                        <h2>Navegue por todas as categorias</h2>
-                        <button class="submenu__close" aria-label="Fechar menu">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="submenu__columns">
-                        <!-- Apenas títulos clicáveis -->
-                        <div class="submenu__column">
-                            <a href="/acessorios-e-vestuarios" class="submenu__title-link">
-                                <h3 class="submenu__title">Acessórios e Vestuários</h3>
-                            </a>
-                        </div>
-                        <div class="submenu__column">
-                            <a href="/anestesico" class="submenu__title-link">
-                                <h3 class="submenu__title">Anestésico</h3>
-                            </a>
-                        </div>
-                        <div class="submenu__column">
-                            <a href="/biosseguranca" class="submenu__title-link">
-                                <h3 class="submenu__title">Biossegurança</h3>
-                            </a>
-                        </div>
-                        <div class="submenu__column">
-                            <a href="/brocas" class="submenu__title-link">
-                                <h3 class="submenu__title">Brocas</h3>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Breadcrumb -->
-    <div class="breadcrumbs">
+    <!-- Header with Logo (same as checkout page) -->
+    <header class="checkout-header-container">
         <div class="container">
-            <ul class="breadcrumb__list">
-                <li class="breadcrumb__item">
-                    <a href="/pages/home/index.html" class="breadcrumb__link">Home</a>
-                </li>
-                <li class="breadcrumb__item">
-                    <a href="/pages/carrinho/carrinho.html" class="breadcrumb__link">Carrinho</a>
-                </li>
-                <li class="breadcrumb__item">
-                    <span class="breadcrumb__link">Confirmação do Pedido</span>
-                </li>
-            </ul>
+            <div class="logo-container">
+                <a href="/pages/home/index.html">
+                    <img src="https://recursos.odontomaster.com.br/i/logo_odonto.png" alt="Odonto Master" class="checkout-logo">
+                </a>
+            </div>
         </div>
-    </div>
+    </header>
 
     <!-- Conteúdo Principal -->
     <main class="main-content confirmation-page">
@@ -220,55 +32,120 @@
             <h1 class="page-title">Confirmação do Pedido</h1>
             
             <div class="confirmation-content">
-                <!-- Informações do Cliente e Entrega -->
+                <!-- Resumo do Pedido -->
+                <section class="order-summary-section">
+                    <h2 class="section-title">Resumo do Pedido</h2>
+                    
+                    <div class="order-items" id="order-items-container">
+                        <!-- Itens do carrinho serão carregados dinamicamente aqui -->
+                    </div>
+                    
+                    <!-- Cupom de Desconto -->
+                    <div class="discount-section" id="discount-section" style="display: none;">
+                        <div class="discount-applied">
+                            <span class="discount-label">Cupom Aplicado</span>
+                            <span class="discount-code-display" id="discount-code">-</span>
+                            <span class="discount-value" id="discount-value">-</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Totais -->
+                    <div class="order-totals">
+                        <div class="total-row">
+                            <span class="total-label">Subtotal:</span>
+                            <span class="total-value" id="subtotal">R$ 0,00</span>
+                        </div>
+                        <div class="total-row" id="discount-row" style="display: none;">
+                            <span class="total-label">Desconto:</span>
+                            <span class="total-value negative" id="discount-amount">R$ 0,00</span>
+                        </div>
+                        <div class="total-row">
+                            <span class="total-label">Frete:</span>
+                            <span class="total-value" id="shipping-cost">R$ 25,00</span>
+                        </div>
+                        <div class="total-row grand-total">
+                            <span class="total-label">Total:</span>
+                            <span class="total-value" id="grand-total">R$ 0,00</span>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Informações do Cliente -->
                 <section class="customer-info-section">
                     <h2 class="section-title">Informações do Cliente</h2>
                     
                     <div class="customer-details">
                         <div class="detail-row">
                             <span class="detail-label">Nome Completo:</span>
-                            <span class="detail-value" id="customer-name">Dr. João Silva Santos</span>
+                            <span class="detail-value" id="customer-name">-</span>
                         </div>
                         <div class="detail-row">
                             <span class="detail-label">CPF/CNPJ:</span>
-                            <span class="detail-value" id="customer-document">123.456.789-00</span>
+                            <span class="detail-value" id="customer-document">-</span>
                         </div>
                         <div class="detail-row">
                             <span class="detail-label">E-mail:</span>
-                            <span class="detail-value" id="customer-email">joao.silva@email.com</span>
+                            <span class="detail-value" id="customer-email">-</span>
                         </div>
                         <div class="detail-row">
                             <span class="detail-label">Telefone:</span>
-                            <span class="detail-value" id="customer-phone">(71) 99999-9999</span>
+                            <span class="detail-value" id="customer-phone">-</span>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Endereço de Entrega -->
+                <section class="address-info-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Endereço de Entrega</h2>
+                        <button class="btn btn--secondary btn--small edit-address-btn" id="edit-address-btn">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                    </div>
+                    
+                    <div class="address-display" id="address-display">
+                        <div class="address-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Destinatário:</span>
+                                <span class="detail-value" id="address-recipient">-</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">CEP:</span>
+                                <span class="detail-value" id="address-zipcode">-</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Número:</span>
+                                <span class="detail-value" id="address-number">-</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Complemento:</span>
+                                <span class="detail-value" id="address-complement">-</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <h3 class="subsection-title">Endereço de Entrega</h3>
-                    
-                    <div class="address-details">
-                        <div class="detail-row">
-                            <span class="detail-label">CEP:</span>
-                            <span class="detail-value" id="address-zipcode">40000-000</span>
+                    <div class="address-edit-form" id="address-edit-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="edit-cep">CEP</label>
+                            <input type="text" id="edit-cep" class="form-control" placeholder="00000-000">
                         </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Logradouro:</span>
-                            <span class="detail-value" id="address-street">Rua Exemplo</span>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-number">Número</label>
+                                <input type="text" id="edit-number" class="form-control" placeholder="Número">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-complement">Complemento</label>
+                                <input type="text" id="edit-complement" class="form-control" placeholder="Complemento">
+                            </div>
                         </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Número:</span>
-                            <span class="detail-value" id="address-number">123</span>
+                        <div class="form-group">
+                            <label for="edit-recipient">Destinatário</label>
+                            <input type="text" id="edit-recipient" class="form-control" placeholder="Nome do destinatário">
                         </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Complemento:</span>
-                            <span class="detail-value" id="address-complement">Apto 456</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Bairro:</span>
-                            <span class="detail-value" id="address-neighborhood">Bairro Exemplo</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Cidade/Estado:</span>
-                            <span class="detail-value" id="address-city-state">Salvador/BA</span>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn--secondary" id="cancel-edit-address">Cancelar</button>
+                            <button type="button" class="btn btn--primary" id="save-edit-address">Salvar</button>
                         </div>
                     </div>
                 </section>
@@ -279,144 +156,48 @@
                     
                     <div class="shipping-options">
                         <div class="shipping-option selected">
-                            <input type="radio" id="shipping-standard" name="shipping" value="standard" checked>
-                            <label for="shipping-standard" class="shipping-label">
+                            <input type="radio" id="shipping-sedex" name="shipping" value="sedex" checked>
+                            <label for="shipping-sedex" class="shipping-label">
                                 <div class="shipping-header">
-                                    <span class="shipping-name">Entrega Padrão</span>
+                                    <span class="shipping-name">Correios Sedex</span>
                                     <span class="shipping-price">R$ 25,00</span>
-                                </div>
-                                <div class="shipping-description">
-                                    Entrega em 3-5 dias úteis
-                                </div>
-                                <div class="shipping-eta">
-                                    Chega até <strong>20/09/2025</strong>
-                                </div>
-                            </label>
-                        </div>
-                        
-                        <div class="shipping-option">
-                            <input type="radio" id="shipping-express" name="shipping" value="express">
-                            <label for="shipping-express" class="shipping-label">
-                                <div class="shipping-header">
-                                    <span class="shipping-name">Entrega Expressa</span>
-                                    <span class="shipping-price">R$ 45,00</span>
                                 </div>
                                 <div class="shipping-description">
                                     Entrega em 1-2 dias úteis
                                 </div>
                                 <div class="shipping-eta">
-                                    Chega até <strong>18/09/2025</strong>
+                                    Chega até <strong id="eta-sedex">-</strong>
                                 </div>
                             </label>
                         </div>
                         
                         <div class="shipping-option">
-                            <input type="radio" id="shipping-scheduled" name="shipping" value="scheduled">
-                            <label for="shipping-scheduled" class="shipping-label">
+                            <input type="radio" id="shipping-pickup" name="shipping" value="pickup">
+                            <label for="shipping-pickup" class="shipping-label">
                                 <div class="shipping-header">
-                                    <span class="shipping-name">Agendamento de Entrega</span>
-                                    <span class="shipping-price">R$ 35,00</span>
+                                    <span class="shipping-name">Retirada - Caminho das Árvores</span>
+                                    <span class="shipping-price">Grátis</span>
                                 </div>
                                 <div class="shipping-description">
-                                    Escolha a data e horário da entrega
+                                    Retire pessoalmente em nosso endereço
                                 </div>
                                 <div class="shipping-eta">
-                                    Agende sua entrega
+                                    Disponível em 1 dia útil
                                 </div>
                             </label>
-                        </div>
-                    </div>
-                </section>
-                
-                <!-- Resumo do Pedido -->
-                <section class="order-summary-section">
-                    <h2 class="section-title">Resumo do Pedido</h2>
-                    
-                    <div class="order-items">
-                        <!-- Item de exemplo 1 -->
-                        <div class="order-item">
-                            <div class="item-image">
-                                <img src="https://via.placeholder.com/80x80/e8ece9/333?text=Resina+Composta" alt="Resina Composta Z350 XT">
-                            </div>
-                            <div class="item-details">
-                                <h3 class="item-name">Resina Composta Z350 XT</h3>
-                                <div class="item-brand">3M ESPE</div>
-                                <div class="item-quantity">Quantidade: 2 unidades</div>
-                            </div>
-                            <div class="item-price">
-                                <span class="price-original">R$ 379,80</span>
-                                <span class="price-current">R$ 322,83</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Item de exemplo 2 -->
-                        <div class="order-item">
-                            <div class="item-image">
-                                <img src="https://via.placeholder.com/80x80/e8ece9/333?text=Sistema+Adesivo" alt="Sistema Adesivo Single Bond Universal">
-                            </div>
-                            <div class="item-details">
-                                <h3 class="item-name">Sistema Adesivo Single Bond Universal</h3>
-                                <div class="item-brand">3M ESPE</div>
-                                <div class="item-quantity">Quantidade: 1 unidade</div>
-                            </div>
-                            <div class="item-price">
-                                <span class="price-original">R$ 99,90</span>
-                                <span class="price-current">R$ 89,91</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Item de exemplo 3 -->
-                        <div class="order-item">
-                            <div class="item-image">
-                                <img src="https://via.placeholder.com/80x80/e8ece9/333?text=Ácido+Fosfórico" alt="Ácido Fosfórico 37% Gel">
-                            </div>
-                            <div class="item-details">
-                                <h3 class="item-name">Ácido Fosfórico 37% Gel</h3>
-                                <div class="item-brand">FGM</div>
-                                <div class="item-quantity">Quantidade: 1 unidade</div>
-                            </div>
-                            <div class="item-price">
-                                <span class="price-original">R$ 25,00</span>
-                                <span class="price-current">R$ 23,75</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Cupom de Desconto -->
-                    <div class="discount-section">
-                        <h3 class="subsection-title">Cupom de Desconto</h3>
-                        <div class="discount-applied">
-                            <span class="discount-code">ODONTO10</span>
-                            <span class="discount-value">- R$ 53,44 (10% OFF)</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Totais -->
-                    <div class="order-totals">
-                        <div class="total-row">
-                            <span class="total-label">Subtotal:</span>
-                            <span class="total-value" id="subtotal">R$ 507,50</span>
-                        </div>
-                        <div class="total-row">
-                            <span class="total-label">Desconto:</span>
-                            <span class="total-value negative" id="discount">- R$ 53,44</span>
-                        </div>
-                        <div class="total-row">
-                            <span class="total-label">Frete:</span>
-                            <span class="total-value" id="shipping-cost">R$ 25,00</span>
-                        </div>
-                        <div class="total-row grand-total">
-                            <span class="total-label">Total:</span>
-                            <span class="total-value" id="grand-total">R$ 479,06</span>
                         </div>
                     </div>
                 </section>
                 
                 <!-- Ações -->
                 <div class="confirmation-actions">
+
+                    <a href="#" alt="Página Minha Conta">
                     <button class="btn btn--secondary" id="edit-order-btn">
                         <i class="fas fa-edit"></i> Editar Pedido
                     </button>
+                    </a>
+
                     <button class="btn btn--primary" id="confirm-order-btn">
                         <i class="fas fa-check-circle"></i> Confirmar Pedido
                     </button>

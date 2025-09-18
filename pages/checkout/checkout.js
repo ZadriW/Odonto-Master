@@ -64,65 +64,33 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// Render cart items dynamically
+// Render cart items
 function renderCartItems() {
-  // Clear container
-  cartItemsContainer.innerHTML = '';
+  if (!cartItemsContainer) return;
   
-  // Check if cart is empty
   if (!cartData || cartData.length === 0) {
-    cartItemsContainer.innerHTML = `
-      <div class="empty-cart-message">
-        <p>Seu carrinho está vazio.</p>
-      </div>
-    `;
-    document.querySelector('.empty-cart-message .continue-shopping').addEventListener('click', continueShopping);
+    cartItemsContainer.innerHTML = '<p>Seu carrinho está vazio.</p>';
     return;
   }
   
-  // Render each item
-  cartData.forEach(item => {
-    const cartItemElement = document.createElement('div');
-    cartItemElement.className = 'cart-item';
-    cartItemElement.innerHTML = `
-      <div class="cart-item__image">
-        <img src="${item.image || 'https://placehold.co/100x100'}" alt="${item.name}">
-      </div>
-      <div class="cart-item__details">
-        <h3 class="cart-item__name">${item.name}</h3>
-        <div class="cart-item__quantity">
-          <span>Quantidade:</span>
-          <div class="quantity-control">
-            <button class="quantity-btn decrease-btn" data-id="${item.id}" aria-label="Diminuir quantidade">-</button>
-            <span class="quantity-value">${item.quantity}</span>
-            <button class="quantity-btn increase-btn" data-id="${item.id}" aria-label="Aumentar quantidade">+</button>
-          </div>
+  cartItemsContainer.innerHTML = cartData.map(item => {
+    const priceInReais = (item.price > 1000) ? item.price / 100 : item.price;
+    return `
+      <div class="cart-item">
+        <div class="item-image">
+          <img src="https://via.placeholder.com/80x80/e8ece9/333?text=${encodeURIComponent(item.name.substring(0, 15))}" alt="${item.name}">
+        </div>
+        <div class="item-details">
+          <h3 class="item-name">${item.name}</h3>
+          <div class="item-brand">Marca não especificada</div>
+          <div class="item-quantity">Quantidade: ${item.quantity}</div>
+        </div>
+        <div class="item-price">
+          R$ ${priceInReais.toFixed(2).replace('.', ',')}
         </div>
       </div>
-      <div class="cart-item__price">
-        ${item.originalPrice ? `<span class="price-original">R$ ${(item.originalPrice/100).toFixed(2).replace('.', ',')}</span>` : ''}
-        <span class="price-current">R$ ${(item.price/100).toFixed(2).replace('.', ',')}</span>
-      </div>
-      <button class="cart-item__remove" data-id="${item.id}" aria-label="Remover item">
-        <i class="fas fa-trash"></i>
-      </button>
     `;
-    
-    cartItemsContainer.appendChild(cartItemElement);
-  });
-  
-  // Add event listeners to the newly created elements
-  document.querySelectorAll('.decrease-btn').forEach(btn => {
-    btn.addEventListener('click', () => updateQuantity(btn.dataset.id, -1));
-  });
-  
-  document.querySelectorAll('.increase-btn').forEach(btn => {
-    btn.addEventListener('click', () => updateQuantity(btn.dataset.id, 1));
-  });
-  
-  document.querySelectorAll('.cart-item__remove').forEach(btn => {
-    btn.addEventListener('click', () => removeItem(btn.dataset.id));
-  });
+  }).join('');
 }
 
 // Update item quantity
@@ -167,6 +135,9 @@ function applyCoupon() {
       ...coupons[couponCode]
     };
     
+    // Save applied coupon to localStorage
+    localStorage.setItem('odonto_applied_coupon', JSON.stringify(appliedCoupon));
+    
     alert(`Cupom "${couponCode}" aplicado com sucesso!`);
     updateCartTotals();
   } else {
@@ -180,7 +151,8 @@ function updateCartTotals() {
   let subtotal = 0;
   if (cartData && cartData.length > 0) {
     cartData.forEach(item => {
-      subtotal += (item.price/100) * item.quantity;
+      const priceInReais = (item.price > 1000) ? item.price / 100 : item.price;
+      subtotal += priceInReais * item.quantity;
     });
   }
   
@@ -203,6 +175,9 @@ function updateCartTotals() {
   if (appliedCoupon) {
     discountLine.style.display = 'flex';
     discountAmount.textContent = `- R$ ${discount.toFixed(2).replace('.', ',')}`;
+    
+    // Save applied coupon to localStorage
+    localStorage.setItem('odonto_applied_coupon', JSON.stringify(appliedCoupon));
   } else {
     discountLine.style.display = 'none';
   }

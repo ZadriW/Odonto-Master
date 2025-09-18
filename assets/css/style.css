@@ -240,10 +240,14 @@ input:focus, textarea:focus, select:focus {
     color: var(--cor-erro);
 }
 
-.top-banner__login .login-link {
+.top-banner__login p {
     color: #007bff;
-    text-decoration: none;
-    font-weight: 500;
+
+}
+
+.top-banner__login a {
+    color: var(--cor-erro);
+    text-decoration: underline;
 }
 
 .top-banner__login .login-link:hover {
@@ -461,7 +465,7 @@ input:focus, textarea:focus, select:focus {
 /* Search Bar */
 .search-bar {
     flex: 1;
-    max-width: 500px;
+    max-width: 400px;
     margin: 0 var(--spacing-lg);
 }
 
@@ -480,13 +484,14 @@ input:focus, textarea:focus, select:focus {
     padding-right: 45px;
     border: 1px solid var(--cor-primaria-escura);
     border-radius: 8px;
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-sm);
     transition: border-color 0.3s;
 }
 
 .search-form__input:focus {
     outline: none;
-    border-color: var(--cor-primaria);
+    border: 2px solid var(--cor-primaria);
+    
 }
 
 .search-form__button {
