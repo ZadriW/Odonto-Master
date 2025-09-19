@@ -860,6 +860,7 @@ input:focus, textarea:focus, select:focus {
     margin-bottom: 20px;
     position: relative;
     padding-bottom: 10px;
+    
 }
 
 .section-title::after {

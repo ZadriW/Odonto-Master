@@ -1,4 +1,37 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Person type tabs
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const individualFields = document.getElementById('individualFields');
+    const companyFields = document.getElementById('companyFields');
+    const individualProfessionalFields = document.getElementById('individualProfessionalFields');
+    const companyProfessionalFields = document.getElementById('companyProfessionalFields');
+    const professionalInfoSection = document.getElementById('professionalInfoSection');
+    const errorNotification = document.getElementById('errorNotification');
+    const errorList = document.getElementById('errorList');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Update active tab
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Show/hide fields based on selected tab
+            if (this.dataset.type === 'individual') {
+                individualFields.style.display = 'block';
+                companyFields.style.display = 'none';
+                individualProfessionalFields.style.display = 'block';
+                companyProfessionalFields.style.display = 'none';
+                professionalInfoSection.querySelector('.section-title').textContent = 'Informações - Pessoa Física';
+            } else {
+                individualFields.style.display = 'none';
+                companyFields.style.display = 'block';
+                individualProfessionalFields.style.display = 'none';
+                companyProfessionalFields.style.display = 'block';
+                professionalInfoSection.querySelector('.section-title').textContent = 'Informações - Pessoa Jurídica';
+            }
+        });
+    });
+
     // Registration form submission
     const registrationForm = document.getElementById('registrationForm');
     
@@ -6,19 +39,19 @@ document.addEventListener('DOMContentLoaded', function() {
         registrationForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Clear previous error states
+            clearErrorStates();
+            
             // Get form values
             const formData = new FormData(registrationForm);
             const data = Object.fromEntries(formData.entries());
             
-            // Simple validation
-            if (!validateForm(data)) {
-                return;
-            }
+
             
             // Show loading state
             const registrationButton = registrationForm.querySelector('.registration-button');
             const originalButtonText = registrationButton.innerHTML;
-            registrationButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Criando conta...';
+            registrationButton.innerHTML = '<i class=\"fas fa-spinner fa-spin\"></i> Criando conta...';
             registrationButton.disabled = true;
             
             // Simulate registration process (in a real app, this would be an API call)
@@ -39,11 +72,29 @@ document.addEventListener('DOMContentLoaded', function() {
     // Password strength indicator
     const passwordInput = document.getElementById('password');
     const passwordStrength = document.getElementById('passwordStrength');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    
+    // Create password requirements notification element
+    const passwordRequirements = document.createElement('div');
+    passwordRequirements.id = 'password-requirements';
+    passwordRequirements.className = 'password-requirements';
+    passwordRequirements.style.display = 'none';
     
     if (passwordInput && passwordStrength) {
+        // Insert password requirements after password strength indicator
+        passwordStrength.parentNode.insertBefore(passwordRequirements, passwordStrength.nextSibling);
+        
         passwordInput.addEventListener('input', function() {
             const password = this.value;
             updatePasswordStrength(password);
+            checkPasswordRequirements(password);
+        });
+    }
+    
+    // Confirm password validation
+    if (confirmPasswordInput) {
+        confirmPasswordInput.addEventListener('input', function() {
+            validatePasswordsMatch();
         });
     }
     
@@ -143,115 +194,185 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // CNPJ formatting
+    const cnpjField = document.getElementById('cnpj');
+    if (cnpjField) {
+        cnpjField.addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length > 14) value = value.substring(0, 14);
+            
+            if (value.length > 12) {
+                value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+            } else if (value.length > 8) {
+                value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{1,4})/, '$1.$2.$3/$4');
+            } else if (value.length > 5) {
+                value = value.replace(/(\d{2})(\d{3})(\d{1,3})/, '$1.$2.$3');
+            } else if (value.length > 2) {
+                value = value.replace(/(\d{2})(\d{1,3})/, '$1.$2');
+            }
+            
+            this.value = value;
+        });
+    }
+    
+    // Company phone formatting
+    const companyPhoneField = document.getElementById('companyPhone');
+    if (companyPhoneField) {
+        companyPhoneField.addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.substring(0, 11);
+            
+            if (value.length > 6) {
+                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            } else if (value.length > 2) {
+                value = value.replace(/(\d{2})(\d{1,5})/, '($1) $2');
+            } else if (value.length > 0) {
+                value = value.replace(/(\d{1,2})/, '($1');
+            }
+            
+            this.value = value;
+        });
+    }
+    
     // Form validation function
     function validateForm(data) {
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!data.email || !emailRegex.test(data.email)) {
-            alert('Por favor, insira um e-mail válido.');
-            return false;
+        const errors = [];
+        
+        // Determine if we're validating individual or company
+        const activeTab = document.querySelector('.tab-button.active');
+        const isIndividual = activeTab ? activeTab.dataset.type === 'individual' : true;
+        
+        if (isIndividual) {
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!data.email || !emailRegex.test(data.email)) {
+                errors.push({ field: 'email', message: 'Por favor, insira um e-mail válido.' });
+            }
+            
+            // CPF validation (basic format check)
+            const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+            if (!data.cpf || !cpfRegex.test(data.cpf)) {
+                errors.push({ field: 'cpf', message: 'Por favor, insira um CPF válido.' });
+            }
+            
+            // Full name validation
+            if (!data.fullName || data.fullName.trim().length < 3) {
+                errors.push({ field: 'fullName', message: 'Por favor, insira seu nome completo.' });
+            }
+            
+            // Birth date validation
+            if (!data.birthDate) {
+                errors.push({ field: 'birthDate', message: 'Por favor, selecione sua data de nascimento.' });
+            }
+            
+            // Gender validation
+            if (!data.gender) {
+                errors.push({ field: 'gender', message: 'Por favor, selecione seu gênero.' });
+            }
+            
+            // RG validation
+            if (!data.rg || data.rg.trim().length < 3) {
+                errors.push({ field: 'rg', message: 'Por favor, insira seu RG.' });
+            }
+            
+            // Profession validation
+            if (!data.profession) {
+                errors.push({ field: 'profession', message: 'Por favor, selecione sua profissão.' });
+            }
+            
+            // Specialization validation
+            if (!data.specialization || data.specialization.trim().length < 2) {
+                errors.push({ field: 'specialization', message: 'Por favor, insira sua especialização ou semestre.' });
+            }
+            
+            // Institution validation
+            if (!data.institution || data.institution.trim().length < 3) {
+                errors.push({ field: 'institution', message: 'Por favor, insira o nome da instituição.' });
+            }
+            
+            // Registration number validation
+            if (!data.registrationNumber || data.registrationNumber.trim().length < 3) {
+                errors.push({ field: 'registrationNumber', message: 'Por favor, insira sua matrícula ou CRO.' });
+            }
+        } else {
+            // Company email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!data.companyEmail || !emailRegex.test(data.companyEmail)) {
+                errors.push({ field: 'companyEmail', message: 'Por favor, insira um e-mail válido para a empresa.' });
+            }
+            
+            // CNPJ validation (basic format check)
+            const cnpjRegex = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
+            if (!data.cnpj || !cnpjRegex.test(data.cnpj)) {
+                errors.push({ field: 'cnpj', message: 'Por favor, insira um CNPJ válido.' });
+            }
+            
+            // Company name validation
+            if (!data.companyName || data.companyName.trim().length < 3) {
+                errors.push({ field: 'companyName', message: 'Por favor, insira a razão social da empresa.' });
+            }
+            
+            // Company phone validation
+            const phoneRegex = /^\(\d{2}\) \d{4,5}-\d{4}$/;
+            if (!data.companyPhone || !phoneRegex.test(data.companyPhone)) {
+                errors.push({ field: 'companyPhone', message: 'Por favor, insira um telefone comercial válido.' });
+            }
+            
+            // Responsible name validation
+            if (!data.responsibleName || data.responsibleName.trim().length < 3) {
+                errors.push({ field: 'responsibleName', message: 'Por favor, insira o nome do responsável.' });
+            }
+            
+            // Responsible role validation
+            if (!data.responsibleRole || data.responsibleRole.trim().length < 3) {
+                errors.push({ field: 'responsibleRole', message: 'Por favor, insira o cargo do responsável.' });
+            }
         }
         
-        // CPF validation (basic format check)
-        const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
-        if (!data.cpf || !cpfRegex.test(data.cpf)) {
-            alert('Por favor, insira um CPF válido.');
-            return false;
+        // Password validation (common to both)
+        if (!data.password || data.password.length < 8) {
+            errors.push({ field: 'password', message: 'A senha deve ter pelo menos 8 caracteres.' });
         }
         
-        // Full name validation
-        if (!data.fullName || data.fullName.trim().length < 3) {
-            alert('Por favor, insira seu nome completo.');
-            return false;
-        }
-        
-        // Birth date validation
-        if (!data.birthDate) {
-            alert('Por favor, selecione sua data de nascimento.');
-            return false;
-        }
-        
-        // Gender validation
-        if (!data.gender) {
-            alert('Por favor, selecione seu gênero.');
-            return false;
-        }
-        
-        // Password validation
-        if (!data.password || data.password.length < 6) {
-            alert('A senha deve ter pelo menos 6 caracteres.');
-            return false;
+        // Check password strength
+        const passwordStrength = updatePasswordStrength(data.password);
+        if (passwordStrength < 3) {
+            errors.push({ field: 'password', message: 'Por favor, escolha uma senha mais forte. A senha deve conter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais.' });
         }
         
         // Password confirmation validation
         if (data.password !== data.confirmPassword) {
-            alert('As senhas não coincidem.');
-            return false;
+            errors.push({ field: 'confirmPassword', message: 'As senhas não coincidem.' });
         }
         
-        // Phone validation
+        // Phone validation (common to both)
         const phoneRegex = /^\(\d{2}\) \d{4,5}-\d{4}$/;
         if (!data.phone || !phoneRegex.test(data.phone)) {
-            alert('Por favor, insira um telefone válido.');
-            return false;
+            errors.push({ field: 'phone', message: 'Por favor, insira um telefone válido.' });
         }
         
         // Recipient name validation
         if (!data.recipientName || data.recipientName.trim().length < 3) {
-            alert('Por favor, insira o nome do destinatário.');
-            return false;
+            errors.push({ field: 'recipientName', message: 'Por favor, insira o nome do destinatário.' });
         }
         
         // CEP validation
         const cepRegex = /^\d{5}-\d{3}$/;
         if (!data.cep || !cepRegex.test(data.cep)) {
-            alert('Por favor, insira um CEP válido.');
-            return false;
+            errors.push({ field: 'cep', message: 'Por favor, insira um CEP válido.' });
         }
         
         // Address number validation
         if (!data.number) {
-            alert('Por favor, insira o número do endereço.');
-            return false;
-        }
-        
-        // RG validation
-        if (!data.rg || data.rg.trim().length < 3) {
-            alert('Por favor, insira seu RG.');
-            return false;
-        }
-        
-        // Profession validation
-        if (!data.profession) {
-            alert('Por favor, selecione sua profissão.');
-            return false;
-        }
-        
-        // Specialization validation
-        if (!data.specialization || data.specialization.trim().length < 2) {
-            alert('Por favor, insira sua especialização ou semestre.');
-            return false;
-        }
-        
-        // Institution validation
-        if (!data.institution || data.institution.trim().length < 3) {
-            alert('Por favor, insira o nome da instituição.');
-            return false;
-        }
-        
-        // Registration number validation
-        if (!data.registrationNumber || data.registrationNumber.trim().length < 3) {
-            alert('Por favor, insira sua matrícula ou CRO.');
-            return false;
+            errors.push({ field: 'number', message: 'Por favor, insira o número do endereço.' });
         }
         
         // Terms validation
         if (!document.getElementById('terms').checked) {
-            alert('Você deve concordar com os termos de uso e política de privacidade.');
-            return false;
+            errors.push({ field: 'terms', message: 'Você deve concordar com os termos de uso e política de privacidade.' });
         }
         
-        return true;
+        return errors;
     }
     
     // Password strength indicator function
@@ -292,5 +413,115 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             strengthBar.className = 'password-strength-bar password-strength-strong';
         }
+        
+        return strength;
+    }
+    
+    // Check password requirements
+    function checkPasswordRequirements(password) {
+        const requirements = [
+            { regex: /.{8,}/, message: 'Pelo menos 8 caracteres' },
+            { regex: /[A-Z]/, message: 'Pelo menos 1 letra maiúscula' },
+            { regex: /[a-z]/, message: 'Pelo menos 1 letra minúscula' },
+            { regex: /\d/, message: 'Pelo menos 1 número' },
+            { regex: /[^A-Za-z0-9]/, message: 'Pelo menos 1 caractere especial' }
+        ];
+        
+        const failedRequirements = requirements.filter(req => !req.regex.test(password));
+        
+        if (password.length === 0) {
+            passwordRequirements.style.display = 'none';
+            return true;
+        }
+        
+        if (failedRequirements.length > 0) {
+            passwordRequirements.style.display = 'block';
+            passwordRequirements.innerHTML = `
+                <p class="requirements-title">A senha deve conter:</p>
+                <ul class="requirements-list">
+                    ${requirements.map(req => {
+                        const isMet = req.regex.test(password);
+                        return `<li class="${isMet ? 'met' : 'unmet'}">${req.message}</li>`;
+                    }).join('')}
+                </ul>
+            `;
+            return false;
+        } else {
+            passwordRequirements.style.display = 'none';
+            return true;
+        }
+    }
+    
+    // Check if passwords match
+    function validatePasswordsMatch() {
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+        
+        if (confirmPassword.length === 0) return true;
+        
+        if (password !== confirmPassword) {
+            confirmPasswordInput.setCustomValidity('As senhas não coincidem');
+            return false;
+        } else {
+            confirmPasswordInput.setCustomValidity('');
+            return true;
+        }
+    }
+    
+    // Clear error states
+    function clearErrorStates() {
+        // Remove error class from all inputs
+        const errorInputs = document.querySelectorAll('.form-input.error, select.error, input[type="checkbox"].error, .form-checkbox-label.error');
+        errorInputs.forEach(input => {
+            input.classList.remove('error');
+        });
+        
+        // Hide error notification
+        errorNotification.classList.remove('show');
+    }
+    
+    // Show error notification
+    function showErrorNotification(errors) {
+        if (errors.length > 0) {
+            // Create error list
+            const errorItems = errors.map(error => `<li>${error.message}</li>`).join('');
+            errorList.innerHTML = errorItems;
+            
+            // Show notification
+            errorNotification.classList.add('show');
+            
+            // Scroll to notification
+            errorNotification.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+    
+    // Highlight error fields
+    function highlightErrorFields(errors) {
+        errors.forEach(error => {
+            const field = document.getElementById(error.field);
+            if (field) {
+                field.classList.add('error');
+            } else {
+                // Handle select elements and other special cases
+                if (error.field === 'gender' || error.field === 'profession') {
+                    const selectField = document.getElementById(error.field);
+                    if (selectField) {
+                        selectField.classList.add('error');
+                    }
+                }
+                
+                // Handle terms checkbox
+                if (error.field === 'terms') {
+                    const termsCheckbox = document.getElementById('terms');
+                    const termsLabel = document.querySelector('label[for="terms"]');
+                    if (termsCheckbox) {
+                        termsCheckbox.classList.add('error');
+                    }
+                    if (termsLabel) {
+                        termsLabel.classList.add('error');
+                    }
+                }
+            }
+        });
     }
 });
