@@ -230,7 +230,9 @@ input:focus, textarea:focus, select:focus {
     justify-content: space-around;
     align-items: center;
     font-size: 12px;
+   
 }
+
 
 .top-banner__warning {
     color: #007bff;
@@ -242,16 +244,16 @@ input:focus, textarea:focus, select:focus {
 
 .top-banner__login p {
     color: #007bff;
-
 }
+
 
 .top-banner__login a {
     color: var(--cor-erro);
     text-decoration: underline;
 }
 
-.top-banner__login .login-link:hover {
-    text-decoration: underline;
+.top-banner__login a:focus {
+    outline: none;
 }
 
 /* Header Main */
