@@ -8,6 +8,7 @@
     <!-- Importando estilos compartilhados -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/pages/institucional/quem-somos.css">
   
 </head>
@@ -30,7 +31,7 @@
                         <strong>ATENÇÃO!</strong> Os produtos desse site são restritos à Dentistas com CRO, Clínicas Odontológicas e Estudantes de Graduação em Odontologia.
                     </div>
                     <div class="top-banner__login">
-                        <a href="#" class="login-link">Olá Visitante, Identifique-se aqui</a>
+                        <p>Olá Visitante, identifique-se <a href="/pages/login/login.html" alt="Tela de Login">aqui</a> ou <a href="/pages/registro/index.html" alt="Tela de Registro">registre-se</a></p>
                     </div>
                 </div>
             </div>
@@ -43,29 +44,31 @@
                     <!-- Logo -->
                     <div class="header-logo">
                         <a href="/pages/home/index.html" class="logo-link">
-                            <img src="https://recursos.odontomaster.com.br/i/logo_odonto.png" alt="Odonto Master" class="logo-image">
+                            <img src= "https://recursos.odontomaster.com.br/i/logo_odonto.png" alt="Odonto Master" class="logo-image">
                         </a>
                     </div>
 
                     <!-- Search Bar --> 
                     <div class="search-bar">
-                        <form class="search-form" id="searchForm" autocomplete="off" method="get" action="#">
+                        <form class="search-form" id="searchForm" autocomplete="off" method="get" action="/pages/busca/index.html">
                             <div class="search-form__wrapper">
                                 <input type="text" 
                                        class="search-form__input" 
                                        id="searchInput" 
                                        name="busca" 
                                        placeholder="Busque aqui..."
-                                       autocomplete="on">
+                                       autocomplete="off">
                                 <button type="submit" class="search-form__button" aria-label="Buscar">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
+                            <div class="search-autocomplete" id="searchAutocomplete" style="display: none;"></div>
                         </form>
                     </div>
 
                     <!-- Header Actions -->
                     <section class="header-actions">
+                        
                         <!-- Contact Info -->
                         <div class="contact-info">
                             <div class="contact-info__phone">
@@ -101,14 +104,13 @@
                             </div>
                         </div>
 
-                        <!-- My Account -->
                         <div class="my-account">
                             <button class="my-account__trigger" aria-label="Minha conta">
                                 <i class="fas fa-user"></i>
-                            </button>
+                                <a class="my-account__link" href="#"></a>
                         </div>
 
-                        <!-- Shopping Cart -->
+                        <!--Carrinho -->
                         <div class="shopping-cart">
                             <button class="shopping-cart__trigger" aria-label="Carrinho de compras">
                                 <i class="fas fa-shopping-cart"></i>
@@ -119,7 +121,7 @@
                             <div class="shopping-cart__dropdown">
                                 <div class="shopping-cart__content">
                                     <div class="shopping-cart__empty">
-                                        <p>Seu carrinho de compras está vazio.</p>
+                                        <p>Sua sacola de compras está vazia</p>                                   
                                     </div>
                                 </div>
                             </div>
@@ -134,78 +136,81 @@
             </div>
         </div>
 
-        <!-- Navigation Bar -->
+        <!-- Barra de navegação -->
         <nav class="main-navigation" id="main-navigation">
             <div class="container">
-                <div class="main-navigation__content">
-                    
 
-                    <!-- Navigation Menu -->
-                    <div class="navigation-menu">
+
+
+
+                <div class="main-navigation__content">
+                                                 
                         <ul class="menu-list">
                             <li class="menu-item menu-item--has-submenu">
                                 <a href="#" class="menu-link" id="mega-menu-trigger" aria-haspopup="true" aria-expanded="false">Todas as Categorias</a>
                             </li>
-                            <li class="menu-item"><a href="../pages/cirurgia/cirurgia.html" class="menu-link">Cirurgia e Periodontia</a></li>
-                            <li class="menu-item"><a href="../categoria/dentistica/index.html" class="menu-link">Dentística</a></li>
-                            <li class="menu-item"><a href="../categoria/endodontia/index.html" class="menu-link">Endodontia</a></li>
-                            <li class="menu-item"><a href="../categoria/equipamentos/index.html" class="menu-link">Equipamentos</a></li>
-                            <li class="menu-item"><a href="../categoria/instrumental/index.html" class="menu-link">Instrumental</a></li>
-                            <li class="menu-item"><a href="../categoria/ortodontia/index.html" class="menu-link">Ortodontia</a></li>
-                            <li class="menu-item"><a href="../categoria/pecas-de-mao/index.html" class="menu-link">Peças de Mão</a></li>
+                            <li class="menu-item"><a href="/pages/cirurgia/cirurgia.html" class="menu-link">Cirurgia e Periodontia</a></li>
+                            <li class="menu-item"><a href="/pages/dentistica/dentistica.html" class="menu-link">Dentística</a></li>
+                            <li class="menu-item"><a href="/categoria/endodontia/index.html" class="menu-link">Endodontia</a></li>
+                            <li class="menu-item"><a href="/categoria/equipamentos/index.html" class="menu-link">Equipamentos</a></li>
+                            <li class="menu-item"><a href="/categoria/instrumental/index.html" class="menu-link">Instrumental</a></li>
+                            <li class="menu-item"><a href="/categoria/ortodontia/index.html" class="menu-link">Ortodontia</a></li>
+                            <li class="menu-item"><a href="/categoria/pecas-de-mao/index.html" class="menu-link">Peças de Mão</a></li>
+                            <li class="menu-item"><a href="/categoria/protese/index.html" class="menu-link">Prótese</a></li>
                             <li class="menu-item menu-item--highlighted">
-                                <a href="../pages/odontoverse/odontoverse.html" class="menu-link">Estudantes</a>
+                                <a href="/pages/odontoverse/odontoverse.html" class="menu-link">Estudantes</a>
                             </li>
                         </ul>
                     </div>
                     
                     <div class="submenu-overlay"></div>
                     <div class="submenu submenu--mega" id="mega-menu-content" aria-hidden="true">
-                        <div class="submenu__header">
-                            <h2>Navegue por todas as categorias</h2>
-                            <button class="submenu__close" aria-label="Fechar menu">
-                                <i class="fas fa-times"></i>
-                            </button>
+                    <div class="submenu__header">
+                        <h2>Navegue por todas as categorias</h2>
+                        <button class="submenu__close" aria-label="Fechar menu">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="submenu__columns">
+                        <!-- Apenas títulos clicáveis -->
+                        <div class="submenu__column">
+                            <a href="/acessorios-e-vestuarios" class="submenu__title-link">
+                                <h3 class="submenu__title">Acessórios e Vestuários</h3>
+                            </a>
                         </div>
-                        <div class="submenu__columns">
-                            <!-- Apenas títulos clicáveis -->
-                            <div class="submenu__column">
-                                <a href="../categoria/acessorios-e-vestuarios" class="submenu__title-link">
-                                    <h3 class="submenu__title">Acessórios e Vestuários</h3>
-                                </a>
-                            </div>
-                            <div class="submenu__column">
-                                <a href="../categoria/anestesico" class="submenu__title-link">
-                                    <h3 class="submenu__title">Anestésico</h3>
-                                </a>
-                            </div>
-                            <div class="submenu__column">
-                                <a href="../categoria/biosseguranca" class="submenu__title-link">
-                                    <h3 class="submenu__title">Biossegurança</h3>
-                                </a>
-                            </div>
-                            <div class="submenu__column">
-                                <a href="../categoria/brocas" class="submenu__title-link">
-                                    <h3 class="submenu__title">Brocas</h3>
-                                </a>
-                            </div>
+                        <div class="submenu__column">
+                            <a href="/anestesico" class="submenu__title-link">
+                                <h3 class="submenu__title">Anestésico</h3>
+                            </a>
+                        </div>
+                        <div class="submenu__column">
+                            <a href="/biosseguranca" class="submenu__title-link">
+                                <h3 class="submenu__title">Biossegurança</h3>
+                            </a>
+                        </div>
+                        <div class="submenu__column">
+                            <a href="/brocas" class="submenu__title-link">
+                                <h3 class="submenu__title">Brocas</h3>
+                            </a>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Breadcrumb -->
+     <!-- Breadcrumb -->
     <div class="breadcrumbs">
         <div class="container">
             <ul class="breadcrumb__list">
                 <li class="breadcrumb__item">
                     <a href="/pages/home/index.html" class="breadcrumb__link">Home</a>
                 </li>
-                <li class="breadcrumb__item">
-                    <span class="breadcrumb__link">Quem Somos</span>
-                </li>
+
+                <li class="breadcrumb__item">                                                        
+                    <span class="breadcrumb__link">Quem Somos</span>                                 
+                </li>  
             </ul>
         </div>
     </div>
@@ -301,21 +306,21 @@
                 <div class="footer-column">
                     <h4 class="footer-column__title">INSTITUCIONAL</h4>
                     <ul class="footer-column__list">
-                        <li><a href="quem-somos.html" class="footer-link">Quem Somos</a></li>
-                        <li><a href="estudantes.html" class="footer-link">Estudantes</a></li>
-                        <li><a href="revenda.html" class="footer-link">Revenda</a></li>
-                        <li><a href="#" class="footer-link">Login/Cadastro</a></li>
-                        <li><a href="trabalhe-conosco.html" class="footer-link">Trabalhe Conosco</a></li>
+                        <li><a href="/pages/institucional/quem-somos.html" class="footer-link">Quem Somos</a></li>
+                        <li><a href="/pages/odontoverse/odontoverse.html" class="footer-link">Estudantes</a></li>
+                        <li><a href="/institucional/revenda/index.html" class="footer-link">Revenda</a></li>
+                        <li><a href="/pages/login/login.html" class="footer-link">Login/Cadastro</a></li>
+                        <li><a href="https://odonto-master.rds.land/trabalhe-conosco   " class="footer-link">Trabalhe Conosco</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-column">
                     <h4 class="footer-column__title">AJUDA</h4>
                     <ul class="footer-column__list">
-                        <li><a href="#" class="footer-link">Como Comprar</a></li>
-                        <li><a href="#" class="footer-link">Trocas e Devoluções</a></li>
-                        <li><a href="#" class="footer-link">Política de Privacidade</a></li>
-                        <li><a href="#" class="footer-link">Cashback de Frete</a></li>
+                        <li><a href="/pages/ajuda/como-comprar.html" class="footer-link">Como Comprar</a></li>
+                        <li><a href="/pages/ajuda/trocas-e-devolucoes.html" class="footer-link">Trocas e Devoluções</a></li>
+                        <li><a href="/ajuda/politica-privacidade/index.html" class="footer-link">Política de Privacidade</a></li>
+                        <li><a href="/ajuda/cashback-frete/index.html" class="footer-link">Cashback de Frete</a></li>
                     </ul>
                 </div>
 
@@ -377,6 +382,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="/assets/js/script.js"></script>
     <script src="quem-somos.js"></script>
 </body>
 </html>

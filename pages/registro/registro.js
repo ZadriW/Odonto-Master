@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-<<<<<<< HEAD
-=======
+
+
     console.log('Registration page loaded');
     
->>>>>>> 00d02e1a4a82ef7b0c1f7221ec18dd04dfbaa85f
+
     // Person type tabs
     const tabButtons = document.querySelectorAll('.tab-button');
     const individualFields = document.getElementById('individualFields');
@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorNotification = document.getElementById('errorNotification');
     const errorList = document.getElementById('errorList');
     
-<<<<<<< HEAD
-=======
+
+
     console.log('Elements found:', {
         tabButtons: tabButtons.length,
         individualFields: !!individualFields,
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
     
->>>>>>> 00d02e1a4a82ef7b0c1f7221ec18dd04dfbaa85f
+
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
             // Update active tab
@@ -86,9 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData(registrationForm);
             const data = Object.fromEntries(formData.entries());
             
-<<<<<<< HEAD
-
-=======
             console.log('Form data collected:', data);
             
             // Simple validation
@@ -99,14 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Check if passwords match
             if (data.password && data.confirmPassword && data.password !== data.confirmPassword) {
                 validationErrors.push({ field: 'confirmPassword', message: 'As senhas não coincidem.' });
-            }
-            
-            // Additional password validation
-            if (data.password && data.password.length > 0) {
-                const passwordStrength = updatePasswordStrength(data.password);
-                if (passwordStrength < 3) {
-                    validationErrors.push({ field: 'password', message: 'Por favor, escolha uma senha mais forte. A senha deve conter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais.' });
-                }
             }
             
             console.log('Final validation errors:', validationErrors);
@@ -121,14 +110,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 return;
             }
->>>>>>> 00d02e1a4a82ef7b0c1f7221ec18dd04dfbaa85f
+
             
             console.log('Form is valid, proceeding with submission');
             
             // Show loading state
             const registrationButton = registrationForm.querySelector('.registration-button');
             const originalButtonText = registrationButton.innerHTML;
-            registrationButton.innerHTML = '<i class=\"fas fa-spinner fa-spin\"></i> Criando conta...';
+            registrationButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Criando conta...';
             registrationButton.disabled = true;
             
             // Simulate registration process (in a real app, this would be an API call)
@@ -456,8 +445,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // This function is kept for compatibility but not used in the new validation
         return true;
     }
-        });
-    }
+      
     
     // Password strength indicator
     const passwordInput = document.getElementById('password');
@@ -478,6 +466,22 @@ document.addEventListener('DOMContentLoaded', function() {
             const password = this.value;
             updatePasswordStrength(password);
             checkPasswordRequirements(password);
+        });
+        
+        // Add blur event to hide requirements when user leaves the field
+        passwordInput.addEventListener('blur', function() {
+            // Only hide if there's no error
+            const hasError = this.classList.contains('error');
+            if (!hasError) {
+                passwordRequirements.style.display = 'none';
+            }
+        });
+        
+        // Add focus event to show requirements when user enters the field
+        passwordInput.addEventListener('focus', function() {
+            if (this.value.length > 0) {
+                checkPasswordRequirements(this.value);
+            }
         });
     }
     
@@ -506,28 +510,38 @@ document.addEventListener('DOMContentLoaded', function() {
             searchCepBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Buscando...';
             searchCepBtn.disabled = true;
             
-            // Simulate CEP search (in a real app, this would be an API call to ViaCEP or similar)
-            setTimeout(() => {
-                // Reset button state
-                searchCepBtn.innerHTML = originalBtnText;
-                searchCepBtn.disabled = false;
-                
-                // Simulate successful CEP search with mock data
-                if (cep === '40000000') {
-                    document.getElementById('street').value = 'Rua Exemplo';
-                    document.getElementById('neighborhood').value = 'Bairro Exemplo';
-                    document.getElementById('city').value = 'Salvador';
-                    document.getElementById('state').value = 'BA';
-                } else {
-                    // For other CEPs, show a generic example
-                    document.getElementById('street').value = 'Rua dos Testes';
-                    document.getElementById('neighborhood').value = 'Centro';
-                    document.getElementById('city').value = 'Cidade Exemplo';
-                    document.getElementById('state').value = 'EX';
-                }
-                
-                alert('CEP encontrado! Os campos de endereço foram preenchidos automaticamente.');
-            }, 1500);
+            // Call ViaCEP API to search for CEP
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => response.json())
+                .then(data => {
+                    // Reset button state
+                    searchCepBtn.innerHTML = originalBtnText;
+                    searchCepBtn.disabled = false;
+                    
+                    if (data.erro) {
+                        alert('CEP não encontrado. Por favor, verifique o número do CEP e tente novamente.');
+                        return;
+                    }
+                    
+                    // Fill address fields with retrieved data
+                    document.getElementById('street').value = data.logradouro || '';
+                    document.getElementById('neighborhood').value = data.bairro || '';
+                    document.getElementById('city').value = data.localidade || '';
+                    document.getElementById('state').value = data.uf || '';
+                    
+                    // Focus on number field after filling address
+                    document.getElementById('number').focus();
+                    
+                    alert('CEP encontrado! Os campos de endereço foram preenchidos automaticamente.');
+                })
+                .catch(error => {
+                    // Reset button state
+                    searchCepBtn.innerHTML = originalBtnText;
+                    searchCepBtn.disabled = false;
+                    
+                    console.error('Error searching CEP:', error);
+                    alert('Ocorreu um erro ao buscar o CEP. Por favor, tente novamente mais tarde.');
+                });
         });
     }
     
@@ -722,12 +736,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Password validation (common to both)
         if (!data.password || data.password.length < 8) {
             errors.push({ field: 'password', message: 'A senha deve ter pelo menos 8 caracteres.' });
-        }
-        
-        // Check password strength
-        const passwordStrength = updatePasswordStrength(data.password);
-        if (passwordStrength < 3) {
-            errors.push({ field: 'password', message: 'Por favor, escolha uma senha mais forte. A senha deve conter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais.' });
+        } else {
+            // Check password strength requirements
+            const passwordCheck = checkPasswordRequirements(data.password);
+            if (!passwordCheck.isValid) {
+                errors.push({ field: 'password', message: 'Por favor, escolha uma senha mais forte. Verifique os requisitos abaixo do campo de senha.' });
+            }
         }
         
         // Password confirmation validation
@@ -772,7 +786,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (password.length === 0) {
             passwordStrength.innerHTML = '';
-            return;
+            return 0;
         }
         
         let strength = 0;
@@ -821,7 +835,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (password.length === 0) {
             passwordRequirements.style.display = 'none';
-            return true;
+            return { isValid: false, failedRequirements: [] };
         }
         
         if (failedRequirements.length > 0) {
@@ -835,10 +849,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     }).join('')}
                 </ul>
             `;
-            return false;
+            return { isValid: false, failedRequirements };
         } else {
             passwordRequirements.style.display = 'none';
-            return true;
+            return { isValid: true, failedRequirements: [] };
         }
     }
     
@@ -914,4 +928,3 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-});

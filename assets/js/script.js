@@ -1,5 +1,5 @@
 /**
- * @version 2.0.0
+ * @version 2.1.0
  * @author Odonto Master Development Team
  * =================================================================================
  */
@@ -803,61 +803,61 @@ class SearchSystem {
     }
 }
 
-    // =================================================================================
-    // ===== NOVO MÓDULO: GERENCIADOR DE UI DO CARRINHO ================================
-    // =================================================================================
-    class CartUIManager {
-        constructor() {
-            this.cartContainer = document.querySelector('.shopping-cart');
-            if (!this.cartContainer) return;
+// =================================================================================
+// ===== NOVO MÓDULO: GERENCIADOR DE UI DO CARRINHO ================================
+// =================================================================================
+class CartUIManager {
+    constructor() {
+        this.cartContainer = document.querySelector('.shopping-cart');
+        if (!this.cartContainer) return;
 
-            this.dropdown = this.cartContainer.querySelector('.shopping-cart__dropdown');
-            this.hideTimeout = null;
+        this.dropdown = this.cartContainer.querySelector('.shopping-cart__dropdown');
+        this.hideTimeout = null;
 
-            this.init();
-        }
-
-        init() {
-            // Eventos para mostrar e esconder o dropdown
-            this.cartContainer.addEventListener('mouseenter', () => this.showDropdown());
-            this.cartContainer.addEventListener('mouseleave', () => this.startHideTimer());
-            
-            // Eventos para acessibilidade (navegação por teclado)
-            this.cartContainer.querySelector('.shopping-cart__trigger').addEventListener('focus', () => this.showDropdown());
-            this.cartContainer.addEventListener('focusout', (e) => {
-                // Esconde se o foco sair de dentro do container do carrinho
-                 if (!window.cart.isUpdating && !this.cartContainer.contains(e.relatedTarget)) {
-                this.hideDropdown();
-                }
-            });
-            
-            // Mantém o dropdown aberto se o foco estiver dentro dele
-            this.dropdown.addEventListener('mouseenter', () => this.cancelHideTimer());
-
-            Logger.info('Gerenciador de UI do Carrinho inicializado');
-        }
-
-        showDropdown() {
-            this.cancelHideTimer();
-            this.dropdown.classList.add('is-active');
-        }
-
-        hideDropdown() {
-            this.dropdown.classList.remove('is-active');
-        }
-
-        startHideTimer() {
-            // ATRASO INTELIGENTE: Espera 300ms antes de fechar
-            this.hideTimeout = setTimeout(() => {
-                this.hideDropdown();
-            }, 50);
-        }
-
-        cancelHideTimer() {
-            // Cancela o fechamento se o mouse voltar para o carrinho ou entrar no dropdown
-            clearTimeout(this.hideTimeout);
-        }
+        this.init();
     }
+
+    init() {
+        // Eventos para mostrar e esconder o dropdown
+        this.cartContainer.addEventListener('mouseenter', () => this.showDropdown());
+        this.cartContainer.addEventListener('mouseleave', () => this.startHideTimer());
+        
+        // Eventos para acessibilidade (navegação por teclado)
+        this.cartContainer.querySelector('.shopping-cart__trigger').addEventListener('focus', () => this.showDropdown());
+        this.cartContainer.addEventListener('focusout', (e) => {
+            // Esconde se o foco sair de dentro do container do carrinho
+             if (!window.cart.isUpdating && !this.cartContainer.contains(e.relatedTarget)) {
+            this.hideDropdown();
+            }
+        });
+        
+        // Mantém o dropdown aberto se o foco estiver dentro dele
+        this.dropdown.addEventListener('mouseenter', () => this.cancelHideTimer());
+
+        Logger.info('Gerenciador de UI do Carrinho inicializado');
+    }
+
+    showDropdown() {
+        this.cancelHideTimer();
+        this.dropdown.classList.add('is-active');
+    }
+
+    hideDropdown() {
+        this.dropdown.classList.remove('is-active');
+    }
+
+    startHideTimer() {
+        // ATRASO INTELIGENTE: Espera 300ms antes de fechar
+        this.hideTimeout = setTimeout(() => {
+            this.hideDropdown();
+        }, 50);
+    }
+
+    cancelHideTimer() {
+        // Cancela o fechamento se o mouse voltar para o carrinho ou entrar no dropdown
+        clearTimeout(this.hideTimeout);
+    }
+}
 
 // =================================================================================
 // ===== NOVO MÓDULO: GERENCIADOR DE UI DO ATENDIMENTO =============================
@@ -1047,28 +1047,46 @@ class Carousel {
     setupTouchSupport() {
         let startX = 0;
         let currentX = 0;
+        let startY = 0;
+        let currentY = 0;
+        let startTime = 0;
         
         this.track.addEventListener('touchstart', e => {
             startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            startTime = new Date().getTime();
             this.stopAutoplay();
-        });
+        }, { passive: true });
         
         this.track.addEventListener('touchmove', e => {
             currentX = e.touches[0].clientX;
-            const diff = startX - currentX;
+            currentY = e.touches[0].clientY;
             
-            if (Math.abs(diff) > 50) {
+            // Only handle horizontal swipes
+            const diffX = startX - currentX;
+            const diffY = Math.abs(startY - currentY);
+            
+            // If horizontal movement is greater than vertical, prevent default
+            if (Math.abs(diffX) > diffY && Math.abs(diffX) > 10) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        this.track.addEventListener('touchend', () => {
+            const diff = startX - currentX;
+            const deltaTime = new Date().getTime() - startTime;
+            
+            // Only consider it a swipe if it's fast enough or long enough
+            if (Math.abs(diff) > 50 || (Math.abs(diff) > 20 && deltaTime < 300)) {
                 if (diff > 0) {
                     this.next();
                 } else {
                     this.prev();
                 }
             }
-        });
-        
-        this.track.addEventListener('touchend', () => {
+            
             this.startAutoplay();
-        });
+        }, { passive: true });
     }
     
     goTo(index) {
@@ -1342,11 +1360,12 @@ const mockProductsEquipamentos = [
 ];
 
 // Inicialização dentro do DOMContentLoaded para garantir que os elementos existam
-document.addEventListener('DOMContentLoaded', () => {
-    new ProductsCarousel('productsTrack', 'carouselDots', mockProductsDestaques);
-    new ProductsCarousel('productsTrackLancamentos', 'carouselDotsLancamentos', mockProductsLancamentos);
-    new ProductsCarousel('productsTrackEquipamentos', 'carouselDotsEquipamentos', mockProductsEquipamentos);
-});
+// REMOVED: Dynamic carousel initialization to use static HTML instead
+// document.addEventListener('DOMContentLoaded', () => {
+//     new ProductsCarousel('productsTrack', 'carouselDots', mockProductsDestaques);
+//     new ProductsCarousel('productsTrackLancamentos', 'carouselDotsLancamentos', mockProductsLancamentos);
+//     new ProductsCarousel('productsTrackEquipamentos', 'carouselDotsEquipamentos', mockProductsEquipamentos);
+// });
 
 // ===== SISTEMA DE MEGA MENU =====
 class MegaMenu {
@@ -1460,14 +1479,18 @@ class AnimationManager {
     
     setupIntersectionObserver() {
         const options = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
         };
         
+        // Create intersection observer
         this.observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
+                    // Removido: entry.target.classList.add('animate-in');
+                    // Em vez disso, vamos usar uma classe CSS para mostrar o elemento
+                    entry.target.classList.add('visible');
                     this.observer.unobserve(entry.target);
                 }
             });
@@ -1484,6 +1507,66 @@ class AnimationManager {
     
     animateOut(element, animation = 'fadeOutDown') {
         element.classList.add(`animate-${animation}`);
+    }
+}
+
+/*
+// ===== SISTEMA DE CABEÇALHO INTELIGENTE =====
+class SmartHeader {
+    constructor() {
+        this.header = document.querySelector('.main-header');
+        this.lastScrollTop = 0;
+        this.delta = 5; // Minimum scroll amount to trigger header hide/show
+        this.ticking = false;
+        
+        if (this.header) {
+            // this.init();
+        }
+    }
+    
+    init() {
+        this.bindEvents();
+        // Logger.info('Sistema de cabeçalho inteligente inicializado');
+    }
+    
+    bindEvents() {
+        window.addEventListener('scroll', () => {
+            // Use requestAnimationFrame for better performance
+            if (!this.ticking) {
+                requestAnimationFrame(() => {
+                    this.update();
+                    this.ticking = false;
+                });
+                this.ticking = true;
+            }
+        });
+    }
+    
+    update() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Only trigger if scrolled more than delta
+        if (Math.abs(this.lastScrollTop - scrollTop) <= this.delta) {
+            return;
+        }
+        
+        // Hide header when scrolling down
+        if (scrollTop > this.lastScrollTop && scrollTop > this.header.offsetHeight) {
+            // this.header.style.transform = 'translateY(-100%)';
+        } 
+        // Show header when scrolling up
+        else if (scrollTop + window.innerHeight < document.documentElement.offsetHeight) {
+            // this.header.style.transform = 'translateY(0)';
+        }
+        
+        this.lastScrollTop = scrollTop;
+    }
+}
+*/
+
+class SmartHeader {
+    constructor() {
+        // Classe mantida apenas para compatibilidade, mas sem funcionalidade
     }
 }
 
@@ -1589,11 +1672,11 @@ class OdontoMasterApp {
         this.modules.performance = new PerformanceMonitor();
         this.modules.cartUI = new CartUIManager();
         this.modules.customerServiceUI = new CustomerServiceUIManager();
+        // this.modules.smartHeader = new SmartHeader();
         
         // Inicializar carrosséis
         const carousels = document.querySelectorAll('.highlight-carousel');
         this.modules.carousels = Array.from(carousels).map(carousel => new Carousel(carousel));
-        
         
         Logger.info(`${Object.keys(this.modules).length} módulos inicializados`);
     }
@@ -1761,10 +1844,11 @@ if (typeof module !== 'undefined' && module.exports) {
         Carousel,
         MegaMenu,
         AnimationManager,
-        PerfomanceMonitor
+        PerformanceMonitor,
+        SmartHeader
     };
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { OdontoMasterApp, CONFIG, Utils, Logger, EventBus, Storage, CookieManager, NotificationSystem, ShoppingCart, SearchSystem, MobileMenu, Carousel, MegaMenu, AnimationManager, PerformanceMonitor };
+    module.exports = { OdontoMasterApp, CONFIG, Utils, Logger, EventBus, Storage, CookieManager, NotificationSystem, ShoppingCart, SearchSystem, MobileMenu, Carousel, MegaMenu, AnimationManager, PerformanceMonitor, SmartHeader };
 }
