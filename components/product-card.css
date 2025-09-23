@@ -4,20 +4,17 @@
   border: 1px solid var(--cor-borda-clara);
   border-radius: var(--border-radius-lg);
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: all var(--transition-normal);
   position: relative;
   cursor: pointer;
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* Contain hover effects within carousel boundaries */
-  contain: layout style paint;
 }
 
 .product-card:hover {
-  /* Reduced transform to prevent overflow issues */
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
   border-color: var(--cor-primaria);
 }
 
@@ -35,14 +32,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.2s ease;
-  /* Prevent image from overflowing container on hover */
-  will-change: transform;
+  transition: transform var(--transition-normal);
 }
 
 .product-card:hover .product-card__image img {
-  /* Reduced scale to prevent overflow */
-  transform: scale(1.02);
+  transform: scale(1.05);
 }
 
 .product-badge {
@@ -102,7 +96,7 @@
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all var(--transition-normal);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-top: auto;

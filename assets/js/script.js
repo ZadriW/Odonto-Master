@@ -1047,46 +1047,28 @@ class Carousel {
     setupTouchSupport() {
         let startX = 0;
         let currentX = 0;
-        let startY = 0;
-        let currentY = 0;
-        let startTime = 0;
         
         this.track.addEventListener('touchstart', e => {
             startX = e.touches[0].clientX;
-            startY = e.touches[0].clientY;
-            startTime = new Date().getTime();
             this.stopAutoplay();
-        }, { passive: true });
+        });
         
         this.track.addEventListener('touchmove', e => {
             currentX = e.touches[0].clientX;
-            currentY = e.touches[0].clientY;
-            
-            // Only handle horizontal swipes
-            const diffX = startX - currentX;
-            const diffY = Math.abs(startY - currentY);
-            
-            // If horizontal movement is greater than vertical, prevent default
-            if (Math.abs(diffX) > diffY && Math.abs(diffX) > 10) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-        
-        this.track.addEventListener('touchend', () => {
             const diff = startX - currentX;
-            const deltaTime = new Date().getTime() - startTime;
             
-            // Only consider it a swipe if it's fast enough or long enough
-            if (Math.abs(diff) > 50 || (Math.abs(diff) > 20 && deltaTime < 300)) {
+            if (Math.abs(diff) > 50) {
                 if (diff > 0) {
                     this.next();
                 } else {
                     this.prev();
                 }
             }
-            
+        });
+        
+        this.track.addEventListener('touchend', () => {
             this.startAutoplay();
-        }, { passive: true });
+        });
     }
     
     goTo(index) {
@@ -1360,12 +1342,11 @@ const mockProductsEquipamentos = [
 ];
 
 // Inicialização dentro do DOMContentLoaded para garantir que os elementos existam
-// REMOVED: Dynamic carousel initialization to use static HTML instead
-// document.addEventListener('DOMContentLoaded', () => {
-//     new ProductsCarousel('productsTrack', 'carouselDots', mockProductsDestaques);
-//     new ProductsCarousel('productsTrackLancamentos', 'carouselDotsLancamentos', mockProductsLancamentos);
-//     new ProductsCarousel('productsTrackEquipamentos', 'carouselDotsEquipamentos', mockProductsEquipamentos);
-// });
+document.addEventListener('DOMContentLoaded', () => {
+    new ProductsCarousel('productsTrack', 'carouselDots', mockProductsDestaques);
+    new ProductsCarousel('productsTrackLancamentos', 'carouselDotsLancamentos', mockProductsLancamentos);
+    new ProductsCarousel('productsTrackEquipamentos', 'carouselDotsEquipamentos', mockProductsEquipamentos);
+});
 
 // ===== SISTEMA DE MEGA MENU =====
 class MegaMenu {
@@ -1479,18 +1460,14 @@ class AnimationManager {
     
     setupIntersectionObserver() {
         const options = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         };
         
-        // Create intersection observer
         this.observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Removido: entry.target.classList.add('animate-in');
-                    // Em vez disso, vamos usar uma classe CSS para mostrar o elemento
-                    entry.target.classList.add('visible');
+                    entry.target.classList.add('animate-in');
                     this.observer.unobserve(entry.target);
                 }
             });
@@ -1507,66 +1484,6 @@ class AnimationManager {
     
     animateOut(element, animation = 'fadeOutDown') {
         element.classList.add(`animate-${animation}`);
-    }
-}
-
-/*
-// ===== SISTEMA DE CABEÇALHO INTELIGENTE =====
-class SmartHeader {
-    constructor() {
-        this.header = document.querySelector('.main-header');
-        this.lastScrollTop = 0;
-        this.delta = 5; // Minimum scroll amount to trigger header hide/show
-        this.ticking = false;
-        
-        if (this.header) {
-            // this.init();
-        }
-    }
-    
-    init() {
-        this.bindEvents();
-        // Logger.info('Sistema de cabeçalho inteligente inicializado');
-    }
-    
-    bindEvents() {
-        window.addEventListener('scroll', () => {
-            // Use requestAnimationFrame for better performance
-            if (!this.ticking) {
-                requestAnimationFrame(() => {
-                    this.update();
-                    this.ticking = false;
-                });
-                this.ticking = true;
-            }
-        });
-    }
-    
-    update() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        // Only trigger if scrolled more than delta
-        if (Math.abs(this.lastScrollTop - scrollTop) <= this.delta) {
-            return;
-        }
-        
-        // Hide header when scrolling down
-        if (scrollTop > this.lastScrollTop && scrollTop > this.header.offsetHeight) {
-            // this.header.style.transform = 'translateY(-100%)';
-        } 
-        // Show header when scrolling up
-        else if (scrollTop + window.innerHeight < document.documentElement.offsetHeight) {
-            // this.header.style.transform = 'translateY(0)';
-        }
-        
-        this.lastScrollTop = scrollTop;
-    }
-}
-*/
-
-class SmartHeader {
-    constructor() {
-        // Classe mantida apenas para compatibilidade, mas sem funcionalidade
     }
 }
 
@@ -1672,7 +1589,6 @@ class OdontoMasterApp {
         this.modules.performance = new PerformanceMonitor();
         this.modules.cartUI = new CartUIManager();
         this.modules.customerServiceUI = new CustomerServiceUIManager();
-        // this.modules.smartHeader = new SmartHeader();
         
         // Inicializar carrosséis
         const carousels = document.querySelectorAll('.highlight-carousel');
@@ -1802,7 +1718,63 @@ class OdontoMasterApp {
     }
 }
 
-// ===== FUNÇÃO DE LOGIN =====
+
+// ===== FUNÇÃO PARA LOGIN =====
+function login() {
+    // Esta função pode ser expandida conforme necessário
+    window.location.href = '/pages/login/login.html';
+}
+
+// ===== FUNÇÃO PARA ATUALIZAR SAUDAÇÃO DO USUÁRIO =====
+function updateUserGreeting() {
+    // Verificar se há informações do usuário no localStorage
+    const userFirstName = localStorage.getItem('userFirstName');
+    
+    if (userFirstName) {
+        // Atualizar o texto de saudação
+        const greetingElement = document.getElementById('userGreeting');
+        
+        if (greetingElement) {
+            // Verificar se o elemento é um <a> ou <p>
+            if (greetingElement.tagName === 'A') {
+                greetingElement.textContent = `Olá ${userFirstName}, bem-vindo!`;
+                greetingElement.href = '/pages/minha-conta/index.html';
+            } else {
+                // Para o elemento <p> na página home
+                greetingElement.innerHTML = `Olá ${userFirstName}, bem-vindo! | <a href="#" onclick="logout()" alt="Sair">Sair</a>`;
+            }
+        }
+    }
+}
+
+// ===== FUNÇÃO DE LOGOUT =====
+function logout() {
+    console.log('logout chamado');
+    
+    // Remover informações do usuário do localStorage
+    localStorage.removeItem('userFirstName');
+    console.log('Nome removido do localStorage');
+    
+    // Atualizar a saudação
+    const greetingElement = document.getElementById('userGreeting');
+    if (greetingElement) {
+        // Verificar se o elemento é um <a> ou <p>
+        if (greetingElement.tagName === 'A') {
+            greetingElement.textContent = 'Olá Visitante, identifique-se aqui';
+            greetingElement.href = '/pages/login/login.html';
+            console.log('Atualizado elemento <a> para visitante');
+        } else {
+            // Para o elemento <p> na página home
+            greetingElement.innerHTML = 'Olá Visitante, identifique-se <a href="/pages/login/login.html" alt="Tela de Login">aqui</a> ou <a href="/pages/registro/index.html" alt="Tela de Registro">registre-se</a>';
+            console.log('Atualizado elemento <p> para visitante');
+        }
+    }
+    
+    // Redirecionar para a página inicial
+    window.location.href = '/pages/home/index.html';
+}
+
+// ===== FUNÇÃO PARA LOGIN =====
 function login() {
     // Esta função pode ser expandida conforme necessário
     window.location.href = '/pages/login/login.html';
@@ -1825,7 +1797,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar aplicação
     window.app = new OdontoMasterApp();
     window.app.init();
+    
+    // Atualizar saudação do usuário
+    updateUserGreeting();
 });
+
+// Teste rápido para verificar se as funções estão disponíveis
+if (typeof window !== 'undefined') {
+    window.testUserGreeting = function() {
+        const name = localStorage.getItem('userFirstName');
+        if (name) {
+            console.log('Usuário logado:', name);
+        } else {
+            console.log('Nenhum usuário logado');
+        }
+    };
+}
 
 // ===== EXPORTAÇÕES PARA DESENVOLVIMENTO =====
 if (typeof module !== 'undefined' && module.exports) {
@@ -1844,11 +1831,10 @@ if (typeof module !== 'undefined' && module.exports) {
         Carousel,
         MegaMenu,
         AnimationManager,
-        PerformanceMonitor,
-        SmartHeader
+        PerformanceMonitor
     };
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { OdontoMasterApp, CONFIG, Utils, Logger, EventBus, Storage, CookieManager, NotificationSystem, ShoppingCart, SearchSystem, MobileMenu, Carousel, MegaMenu, AnimationManager, PerformanceMonitor, SmartHeader };
+    module.exports = { OdontoMasterApp, CONFIG, Utils, Logger, EventBus, Storage, CookieManager, NotificationSystem, ShoppingCart, SearchSystem, MobileMenu, Carousel, MegaMenu, AnimationManager, PerformanceMonitor };
 }

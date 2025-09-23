@@ -212,8 +212,10 @@ input:focus, textarea:focus, select:focus {
 .main-header {
     background: #fff;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    position: static;
+    position: sticky;
+    top: 0;
     z-index: 1000;
+    
 }
 
 /* Top Banner */
@@ -613,7 +615,7 @@ input:focus, textarea:focus, select:focus {
     text-decoration: none;
     font-weight: 500;
     font-size: 14px;
-    transition: background 0.2s ease;
+    transition: all var(--transition-normal);
     white-space: nowrap;
     position: relative;
     border-right: 1px solid rgba(255, 255, 255, 0.1);
@@ -625,7 +627,7 @@ input:focus, textarea:focus, select:focus {
     background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
     transform: none;
     box-shadow: none;
-    transition: background 0.2s ease;
+    transition: var(--transition-slow);
 }
 
 .menu-link::before {
@@ -821,14 +823,8 @@ input:focus, textarea:focus, select:focus {
 /* ===== BREADCRUMB ===== */
 .breadcrumbs {
     background: var(--cor-primaria-escura);
-    padding: 15px 0;
+    padding: 15px 15px;
     border-bottom: 1px solid var(--cor-borda-clara);
-}
-
-.breadcrumbs .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .breadcrumb__list {
@@ -838,11 +834,13 @@ input:focus, textarea:focus, select:focus {
     margin: 0;
     padding: 0;
     gap: 5px;
+    
 }
 
 .breadcrumb__item {
     display: flex;
     align-items: center;
+    
 }
 
 .breadcrumb__item:not(:last-child)::after {
@@ -856,7 +854,7 @@ input:focus, textarea:focus, select:focus {
     color: var(--cor-texto-branca);
     text-decoration: none;
     font-size: 14px;
-    transition: color 0.2s ease;
+    transition: color var(--transition-fast);
 }
 
 .breadcrumb__link:hover {
@@ -903,14 +901,6 @@ input:focus, textarea:focus, select:focus {
     border: 1px solid var(--cor-borda-clara);
     box-shadow: var(--shadow-md);
     transition: all var(--transition-normal);
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.home-card.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 
@@ -947,8 +937,6 @@ input:focus, textarea:focus, select:focus {
     border-radius: var(--border-radius-lg);
     overflow: hidden;
     box-shadow: 0 3px 6px rgba(0,0,0,0.6);
-    /* Ensure proper containment */
-    contain: layout style paint;
 }
 
 .carousel-viewport {
@@ -960,9 +948,6 @@ input:focus, textarea:focus, select:focus {
     will-change: transform;
     transform: translateX(0);
     transition: transform 400ms cubic-bezier(.2,.6,.2,1);
-    /* Ensure smooth rendering */
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
 }
 
 .carousel-slide {
@@ -975,8 +960,6 @@ input:focus, textarea:focus, select:focus {
     width: 100%;
     height: 260px;
     object-fit: cover;
-    /* Prevent image from overflowing container */
-    will-change: transform;
 }
 
 .carousel-nav {
@@ -994,16 +977,10 @@ input:focus, textarea:focus, select:focus {
     cursor: pointer;
     transition: background .2s ease;
     z-index: 2;
-    /* Ensure buttons are properly focusable */
-    outline: none;
 }
 
 .carousel-nav:hover { 
     background: var(--cor-primaria-escura); 
-}
-
-.carousel-nav:focus {
-    box-shadow: 0 0 0 3px rgba(28, 87, 135, 0.5);
 }
 
 .carousel-nav--prev { left: 10px; }
@@ -1020,24 +997,18 @@ input:focus, textarea:focus, select:focus {
 }
 
 .carousel-dot {
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    border: 2px solid var(--cor-primaria);
+    border: 1px solid var(--cor-primaria);
     background: #fff;
     opacity: .8;
     transition: background .2s ease, transform .2s ease;
-    /* Ensure proper focus styling */
-    outline: none;
 }
 
 .carousel-dot.is-active {
     background: var(--cor-primaria);
-    transform: scale(1.2);
-}
-
-.carousel-dot:focus {
-    box-shadow: 0 0 0 3px rgba(28, 87, 135, 0.3);
+    transform: scale(1.1);
 }
 
 /* ===== MAIN CONTENT ===== */
@@ -1074,8 +1045,6 @@ input:focus, textarea:focus, select:focus {
             position: relative;
             margin: 0 auto;
             padding: 0 60px;
-            /* Ensure proper containment of all carousel elements */
-            contain: layout style paint;
         }
 
         /* Carrossel Wrapper */
@@ -1083,39 +1052,20 @@ input:focus, textarea:focus, select:focus {
             overflow: hidden;
             margin: 30px auto;
             border-radius: var(--border-radius-lg);
-            /* Ensure proper clipping of child elements */
-            contain: layout style paint;
         }
 
         /* Carousel Track */
         .products-carousel-track {
             display: flex;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.2, 0.6, 0.2, 1);
             will-change: transform;
-            /* Ensure smooth rendering */
-            backface-visibility: hidden;
-            transform-style: preserve-3d;
-            /* Add a small buffer to prevent clipping issues */
-            padding: 5px 0;
         }
 
-        /* Product Card */
         /* Product Card */
         .product-slide {
             flex: 0 0 calc(100% / 4);
             padding: 0 15px;
             min-width: 0;
-        }
-        
-        .product-slide.clone {
-            /* Hide cloned elements from screen readers */
-            visibility: visible;
-            position: relative;
-        }
-        
-        .product-slide.clone .product-card-link {
-            /* Prevent interaction with cloned elements */
-            pointer-events: none;
         }
 
         .product-card {
@@ -1123,21 +1073,18 @@ input:focus, textarea:focus, select:focus {
             border: 1px solid var(--cor-borda-clara);
             border-radius: var(--border-radius-lg);
             overflow: hidden;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            transition: all var(--transition-normal);
             position: relative;
             cursor: pointer;
             height: 100%;
             display: flex;
             flex-direction: column;
-            /* Contain hover effects within carousel boundaries */
-            contain: layout style paint;
         }
 
 
         .product-card:hover {
-            /* Reduced transform to prevent overflow issues */
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
             border-color: var(--cor-primaria);
         }
 
@@ -1155,14 +1102,11 @@ input:focus, textarea:focus, select:focus {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.2s ease;
-            /* Prevent image from overflowing container on hover */
-            will-change: transform;
+            transition: transform var(--transition-normal);
         }
 
         .product-card:hover .product-card__image img {
-            /* Reduced scale to prevent overflow */
-            transform: scale(1.02);
+            transform: scale(1.05);
         }
 
         .product-badge {
@@ -1266,24 +1210,20 @@ input:focus, textarea:focus, select:focus {
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background 0.2s ease, transform 0.2s ease;
+            transition: all 0.3s ease;
             z-index: 10;
             font-size: 18px;
-            /* Ensure buttons are properly focusable */
-            outline: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .carousel-nav:hover {
             background: var(--cor-primaria-escura);
             transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
 
         .carousel-nav:active {
             transform: translateY(-50%) scale(0.95);
-        }
-
-        .carousel-nav:focus {
-            box-shadow: 0 0 0 3px rgba(28, 87, 135, 0.5);
         }
 
         .carousel-nav--prev {
@@ -1314,15 +1254,13 @@ input:focus, textarea:focus, select:focus {
         }
 
         .carousel-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             border: 2px solid var(--cor-primaria);
             background: transparent;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
-            /* Ensure proper focus styling for accessibility */
-            outline: none;
+            transition: all 0.3s ease;
         }
 
         .carousel-dot.active {
@@ -1332,10 +1270,6 @@ input:focus, textarea:focus, select:focus {
 
         .carousel-dot:hover:not(.active) {
             background: rgba(28, 87, 135, 0.3);
-        }
-
-        .carousel-dot:focus {
-            box-shadow: 0 0 0 3px rgba(28, 87, 135, 0.3);
         }
 
         /* Responsive Design */
@@ -1547,6 +1481,8 @@ input:focus, textarea:focus, select:focus {
     max-width: 250px;
 }
 
+
+
 .footer-column__title {
     color: #fff;
     margin-bottom: 20px;
@@ -1570,11 +1506,14 @@ input:focus, textarea:focus, select:focus {
 
 .footer-column__list {
     list-style: none;
+    
 }
 
 .footer-column__list li {
     margin-bottom: 10px;
     text-align: center;
+    color: #bdc3c7;
+    
 }
 
 .footer-link {
@@ -1590,7 +1529,8 @@ input:focus, textarea:focus, select:focus {
 }
 
 .footer-link:focus {
-    outline: none;
+    outline: none
+    
 }
 
 
@@ -1808,6 +1748,7 @@ input:focus, textarea:focus, select:focus {
     .footer-bottom {
         flex-direction: column;
         align-items: center;
+        grid-template-columns: 1fr;
         gap: 25px;
     }
     
@@ -1868,7 +1809,31 @@ input:focus, textarea:focus, select:focus {
     }
 }
 
+/* ===== ANIMAÇÕES ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
+.animate-in {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.product-card {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.product-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 /* ===== ACESSIBILIDADE ===== */
 @media (prefers-reduced-motion: reduce) {
