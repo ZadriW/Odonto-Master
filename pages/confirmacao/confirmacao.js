@@ -207,26 +207,46 @@ document.addEventListener('DOMContentLoaded', () => {
         orderItemsContainer.innerHTML = items.map(item => {
             try {
                 // Verifica se o preço está em centavos (como no sistema principal) ou em reais
-                const priceInReais = (item.price > 1000) ? item.price / 100 : item.price;
-                const originalPrice = priceInReais * 1.15; // Preço original com 15% a mais
+                const itemPrice = item.price_current || item.price;
+                const priceInReais = (itemPrice > 1000) ? itemPrice / 100 : itemPrice;
+                const originalPrice = item.price_original ? (item.price_original > 1000 ? item.price_original / 100 : item.price_original) : (priceInReais * 1.15);
+                
+                // Verificar informações de parcelamento
+                let installmentInfo = '';
+                if (item.installments) {
+                    const installmentCount = item.installments.count || 10;
+                    const installmentValue = item.installments.value || (priceInReais / installmentCount);
+                    installmentInfo = `${installmentCount}x sem juros de R$ ${installmentValue.toFixed(2).replace('.', ',')}`;
+                } else {
+                    // Usar padrão de 10x se não houver informações específicas
+                    installmentInfo = `10x sem juros de R$ ${(priceInReais/10).toFixed(2).replace('.', ',')}`;
+                }
                 
                 // Verifica se os valores são números válidos
                 if (isNaN(priceInReais) || isNaN(originalPrice)) {
-                    throw new Error('Invalid price value');
+                    throw new Error(`Invalid price value`);
                 }
+                
+                // Obter informações do produto do banco de dados para usar imagem real
+                const productInfo = window.app ? window.app.productDB.getProduct(item.id) : null;
+                const productImage = productInfo ? productInfo.image : 
+                                   (item.image || `https://placehold.co/60x60/e8ece9/333?text=${encodeURIComponent(item.name.substring(0, 15))}`);
+                
+                const brand = productInfo ? productInfo.brand : 'Marca não especificada';
                 
                 // Adiciona classe para mostrar preços tachados somente quando há cupom
                 const itemClass = hasAppliedCoupon ? 'order-item has-discount' : 'order-item';
                 
                 return `
                 <div class="${itemClass}">
-                    <div class="item-image">
-                        <img src="https://via.placeholder.com/80x80/e8ece9/333?text=${encodeURIComponent(item.name.substring(0, 15))}" alt="${item.name}">
+                    <div class="cart-item__image">
+                        <img src="${productImage}" alt="${item.name}" onerror="this.src='https://placehold.co/60x60/e8ece9/333?text=Produto';">
                     </div>
-                    <div class="item-details">
-                        <h3 class="item-name">${item.name}</h3>
-                        <div class="item-brand">Marca não especificada</div>
+                    <div class="cart-item__info">
+                        <h4 class="item-name">${item.name}</h4>
+                        <div class="item-brand">${brand}</div>
                         <div class="item-quantity">Quantidade: ${item.quantity} unidade${item.quantity > 1 ? 's' : ''}</div>
+                        <div class="item-installment">${installmentInfo}</div>
                     </div>
                     <div class="item-price">
                         <span class="price-original">R$ ${originalPrice.toFixed(2).replace('.', ',')}</span>
@@ -238,11 +258,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Erro ao processar item do carrinho:', item, error);
                 return `
                 <div class="order-item">
-                    <div class="item-image">
-                        <img src="https://via.placeholder.com/80x80/e8ece9/333?text=Erro" alt="Erro">
+                    <div class="cart-item__image">
+                        <img src="https://placehold.co/60x60/e8ece9/333?text=Erro" alt="Erro" onerror="this.src='https://placehold.co/60x60/e8ece9/333?text=Erro';">
                     </div>
-                    <div class="item-details">
-                        <h3 class="item-name">Erro ao carregar item</h3>
+                    <div class="cart-item__info">
+                        <h4 class="item-name">Erro ao carregar item</h4>
                         <div class="item-brand">Dados inválidos</div>
                         <div class="item-quantity">Não foi possível exibir este item</div>
                     </div>
@@ -262,11 +282,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // Calcula o subtotal (verificando se o preço está em centavos ou reais)
             const subtotal = items.reduce((sum, item) => {
                 try {
-                    const priceInReais = (item.price > 1000) ? item.price / 100 : item.price;
+                    // Usar price_current se disponível, senão usar o campo price antigo para compatibilidade
+                    const itemPrice = item.price_current || item.price;
+                    const priceInReais = (itemPrice > 1000) ? itemPrice / 100 : itemPrice;
                     
                     // Verifica se o preço é um número válido
                     if (isNaN(priceInReais)) {
-                        throw new Error(`Preço inválido para o item ${item.name}: ${item.price}`);
+                        throw new Error(`Preço inválido para o item ${item.name}: ${itemPrice}`);
                     }
                     
                     const itemTotal = priceInReais * item.quantity;
@@ -447,7 +469,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Calcula o subtotal (verificando se o preço está em centavos ou reais)
             const subtotal = cartItems.reduce((sum, item) => {
                 try {
-                    const priceInReais = (item.price > 1000) ? item.price / 100 : item.price;
+                    // Usar price_current se dispon�vel, sen�o usar o campo price antigo para compatibilidade\n                    const itemPrice = item.price_current || item.price;\n                    const priceInReais = (itemPrice > 1000) ? itemPrice / 100 : itemPrice;
                     
                     // Verifica se o preço é um número válido
                     if (isNaN(priceInReais)) {
@@ -538,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Calcula o subtotal (verificando se o preço está em centavos ou reais)
             const subtotal = cartItems.reduce((sum, item) => {
                 try {
-                    const priceInReais = (item.price > 1000) ? item.price / 100 : item.price;
+                    // Usar price_current se dispon�vel, sen�o usar o campo price antigo para compatibilidade\n                    const itemPrice = item.price_current || item.price;\n                    const priceInReais = (itemPrice > 1000) ? itemPrice / 100 : itemPrice;
                     
                     // Verifica se o preço é um número válido
                     if (isNaN(priceInReais)) {
