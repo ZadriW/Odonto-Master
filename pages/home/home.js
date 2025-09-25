@@ -1,15 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
+    Logger.info('DOM totalmente carregado, inicializando homepage...');
     // Initialize homepage functionality
     initHomepage();
 });
 
 // Window load event to ensure all resources are loaded
 window.addEventListener('load', function() {
+    Logger.info('Janela totalmente carregada, carregando produtos do JSON...');
     // Load products dynamically from JSON after window is fully loaded
     loadProductsFromJSON();
 });
 
 function initHomepage() {
+    Logger.info('Inicializando homepage...');
     // Initialize product linking for carousel items
     initCarouselProductLinks();
     
@@ -19,13 +22,17 @@ function initHomepage() {
 // ===== DYNAMIC PRODUCT LOADING FROM JSON =====
 async function loadProductsFromJSON() {
     try {
+        Logger.info('Tentando carregar produtos do JSON...');
         // Fetch products from JSON file
         const response = await fetch('/data/products.json');
+        Logger.info('Resposta do fetch:', response);
+        
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const products = await response.json();
+        Logger.info('Produtos carregados:', Object.keys(products).length);
         
         // Update all product sections with dynamic data
         updateFeaturedProducts(products);
@@ -97,6 +104,8 @@ function updateFeaturedProducts(products) {
             }).join('');
         } else {
             Logger.warn('Nenhum produto em destaque encontrado');
+            // Adicionar mensagem de fallback
+            productsTrack.innerHTML = '<p class="no-products-message">Nenhum produto em destaque disponível no momento.</p>';
         }
     } else {
         Logger.warn('Elemento productsTrack não encontrado');
@@ -142,6 +151,8 @@ function updateNewProducts(products) {
             }).join('');
         } else {
             Logger.warn('Nenhum novo produto encontrado');
+            // Adicionar mensagem de fallback
+            productsTrackLancamentos.innerHTML = '<p class="no-products-message">Nenhum lançamento disponível no momento.</p>';
         }
     } else {
         Logger.warn('Elemento productsTrackLancamentos não encontrado');
@@ -188,6 +199,8 @@ function updateBestPrices(products) {
             }).join('');
         } else {
             Logger.warn('Nenhum produto com melhores preços encontrado');
+            // Adicionar mensagem de fallback
+            productsTrackEquipamentos.innerHTML = '<p class="no-products-message">Nenhum equipamento em oferta disponível no momento.</p>';
         }
     } else {
         Logger.warn('Elemento productsTrackEquipamentos não encontrado');
@@ -219,11 +232,13 @@ function updateBestPrices(products) {
 
 // ===== CAROUSEL PRODUCT LINKING FUNCTIONALITY =====
 function initCarouselProductLinks() {
+    Logger.info('Inicializando links de produtos nos carrosséis...');
     // Add click event listeners to all product cards in carousels
     document.addEventListener('click', function(e) {
         // Check if the clicked element is the product button within a product card in a carousel
         const productButton = e.target.closest('.product-button');
         if (productButton) {
+            Logger.info('Botão de produto clicado');
             // Prevent default behavior for links within the product card
             e.preventDefault();
             e.stopPropagation();
@@ -236,6 +251,7 @@ function initCarouselProductLinks() {
                 const priceText = productCard.querySelector('.product-price--current')?.textContent || '0';
                 const price = parseFloat(priceText.replace(/[^\d,]/g, '').replace(',', '.')) * 100 || 0;
                 
+                Logger.info('Adicionando produto ao carrinho:', productId, productTitle, price);
                 // Add to cart
                 addToCart(productId, productTitle, price, 1);
                 

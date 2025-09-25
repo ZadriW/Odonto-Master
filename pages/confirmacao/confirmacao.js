@@ -156,21 +156,116 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             // Renderiza os itens do carrinho
-            renderCartItems(validItems);
+            orderItemsContainer.innerHTML = validItems.map(item => {
+                try {
+                    // Verifica se o preço está em centavos (como no sistema principal) ou em reais
+                    const itemPrice = item.price_current || item.price;
+                    const priceInReais = (itemPrice > 1000) ? itemPrice / 100 : itemPrice;
+                    const originalPrice = item.price_original ? (item.price_original > 1000 ? item.price_original / 100 : item.price_original) : (priceInReais * 1.15);
+                    
+                    // Verificar informações de parcelamento
+                    let installmentInfo = '';
+                    if (item.installments) {
+                        const installmentCount = item.installments.count || 10;
+                        const installmentValue = item.installments.value || (priceInReais / installmentCount);
+                        installmentInfo = `${installmentCount}x sem juros de R$ ${installmentValue.toFixed(2).replace('.', ',')}`;
+                    } else {
+                        // Usar padrão de 10x se não houver informações específicas
+                        installmentInfo = `10x sem juros de R$ ${(priceInReais/10).toFixed(2).replace('.', ',')}`;
+                    }
+                    
+                    // Verifica se os valores são números válidos
+                    if (isNaN(priceInReais) || isNaN(originalPrice)) {
+                        throw new Error(`Invalid price value`);
+                    }
+                    
+                    // Obter informações do produto do banco de dados para usar imagem real
+                    const productInfo = window.app ? window.app.productDB.getProduct(item.id) : null;
+                    const productImage = productInfo ? productInfo.image : 
+                                       (item.image || `https://placehold.co/60x60/e8ece9/333?text=${encodeURIComponent(item.name.substring(0, 15))}`);
+                    
+                    const brand = productInfo ? productInfo.brand : 'Marca não especificada';
+                    
+                    // Verifica se há cupom aplicado para mostrar preços tachados
+                    let hasValidCoupon = false;
+                    try {
+                        const appliedCouponStr = localStorage.getItem('odonto_applied_coupon');
+                        if (appliedCouponStr && appliedCouponStr !== 'null' && appliedCouponStr !== 'undefined') {
+                            const appliedCoupon = JSON.parse(appliedCouponStr);
+                            // Valida a estrutura do cupom
+                            if (appliedCoupon && 
+                                typeof appliedCoupon === 'object' && 
+                                appliedCoupon.code && 
+                                typeof appliedCoupon.code === 'string' &&
+                                appliedCoupon.type && 
+                                (appliedCoupon.type === "percentage" || appliedCoupon.type === "fixed") &&
+                                appliedCoupon.discount && 
+                                typeof appliedCoupon.discount === 'number') {
+                                hasValidCoupon = true;
+                            }
+                        }
+                    } catch (couponError) {
+                        console.error('Erro ao verificar cupom aplicado:', couponError);
+                    }
+                    
+                    // Adiciona classe para mostrar preços tachados somente quando há cupom válido
+                    const itemClass = hasValidCoupon ? 'order-item has-discount' : 'order-item';
+                    
+                    return `
+                    <div class="${itemClass}">
+                        <div class="cart-item__image">
+                            <img src="${productImage}" alt="${item.name}" onerror="this.src='https://placehold.co/60x60/e8ece9/333?text=Produto';">
+                        </div>
+                        <div class="cart-item__info">
+                            <h4 class="item-name">${item.name}</h4>
+                            <div class="item-brand">${brand}</div>
+                            <div class="item-quantity">Quantidade: ${item.quantity} unidade${item.quantity > 1 ? 's' : ''}</div>
+                            <div class="item-installment">${installmentInfo}</div>
+                        </div>
+                        <div class="cart-item__price">
+                            ${hasValidCoupon ? `<div class="item-original-price">R$ ${originalPrice.toFixed(2).replace('.', ',')}</div>` : ''}
+                            <div class="item-current-price">R$ ${priceInReais.toFixed(2).replace('.', ',')}</div>
+                            <div class="item-total">R$ ${(priceInReais * item.quantity).toFixed(2).replace('.', ',')}</div>
+                        </div>
+                    </div>
+                    `;
+                } catch (itemError) {
+                    console.error('Erro ao renderizar item do carrinho:', item, itemError);
+                    // Retorna item de erro em caso de falha
+                    return `
+                    <div class="order-item error">
+                        <div class="cart-item__image">
+                            <img src="https://placehold.co/60x60/e8ece9/333?text=Erro" alt="Erro">
+                        </div>
+                        <div class="cart-item__info">
+                            <h4 class="item-name">Erro ao carregar item</h4>
+                            <div class="item-brand">ID: ${item.id || 'Desconhecido'}</div>
+                        </div>
+                        <div class="cart-item__price">
+                            <div class="item-current-price">-</div>
+                            <div class="item-total">-</div>
+                        </div>
+                    </div>
+                    `;
+                }
+            }).join('');
             
-            // Calcula e exibe os totais
-            calculateAndDisplayTotals(validItems);
+            // Calcula e exibe os totais após carregar os itens
+            const totals = calculateAndDisplayTotals(validItems);
+            
+            // Verifica e exibe cupom aplicado, se houver
+            displayAppliedCoupon();
+            
+            return validItems;
         } catch (error) {
             console.error('Erro ao carregar itens do carrinho:', error);
-            if (orderItemsContainer) {
-                orderItemsContainer.innerHTML = `
-                    <div class="error-message">
-                        <p>Erro ao carregar os itens do carrinho.</p>
-                        <p>Detalhes: ${error.message}</p>
-                        <button class="btn btn--secondary" onclick="location.reload()">Tentar novamente</button>
-                    </div>
-                `;
-            }
+            orderItemsContainer.innerHTML = `
+                <div class="error-message">
+                    <p>Ocorreu um erro ao carregar os itens do carrinho.</p>
+                    <button class="btn btn--secondary" onclick="location.reload()">Recarregar Página</button>
+                </div>
+            `;
+            return [];
         }
     }
     
@@ -276,28 +371,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     }
     
-    // Função para calcular e exibir os totais
+    // Função para calcular e exibir os totais do pedido
     function calculateAndDisplayTotals(items) {
         try {
-            // Calcula o subtotal (verificando se o preço está em centavos ou reais)
+            // Calcula o subtotal
             const subtotal = items.reduce((sum, item) => {
                 try {
-                    // Usar price_current se disponível, senão usar o campo price antigo para compatibilidade
+                    // Verifica se o preço está em centavos (como no sistema principal) ou em reais
                     const itemPrice = item.price_current || item.price;
                     const priceInReais = (itemPrice > 1000) ? itemPrice / 100 : itemPrice;
-                    
-                    // Verifica se o preço é um número válido
-                    if (isNaN(priceInReais)) {
-                        throw new Error(`Preço inválido para o item ${item.name}: ${itemPrice}`);
-                    }
-                    
                     const itemTotal = priceInReais * item.quantity;
-                    
-                    // Verifica se o total do item é um número válido
-                    if (isNaN(itemTotal)) {
-                        throw new Error(`Total inválido para o item ${item.name}`);
-                    }
-                    
                     return sum + itemTotal;
                 } catch (itemError) {
                     console.error('Erro ao calcular total do item:', item, itemError);
@@ -305,16 +388,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }, 0);
             
-            // Verifica se há cupom aplicado
+            // Verifica se há cupom aplicado e válido
             let discount = 0;
-            let hasAppliedCoupon = false;
+            let hasValidCoupon = false;
             let appliedCoupon = null;
             try {
                 const appliedCouponStr = localStorage.getItem('odonto_applied_coupon');
                 if (appliedCouponStr) {
                     try {
                         appliedCoupon = JSON.parse(appliedCouponStr);
-                        // Validate coupon structure
+                        // Valida a estrutura do cupom
                         if (appliedCoupon && 
                             typeof appliedCoupon === 'object' && 
                             appliedCoupon.code && 
@@ -323,132 +406,156 @@ document.addEventListener('DOMContentLoaded', () => {
                             (appliedCoupon.type === "percentage" || appliedCoupon.type === "fixed") &&
                             appliedCoupon.discount && 
                             typeof appliedCoupon.discount === 'number') {
-                            hasAppliedCoupon = true;
+                            hasValidCoupon = true;
                             if (appliedCoupon.type === "percentage") {
                                 discount = subtotal * (appliedCoupon.discount / 100);
                             } else if (appliedCoupon.type === "fixed") {
                                 discount = appliedCoupon.discount;
                             }
+                            
+                            // Garante que o desconto não ultrapasse o subtotal
+                            discount = Math.min(discount, subtotal);
                         } else {
-                            // Invalid coupon structure, remove it
-                            console.log('Invalid coupon structure in calculateAndDisplayTotals, removing');
+                            // Estrutura inválida, remove o cupom
+                            console.log('Estrutura de cupom inválida encontrada em calculateAndDisplayTotals, removendo');
                             localStorage.removeItem('odonto_applied_coupon');
                         }
                     } catch (parseError) {
-                        console.error('Failed to parse coupon data in calculateAndDisplayTotals, removing');
+                        console.error('Falha ao parsear dados do cupom em calculateAndDisplayTotals, removendo');
                         localStorage.removeItem('odonto_applied_coupon');
                     }
                 }
             } catch (error) {
-                console.error('Erro ao carregar cupom aplicado:', error);
+                console.error('Erro ao carregar cupom aplicado em calculateAndDisplayTotals:', error);
                 // Em caso de erro, remove o cupom inválido do localStorage
                 localStorage.removeItem('odonto_applied_coupon');
             }
             
-            // Se não houver cupom aplicado, não mostra desconto
-            const hasDiscount = hasAppliedCoupon && discount > 0;
+            // Calcula o total com desconto
+            const totalWithDiscount = subtotal - discount;
             
-            // Custos de envio (valor padrão - Correios Sedex)
-            const shippingCost = 25.00;
+            // Custo de frete fixo (pode ser dinâmico no futuro)
+            const shippingCost = 25.00; // R$ 25,00
             
-            // Calcula o total
-            const grandTotal = subtotal - discount + shippingCost;
+            // Calcula o total geral
+            const grandTotal = totalWithDiscount + shippingCost;
             
-            // Atualiza os elementos na interface
-            if (document.getElementById('subtotal')) {
-                document.getElementById('subtotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-            }
-            if (document.getElementById('shipping-cost')) {
-                document.getElementById('shipping-cost').textContent = `R$ ${shippingCost.toFixed(2).replace('.', ',')}`;
-            }
-            if (document.getElementById('grand-total')) {
-                document.getElementById('grand-total').textContent = `R$ ${grandTotal.toFixed(2).replace('.', ',')}`;
-            }
+            // Atualiza os elementos da interface com os valores calculados
+            document.getElementById('subtotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
             
-            // Exibe o desconto somente se houver cupom aplicado
-            if (hasAppliedCoupon && hasDiscount) {
-                if (document.getElementById('discount-code')) {
-                    document.getElementById('discount-code').textContent = appliedCoupon.code;
-                }
-                if (document.getElementById('discount-value')) {
-                    document.getElementById('discount-value').textContent = `Você economizou R$ ${discount.toFixed(2).replace('.', ',')}`;
-                }
-                if (document.getElementById('discount-amount')) {
-                    document.getElementById('discount-amount').textContent = `- R$ ${discount.toFixed(2).replace('.', ',')}`;
-                }
-                if (discountRow) discountRow.style.display = 'flex';
-                if (discountSection) discountSection.style.display = 'block';
+            // Atualiza o desconto (se houver cupom válido)
+            if (hasValidCoupon && discount > 0) {
+                document.getElementById('discount-amount').textContent = `- R$ ${discount.toFixed(2).replace('.', ',')}`;
+                document.getElementById('discount-row').style.display = 'flex';
+                
+                // Atualiza o código do cupom exibido
+                document.getElementById('discount-code').textContent = appliedCoupon.code;
+                const discountValue = appliedCoupon.type === "percentage" 
+                    ? `${appliedCoupon.discount}%` 
+                    : `R$ ${appliedCoupon.discount.toFixed(2).replace('.', ',')}`;
+                document.getElementById('discount-value').textContent = discountValue;
+                
+                // Mostra a seção de desconto
+                document.getElementById('discount-section').style.display = 'block';
             } else {
-                if (discountRow) discountRow.style.display = 'none';
-                if (discountSection) discountSection.style.display = 'none';
+                // Esconde a linha e seção de desconto se não houver cupom válido
+                document.getElementById('discount-row').style.display = 'none';
+                document.getElementById('discount-section').style.display = 'none';
             }
+            
+            // Atualiza o custo de frete
+            document.getElementById('shipping-cost').textContent = `R$ ${shippingCost.toFixed(2).replace('.', ',')}`;
+            
+            // Atualiza o total geral
+            document.getElementById('grand-total').textContent = `R$ ${grandTotal.toFixed(2).replace('.', ',')}`;
+            
+            // Retorna os valores calculados para uso posterior
+            return {
+                subtotal: subtotal,
+                discount: discount,
+                shippingCost: shippingCost,
+                grandTotal: grandTotal,
+                appliedCoupon: hasValidCoupon ? appliedCoupon : null
+            };
         } catch (error) {
             console.error('Erro ao calcular totais:', error);
+            
+            // Em caso de erro, mostra valores padrão
+            document.getElementById('subtotal').textContent = 'R$ 0,00';
+            document.getElementById('discount-row').style.display = 'none';
+            document.getElementById('discount-section').style.display = 'none';
+            document.getElementById('shipping-cost').textContent = 'R$ 25,00';
+            document.getElementById('grand-total').textContent = 'R$ 25,00';
+            
+            return {
+                subtotal: 0,
+                discount: 0,
+                shippingCost: 25.00,
+                grandTotal: 25.00,
+                appliedCoupon: null
+            };
         }
     }
     
-    // Função para exibir o cupom aplicado, se houver
+    // Função para verificar e exibir cupom aplicado
     function displayAppliedCoupon() {
         try {
-            // First, clean up any invalid coupon data
+            // Obtém o cupom aplicado do localStorage
             const appliedCouponStr = localStorage.getItem('odonto_applied_coupon');
-            console.log('Applied coupon string from localStorage:', appliedCouponStr); // Debug log
             
-            if (appliedCouponStr) {
-                let appliedCoupon = null;
-                try {
-                    appliedCoupon = JSON.parse(appliedCouponStr);
-                } catch (parseError) {
-                    console.error('Failed to parse coupon data, removing invalid data');
-                    localStorage.removeItem('odonto_applied_coupon');
-                    // Hide coupon section and return
-                    if (discountSection) discountSection.style.display = 'none';
-                    if (discountRow) discountRow.style.display = 'none';
-                    return;
-                }
+            // Verifica se há algo no localStorage
+            if (appliedCouponStr && appliedCouponStr !== 'null' && appliedCouponStr !== 'undefined') {
+                const appliedCoupon = JSON.parse(appliedCouponStr);
                 
-                console.log('Parsed applied coupon:', appliedCoupon); // Debug log
-                
-                // Validate coupon structure
+                // Valida se o cupom tem uma estrutura válida
                 if (appliedCoupon && 
                     typeof appliedCoupon === 'object' && 
                     appliedCoupon.code && 
                     typeof appliedCoupon.code === 'string' &&
                     appliedCoupon.type && 
-                    (appliedCoupon.type === "percentage" || appliedCoupon.type === "fixed") &&
+                    (appliedCoupon.type === "percentage" || appliedCoupon.type === "fixed") && 
                     appliedCoupon.discount && 
                     typeof appliedCoupon.discount === 'number') {
                     
-                    console.log('Valid coupon found, displaying coupon section'); // Debug log
+                    // Exibe o cupom aplicado
                     document.getElementById('discount-code').textContent = appliedCoupon.code;
+                    document.getElementById('discount-value').textContent = appliedCoupon.type === "percentage" 
+                        ? `${appliedCoupon.discount}%` 
+                        : `R$ ${appliedCoupon.discount.toFixed(2).replace('.', ',')}`;
                     
-                    // Exibe a seção de cupom
+                    // Mostra a seção de desconto
+                    const discountSection = document.getElementById('discount-section');
+                    const discountRow = document.getElementById('discount-row');
                     if (discountSection) discountSection.style.display = 'block';
+                    if (discountRow) discountRow.style.display = 'flex';
                     
-                    // Atualiza o cálculo de totais para usar o cupom real
-                    updateTotalsWithCoupon(appliedCoupon);
-                    
-                    // Re-renderiza os itens do carrinho para mostrar preços tachados
-                    const cartItems = JSON.parse(localStorage.getItem('odonto_cart')) || [];
-                    if (cartItems.length > 0) {
-                        renderCartItems(cartItems);
-                    }
+                    console.log('Cupom aplicado exibido:', appliedCoupon.code);
                 } else {
-                    // Invalid coupon structure
-                    console.log('Invalid coupon structure, removing and hiding coupon section'); // Debug log
+                    // Estrutura inválida, remove o cupom
+                    console.log('Estrutura de cupom inválida encontrada, removendo');
                     localStorage.removeItem('odonto_applied_coupon');
+                    
+                    // Esconde a seção de desconto
+                    const discountSection = document.getElementById('discount-section');
+                    const discountRow = document.getElementById('discount-row');
                     if (discountSection) discountSection.style.display = 'none';
                     if (discountRow) discountRow.style.display = 'none';
                 }
             } else {
-                // No coupon data found
-                console.log('No coupon data found, hiding coupon section'); // Debug log
+                // Não há cupom aplicado, esconde a seção de desconto
+                const discountSection = document.getElementById('discount-section');
+                const discountRow = document.getElementById('discount-row');
                 if (discountSection) discountSection.style.display = 'none';
                 if (discountRow) discountRow.style.display = 'none';
             }
         } catch (error) {
-            console.error('Erro ao carregar cupom aplicado:', error);
-            // Em caso de erro, esconde a seção de cupom
+            console.error('Erro ao exibir cupom aplicado:', error);
+            // Em caso de erro, remove o cupom inválido do localStorage
+            localStorage.removeItem('odonto_applied_coupon');
+            
+            // Esconde a seção de desconto
+            const discountSection = document.getElementById('discount-section');
+            const discountRow = document.getElementById('discount-row');
             if (discountSection) discountSection.style.display = 'none';
             if (discountRow) discountRow.style.display = 'none';
         }
@@ -724,31 +831,81 @@ document.addEventListener('DOMContentLoaded', () => {
     updateShippingCost();
 });
 
-// Função para carregar dados do cliente (simulada)
-function loadCustomerData() {
-    // Em uma implementação real, esses dados viriam de uma API ou do localStorage
-    const customerData = {
-        name: 'Dr. João Silva Santos',
-        document: '123.456.789-00',
-        email: 'joao.silva@email.com',
-        phone: '(71) 99999-9999',
-        address: {
-            recipient: 'Dr. João Silva Santos',
-            zipcode: '40000-000',
-            number: '123',
-            complement: 'Apto 456'
-            // Logradouro, bairro, cidade/estado serão obtidos via API no futuro
+// Função para carregar os dados do cliente
+    function loadCustomerData() {
+        try {
+            // Verifica se há usuário logado
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const userId = localStorage.getItem('userId');
+            
+            if (isLoggedIn && userId) {
+                // Tenta carregar dados do arquivo minha-conta.json
+                fetch('/data/minha-conta.json')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const usuarioLogado = data.usuarios.find(usuario => usuario.id === userId);
+                        if (usuarioLogado) {
+                            // Preenche os dados do cliente
+                            document.getElementById('customer-name').textContent = usuarioLogado.perfil.nome || '-';
+                            document.getElementById('customer-document').textContent = usuarioLogado.perfil.cpf || usuarioLogado.perfil.cnpj || '-';
+                            document.getElementById('customer-email').textContent = usuarioLogado.perfil.email || '-';
+                            document.getElementById('customer-phone').textContent = usuarioLogado.perfil.telefone || '-';
+                            
+                            // Preenche os dados de endereço (primeiro endereço ou endereço principal)
+                            if (usuarioLogado.enderecos && usuarioLogado.enderecos.length > 0) {
+                                // Procura primeiro pelo endereço principal, senão pega o primeiro
+                                const enderecoPrincipal = usuarioLogado.enderecos.find(end => end.principal === true);
+                                const endereco = enderecoPrincipal || usuarioLogado.enderecos[0];
+                                
+                                document.getElementById('address-recipient').textContent = usuarioLogado.perfil.nome || '-';
+                                document.getElementById('address-zipcode').textContent = endereco.cep || '-';
+                                document.getElementById('address-number').textContent = endereco.numero || '-';
+                                document.getElementById('address-complement').textContent = endereco.complemento || '-';
+                            }
+                        } else {
+                            // Se não encontrar o usuário, usa fallback
+                            console.warn('Usuário não encontrado no arquivo minha-conta.json');
+                            loadCustomerDataFallback();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao carregar dados do usuário:', error);
+                        // Fallback para dados locais
+                        loadCustomerDataFallback();
+                    });
+            } else {
+                // Se não estiver logado, usa fallback
+                loadCustomerDataFallback();
+            }
+        } catch (error) {
+            console.error('Erro ao carregar dados do cliente:', error);
+            loadCustomerDataFallback();
         }
-    };
+    }
     
-    // Preenche os campos com os dados do cliente
-    document.getElementById('customer-name').textContent = customerData.name;
-    document.getElementById('customer-document').textContent = customerData.document;
-    document.getElementById('customer-email').textContent = customerData.email;
-    document.getElementById('customer-phone').textContent = customerData.phone;
-    document.getElementById('address-recipient').textContent = customerData.address.recipient;
-    document.getElementById('address-zipcode').textContent = customerData.address.zipcode;
-    document.getElementById('address-number').textContent = customerData.address.number;
-    document.getElementById('address-complement').textContent = customerData.address.complement;
-    // Removido: Logradouro, bairro, cidade/estado serão obtidos via API no futuro
-}
+    // Função fallback para carregar dados do cliente
+    function loadCustomerDataFallback() {
+        try {
+            // Obtém os dados do cliente do localStorage
+            const customerData = JSON.parse(localStorage.getItem('odonto_customer_data')) || {};
+            
+            // Preenche os dados do cliente
+            document.getElementById('customer-name').textContent = customerData.name || '-';
+            document.getElementById('customer-document').textContent = customerData.document || customerData.cpf || customerData.cnpj || '-';
+            document.getElementById('customer-email').textContent = customerData.email || '-';
+            document.getElementById('customer-phone').textContent = customerData.phone || '-';
+            
+            // Preenche os dados de endereço
+            document.getElementById('address-recipient').textContent = customerData.recipient || customerData.name || '-';
+            document.getElementById('address-zipcode').textContent = customerData.zipcode || customerData.cep || '-';
+            document.getElementById('address-number').textContent = customerData.number || '-';
+            document.getElementById('address-complement').textContent = customerData.complement || customerData.complemento || '-';
+        } catch (error) {
+            console.error('Erro ao carregar dados do cliente (fallback):', error);
+        }
+    }
