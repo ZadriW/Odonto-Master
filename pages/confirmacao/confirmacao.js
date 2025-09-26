@@ -155,103 +155,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
-            // Renderiza os itens do carrinho
-            orderItemsContainer.innerHTML = validItems.map(item => {
-                try {
-                    // Verifica se o preço está em centavos (como no sistema principal) ou em reais
-                    const itemPrice = item.price_current || item.price;
-                    const priceInReais = (itemPrice > 1000) ? itemPrice / 100 : itemPrice;
-                    const originalPrice = item.price_original ? (item.price_original > 1000 ? item.price_original / 100 : item.price_original) : (priceInReais * 1.15);
-                    
-                    // Verificar informações de parcelamento
-                    let installmentInfo = '';
-                    if (item.installments) {
-                        const installmentCount = item.installments.count || 10;
-                        const installmentValue = item.installments.value || (priceInReais / installmentCount);
-                        installmentInfo = `${installmentCount}x sem juros de R$ ${installmentValue.toFixed(2).replace('.', ',')}`;
-                    } else {
-                        // Usar padrão de 10x se não houver informações específicas
-                        installmentInfo = `10x sem juros de R$ ${(priceInReais/10).toFixed(2).replace('.', ',')}`;
-                    }
-                    
-                    // Verifica se os valores são números válidos
-                    if (isNaN(priceInReais) || isNaN(originalPrice)) {
-                        throw new Error(`Invalid price value`);
-                    }
-                    
-                    // Obter informações do produto do banco de dados para usar imagem real
-                    const productInfo = window.app ? window.app.productDB.getProduct(item.id) : null;
-                    const productImage = productInfo ? productInfo.image : 
-                                       (item.image || `https://placehold.co/60x60/e8ece9/333?text=${encodeURIComponent(item.name.substring(0, 15))}`);
-                    
-                    const brand = productInfo ? productInfo.brand : 'Marca não especificada';
-                    
-                    // Verifica se há cupom aplicado para mostrar preços tachados
-                    let hasValidCoupon = false;
-                    try {
-                        const appliedCouponStr = localStorage.getItem('odonto_applied_coupon');
-                        if (appliedCouponStr && appliedCouponStr !== 'null' && appliedCouponStr !== 'undefined') {
-                            const appliedCoupon = JSON.parse(appliedCouponStr);
-                            // Valida a estrutura do cupom
-                            if (appliedCoupon && 
-                                typeof appliedCoupon === 'object' && 
-                                appliedCoupon.code && 
-                                typeof appliedCoupon.code === 'string' &&
-                                appliedCoupon.type && 
-                                (appliedCoupon.type === "percentage" || appliedCoupon.type === "fixed") &&
-                                appliedCoupon.discount && 
-                                typeof appliedCoupon.discount === 'number') {
-                                hasValidCoupon = true;
-                            }
-                        }
-                    } catch (couponError) {
-                        console.error('Erro ao verificar cupom aplicado:', couponError);
-                    }
-                    
-                    // Adiciona classe para mostrar preços tachados somente quando há cupom válido
-                    const itemClass = hasValidCoupon ? 'order-item has-discount' : 'order-item';
-                    
-                    return `
-                    <div class="${itemClass}">
-                        <div class="cart-item__image">
-                            <img src="${productImage}" alt="${item.name}" onerror="this.src='https://placehold.co/60x60/e8ece9/333?text=Produto';">
-                        </div>
-                        <div class="cart-item__info">
-                            <h4 class="item-name">${item.name}</h4>
-                            <div class="item-brand">${brand}</div>
-                            <div class="item-quantity">Quantidade: ${item.quantity} unidade${item.quantity > 1 ? 's' : ''}</div>
-                            <div class="item-installment">${installmentInfo}</div>
-                        </div>
-                        <div class="cart-item__price">
-                            ${hasValidCoupon ? `<div class="item-original-price">R$ ${originalPrice.toFixed(2).replace('.', ',')}</div>` : ''}
-                            <div class="item-current-price">R$ ${priceInReais.toFixed(2).replace('.', ',')}</div>
-                            <div class="item-total">R$ ${(priceInReais * item.quantity).toFixed(2).replace('.', ',')}</div>
-                        </div>
-                    </div>
-                    `;
-                } catch (itemError) {
-                    console.error('Erro ao renderizar item do carrinho:', item, itemError);
-                    // Retorna item de erro em caso de falha
-                    return `
-                    <div class="order-item error">
-                        <div class="cart-item__image">
-                            <img src="https://placehold.co/60x60/e8ece9/333?text=Erro" alt="Erro">
-                        </div>
-                        <div class="cart-item__info">
-                            <h4 class="item-name">Erro ao carregar item</h4>
-                            <div class="item-brand">ID: ${item.id || 'Desconhecido'}</div>
-                        </div>
-                        <div class="cart-item__price">
-                            <div class="item-current-price">-</div>
-                            <div class="item-total">-</div>
-                        </div>
-                    </div>
-                    `;
-                }
-            }).join('');
-            
-            // Calcula e exibe os totais após carregar os itens
+            // Calcula e exibe os totais antes de renderizar os itens para garantir consistência
             const totals = calculateAndDisplayTotals(validItems);
+            
+            // Renderiza os itens do carrinho
+            renderCartItems(validItems);
             
             // Verifica e exibe cupom aplicado, se houver
             displayAppliedCoupon();
@@ -318,7 +226,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 
                 // Verifica se os valores são números válidos
-                if (isNaN(priceInReais) || isNaN(originalPrice)) {
+                if (isNaN(priceInReais) || isNaN(originalPrice) || !isFinite(priceInReais) || !isFinite(originalPrice)) {
+                    console.warn(`Valores inválidos para o item ${item.name}: price=${itemPrice}, calculated=${priceInReais}`);
                     throw new Error(`Invalid price value`);
                 }
                 
@@ -328,6 +237,16 @@ document.addEventListener('DOMContentLoaded', () => {
                                    (item.image || `https://placehold.co/60x60/e8ece9/333?text=${encodeURIComponent(item.name.substring(0, 15))}`);
                 
                 const brand = productInfo ? productInfo.brand : 'Marca não especificada';
+                
+                // Calcular preço unitário e total com as mesmas regras da função de cálculo de subtotal
+                const itemUnitPrice = priceInReais;
+                const itemTotalPrice = itemUnitPrice * item.quantity;
+                
+                // Verificar se os valores calculados são válidos
+                if (isNaN(itemUnitPrice) || isNaN(itemTotalPrice) || !isFinite(itemUnitPrice) || !isFinite(itemTotalPrice) || itemUnitPrice <= 0 || itemTotalPrice <= 0) {
+                    console.warn(`Cálculo inválido para o item ${item.name}: unitPrice=${itemUnitPrice}, totalPrice=${itemTotalPrice}`);
+                    throw new Error(`Invalid calculated price`);
+                }
                 
                 // Adiciona classe para mostrar preços tachados somente quando há cupom
                 const itemClass = hasAppliedCoupon ? 'order-item has-discount' : 'order-item';
@@ -343,9 +262,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="item-quantity">Quantidade: ${item.quantity} unidade${item.quantity > 1 ? 's' : ''}</div>
                         <div class="item-installment">${installmentInfo}</div>
                     </div>
-                    <div class="item-price">
-                        <span class="price-original">R$ ${originalPrice.toFixed(2).replace('.', ',')}</span>
-                        <span class="price-current">R$ ${priceInReais.toFixed(2).replace('.', ',')}</span>
+                    <div class="cart-item__price">
+                        ${hasAppliedCoupon ? `<div class="price-original">R$ ${originalPrice.toFixed(2).replace('.', ',')}</div>` : ''}
+                        <div class="price-current">R$ ${itemUnitPrice.toFixed(2).replace('.', ',')}</div>
                     </div>
                 </div>
             `;
@@ -361,9 +280,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="item-brand">Dados inválidos</div>
                         <div class="item-quantity">Não foi possível exibir este item</div>
                     </div>
-                    <div class="item-price">
-                        <span class="price-original">-</span>
-                        <span class="price-current">-</span>
+                    <div class="cart-item__price">
+                        <div class="price-current">-</div>
                     </div>
                 </div>
             `;
@@ -371,129 +289,160 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     }
     
-    // Função para calcular e exibir os totais do pedido
-    function calculateAndDisplayTotals(items) {
-        try {
-            // Calcula o subtotal
-            const subtotal = items.reduce((sum, item) => {
-                try {
-                    // Verifica se o preço está em centavos (como no sistema principal) ou em reais
-                    const itemPrice = item.price_current || item.price;
-                    const priceInReais = (itemPrice > 1000) ? itemPrice / 100 : itemPrice;
-                    const itemTotal = priceInReais * item.quantity;
-                    return sum + itemTotal;
-                } catch (itemError) {
-                    console.error('Erro ao calcular total do item:', item, itemError);
-                    return sum; // Ignora itens com erro
-                }
-            }, 0);
-            
-            // Verifica se há cupom aplicado e válido
-            let discount = 0;
-            let hasValidCoupon = false;
-            let appliedCoupon = null;
+    // Função de cálculo universal para totais do pedido
+    function calculateOrderTotals(items) {
+        // Inicializa valores
+        let subtotal = 0;
+        let discount = 0;
+        let shippingCost = 25.00; // Valor padrão
+        let hasValidCoupon = false;
+        let appliedCoupon = null;
+        
+        // Calcula subtotal a partir dos itens
+        for (const item of items) {
             try {
-                const appliedCouponStr = localStorage.getItem('odonto_applied_coupon');
-                if (appliedCouponStr) {
-                    try {
-                        appliedCoupon = JSON.parse(appliedCouponStr);
-                        // Valida a estrutura do cupom
-                        if (appliedCoupon && 
-                            typeof appliedCoupon === 'object' && 
-                            appliedCoupon.code && 
-                            typeof appliedCoupon.code === 'string' &&
-                            appliedCoupon.type && 
-                            (appliedCoupon.type === "percentage" || appliedCoupon.type === "fixed") &&
-                            appliedCoupon.discount && 
-                            typeof appliedCoupon.discount === 'number') {
-                            hasValidCoupon = true;
-                            if (appliedCoupon.type === "percentage") {
-                                discount = subtotal * (appliedCoupon.discount / 100);
-                            } else if (appliedCoupon.type === "fixed") {
-                                discount = appliedCoupon.discount;
-                            }
-                            
-                            // Garante que o desconto não ultrapasse o subtotal
-                            discount = Math.min(discount, subtotal);
-                        } else {
-                            // Estrutura inválida, remove o cupom
-                            console.log('Estrutura de cupom inválida encontrada em calculateAndDisplayTotals, removendo');
-                            localStorage.removeItem('odonto_applied_coupon');
-                        }
-                    } catch (parseError) {
-                        console.error('Falha ao parsear dados do cupom em calculateAndDisplayTotals, removendo');
-                        localStorage.removeItem('odonto_applied_coupon');
+                const itemPrice = item.price_current || item.price;
+                const priceInReais = (itemPrice > 1000) ? itemPrice / 100 : itemPrice;
+                
+                // Validação de preço
+                if (typeof priceInReais === 'number' && isFinite(priceInReais) && priceInReais > 0) {
+                    const itemTotal = priceInReais * item.quantity;
+                    if (typeof itemTotal === 'number' && isFinite(itemTotal) && itemTotal > 0) {
+                        subtotal += itemTotal;
                     }
                 }
             } catch (error) {
-                console.error('Erro ao carregar cupom aplicado em calculateAndDisplayTotals:', error);
-                // Em caso de erro, remove o cupom inválido do localStorage
-                localStorage.removeItem('odonto_applied_coupon');
+                console.warn('Erro ao processar item:', item, error);
             }
-            
-            // Calcula o total com desconto
-            const totalWithDiscount = subtotal - discount;
-            
-            // Custo de frete fixo (pode ser dinâmico no futuro)
-            const shippingCost = 25.00; // R$ 25,00
-            
-            // Calcula o total geral
-            const grandTotal = totalWithDiscount + shippingCost;
-            
-            // Atualiza os elementos da interface com os valores calculados
-            document.getElementById('subtotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-            
-            // Atualiza o desconto (se houver cupom válido)
-            if (hasValidCoupon && discount > 0) {
-                document.getElementById('discount-amount').textContent = `- R$ ${discount.toFixed(2).replace('.', ',')}`;
-                document.getElementById('discount-row').style.display = 'flex';
+        }
+        
+        // Valida subtotal
+        subtotal = typeof subtotal === 'number' && isFinite(subtotal) && subtotal >= 0 ? subtotal : 0;
+        
+        // Processa cupom se existir
+        try {
+            const couponData = localStorage.getItem('odonto_applied_coupon');
+            if (couponData) {
+                const coupon = JSON.parse(couponData);
                 
-                // Atualiza o código do cupom exibido
-                document.getElementById('discount-code').textContent = appliedCoupon.code;
-                const discountValue = appliedCoupon.type === "percentage" 
-                    ? `${appliedCoupon.discount}%` 
-                    : `R$ ${appliedCoupon.discount.toFixed(2).replace('.', ',')}`;
-                document.getElementById('discount-value').textContent = discountValue;
-                
-                // Mostra a seção de desconto
-                document.getElementById('discount-section').style.display = 'block';
-            } else {
-                // Esconde a linha e seção de desconto se não houver cupom válido
-                document.getElementById('discount-row').style.display = 'none';
-                document.getElementById('discount-section').style.display = 'none';
+                // Valida estrutura do cupom
+                if (coupon && 
+                    typeof coupon === 'object' && 
+                    typeof coupon.code === 'string' && 
+                    coupon.code.trim() !== '' &&
+                    typeof coupon.type === 'string' && 
+                    ['percentage', 'fixed'].includes(coupon.type) &&
+                    typeof coupon.discount === 'number' && 
+                    coupon.discount >= 0) {
+                    
+                    hasValidCoupon = true;
+                    appliedCoupon = coupon;
+                    
+                    // Calcula desconto
+                    if (coupon.type === 'percentage') {
+                        discount = subtotal * (coupon.discount / 100);
+                    } else if (coupon.type === 'fixed') {
+                        discount = Math.min(coupon.discount, subtotal); // Não pode exceder subtotal
+                    }
+                    
+                    // Garante que desconto não exceda subtotal
+                    discount = Math.min(discount, subtotal);
+                } else {
+                    // Remove cupom inválido
+                    localStorage.removeItem('odonto_applied_coupon');
+                }
             }
-            
-            // Atualiza o custo de frete
-            document.getElementById('shipping-cost').textContent = `R$ ${shippingCost.toFixed(2).replace('.', ',')}`;
-            
-            // Atualiza o total geral
-            document.getElementById('grand-total').textContent = `R$ ${grandTotal.toFixed(2).replace('.', ',')}`;
-            
-            // Retorna os valores calculados para uso posterior
-            return {
-                subtotal: subtotal,
-                discount: discount,
-                shippingCost: shippingCost,
-                grandTotal: grandTotal,
-                appliedCoupon: hasValidCoupon ? appliedCoupon : null
-            };
         } catch (error) {
-            console.error('Erro ao calcular totais:', error);
+            console.warn('Erro ao processar cupom:', error);
+            localStorage.removeItem('odonto_applied_coupon');
+        }
+        
+        // Calcula totais finais
+        const totalAfterDiscount = subtotal - discount;
+        const grandTotal = totalAfterDiscount + shippingCost;
+        
+        return {
+            subtotal: parseFloat(subtotal.toFixed(2)),
+            discount: parseFloat(discount.toFixed(2)), 
+            shippingCost: parseFloat(shippingCost.toFixed(2)),
+            grandTotal: parseFloat(grandTotal.toFixed(2)),
+            hasValidCoupon,
+            appliedCoupon
+        };
+    }
+    
+    // Função para atualizar a exibição dos totais
+    function displayOrderTotals(totals) {
+        // Atualiza subtotal
+        const subtotalElement = document.getElementById('subtotal');
+        if (subtotalElement) {
+            subtotalElement.textContent = `R$ ${totals.subtotal.toFixed(2).replace('.', ',')}`;
+        }
+        
+        // Atualiza desconto
+        const discountRow = document.getElementById('discount-row');
+        const discountAmount = document.getElementById('discount-amount');
+        const discountSection = document.getElementById('discount-section');
+        const discountCode = document.getElementById('discount-code');
+        const discountValue = document.getElementById('discount-value');
+        
+        if (totals.hasValidCoupon && totals.discount > 0) {
+            if (discountAmount) {
+                discountAmount.textContent = `- R$ ${totals.discount.toFixed(2).replace('.', ',')}`;
+            }
+            if (discountRow) discountRow.style.display = 'flex';
+            if (discountSection) discountSection.style.display = 'block';
             
-            // Em caso de erro, mostra valores padrão
-            document.getElementById('subtotal').textContent = 'R$ 0,00';
-            document.getElementById('discount-row').style.display = 'none';
-            document.getElementById('discount-section').style.display = 'none';
-            document.getElementById('shipping-cost').textContent = 'R$ 25,00';
-            document.getElementById('grand-total').textContent = 'R$ 25,00';
+            // Atualiza informações do cupom
+            if (totals.appliedCoupon) {
+                if (discountCode) discountCode.textContent = totals.appliedCoupon.code;
+                if (discountValue) {
+                    const displayValue = totals.appliedCoupon.type === 'percentage' 
+                        ? `${totals.appliedCoupon.discount}%` 
+                        : `R$ ${totals.appliedCoupon.discount.toFixed(2).replace('.', ',')}`;
+                    discountValue.textContent = displayValue;
+                }
+            }
+        } else {
+            if (discountRow) discountRow.style.display = 'none';
+            if (discountSection) discountSection.style.display = 'none';
+        }
+        
+        // Atualiza frete
+        const shippingElement = document.getElementById('shipping-cost');
+        if (shippingElement) {
+            shippingElement.textContent = `R$ ${totals.shippingCost.toFixed(2).replace('.', ',')}`;
+        }
+        
+        // Atualiza total geral
+        const grandTotalElement = document.getElementById('grand-total');
+        if (grandTotalElement) {
+            grandTotalElement.textContent = `R$ ${totals.grandTotal.toFixed(2).replace('.', ',')}`;
+        }
+    }
+    
+    // Função principal para calcular e exibir totais
+    function calculateAndDisplayTotals(items) {
+        try {
+            const totals = calculateOrderTotals(items);
+            displayOrderTotals(totals);
             
-            return {
+            return totals;
+        } catch (error) {
+            console.error('Erro ao calcular e exibir totais:', error);
+            
+            // Exibe valores padrão em caso de erro
+            const defaultTotals = {
                 subtotal: 0,
-                discount: 0,
+                discount: 0, 
                 shippingCost: 25.00,
                 grandTotal: 25.00,
+                hasValidCoupon: false,
                 appliedCoupon: null
             };
+            
+            displayOrderTotals(defaultTotals);
+            return defaultTotals;
         }
     }
     
@@ -616,6 +565,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('discount-amount').textContent = `- R$ ${discount.toFixed(2).replace('.', ',')}`;
             }
             
+            // Garantir que o subtotal também seja atualizado
+            if (document.getElementById('subtotal')) {
+                // Recalcula o subtotal de forma segura para evitar zeros
+                const cartItems = JSON.parse(localStorage.getItem('odonto_cart')) || [];
+                const recalculatedSubtotal = cartItems.reduce((sum, item) => {
+                    try {
+                        const itemPrice = item.price_current || item.price;
+                        const priceInReais = (itemPrice > 1000) ? itemPrice / 100 : itemPrice;
+                        if (!isNaN(priceInReais) && priceInReais > 0) {
+                            const itemTotal = priceInReais * item.quantity;
+                            if (!isNaN(itemTotal) && itemTotal > 0) {
+                                return sum + itemTotal;
+                            }
+                        }
+                        return sum;
+                    } catch (itemError) {
+                        return sum;
+                    }
+                }, 0);
+                
+                document.getElementById('subtotal').textContent = `R$ ${recalculatedSubtotal.toFixed(2).replace('.', ',')}`;
+            }
+            
             if (discountRow) discountRow.style.display = 'flex';
         } catch (error) {
             console.error('Erro ao atualizar totais com cupom:', error);
@@ -723,13 +695,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Erro ao carregar cupom aplicado:', error);
             }
             
-            const grandTotal = subtotal - discount + shippingCost;
+            // Atualiza os totais na interface usando a nova lógica centralizada
+            const totals = calculateOrderTotals(cartItems);
             
-            // Atualiza os totais na interface
-            const grandTotalElement = document.getElementById('grand-total');
-            if (grandTotalElement) {
-                grandTotalElement.textContent = `R$ ${grandTotal.toFixed(2).replace('.', ',')}`;
-            }
+            // Atualiza totais com o frete fornecido
+            const updatedTotals = {
+                ...totals,
+                shippingCost: parseFloat(shippingCost.toFixed(2)),
+                grandTotal: parseFloat((totals.subtotal - totals.discount + shippingCost).toFixed(2))
+            };
+            
+            // Atualiza a exibição
+            displayOrderTotals(updatedTotals);
         } catch (error) {
             console.error('Erro ao recalcular total do pedido:', error);
         }
@@ -829,6 +806,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Inicializa os totais do pedido
     updateShippingCost();
+    
+    // Limpar cupom aplicado quando o usuário sair da página
+    window.addEventListener('beforeunload', function() {
+        // Remover o cupom do localStorage para que precise ser inserido novamente
+        localStorage.removeItem('odonto_applied_coupon');
+    });
+    
+    // Alternativamente, para remover o cupom quando sair da página de confirmação e ir para outra página
+    window.addEventListener('unload', function() {
+        // Remover o cupom do localStorage para que precise ser inserido novamente
+        localStorage.removeItem('odonto_applied_coupon');
+    });
 });
 
 // Função para carregar os dados do cliente

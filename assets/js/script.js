@@ -1831,8 +1831,27 @@ document.addEventListener('DOMContentLoaded', () => {
     window.app = new OdontoMasterApp();
     window.app.init();
     
-    // Atualizar saudação do usuário
+    // Atualizar saudação do usuário                                                   
+      
+                                                                                    
+    const userFirstName = localStorage.getItem('userFirstName');                       
+    const isLoggedIn = localStorage.getItem('isLoggedIn');                             
+                                                                                        
+   if (userFirstName && isLoggedIn === 'true') {                                      
+       // User has proper session data, maintain login state                          
+        updateUserGreeting();                                                          
+     } else {                                                                           
+        localStorage.removeItem('userFirstName');  
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userFullName');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userCpf');
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userAddresses');    
+    
+    // Update greeting to show as logged out
     updateUserGreeting();
+     }
 });
 
 // Teste rápido para verificar se as funções estão disponíveis

@@ -1,25 +1,23 @@
-TROCAS E DEVOLUÇÕES
-O compromisso da Odonto Master é a satisfação do nosso cliente. 
-Visando uma parceria de respeito e confiança, criamos uma Política de Troca e Devolução, de acordo com o Código de Defesa do Consumidor.
-Para evitar qualquer problema com a sua compra, ao realizar o pedido, siga as instruções abaixo:
-* Leia atentamente a descrição e a ficha técnica do produto;
-* Verifique se a voltagem dos equipamentos e periféricos corresponde a região que você irá utilizá-lo;
-* Fique atento a cor e o modelo do produto (alguns produtos possuem cores e modelos sortidos e a foto no site é meramente ilustrativa);
-* Antes de comprar confira as dimensões dos equipamentos e periféricos (verifique se está adequado ao espaço onde será instalado).
+REGULAMENTO DO CASHBACK
+Ganhe 100% do valor pago pelo frete de volta para utilizar em sua próxima compra.
 
-Confira abaixo as causas que podem levar você à troca e devolução:
-* Embalagem aberta do produto;
-* O produto foi avariado durante o transporte;
-* O produto enviado está em desacordo com o pedido;
-* Desistência
+Assim que o pagamento da sua compra for aprovado, você receberá um e-mail informando o valor do seu crédito. Ele poderá ser usado para sua próxima compra dentro de 30 dias.
+O valor e período da promoção variam de acordo com critérios estabelecidos pela empresa. Porém, uma vez gerado o credito, ele será válido pelo período de 30 dias informado no e-mail enviado para o cliente participante da promoção.
+Preciso comprar quanto para garantir o Crédito de Cashback?
+Para garantir o crédito do cashback será necessário que o primeiro pedido seja no valor mínimo de R$ 500,00 em compras no site.
+Qual é a validade do meu Crédito de Cashback?
+Ele é válido por 30 dias corridos, iniciando a contagem de tempo à 00h01 do dia do recebimento do Crédito até às 23h59 do último do período. Caso o Crédito não seja usado dentro desse período, ele será cancelado.
+Posso converter o valor em dinheiro? Posso transferir o Crédito para outra pessoa ou empresa?
+Não. O valor do Crédito deverá ser usado como forma de pagamento de compras futuras, realizadas somente pela loja virtual da Dental Odonto Master (www.odontomaster.com.br). O Crédito é intransferível e só poderá ser utilizado pelo portador do CPF/CNPJ do cliente que efetuou a compra.
+Preciso devolver um produto que gerou o meu Crédito de Cashback. O que acontece?
+Você pode devolver o produto, mas o valor do Crédito será cancelado.
+O que acontece se o valor da minha nova compra for inferior ao valor do meu Crédito de Cashback?
+Você precisa usar o crédito total para concluir a compra.
+O que acontece se o valor da minha nova compra for superior ao valor do meu Crédito de Cashback?
+Sem problemas :)) Use o seu Crédito e escolha mais uma opção para completar o pagamento.
+Produtos em  Promoção geram o  Crédito de Cashback?
+Não. Produtos que já possuem desconto diferenciados ou frete grátis não se enquadram na promoção de Cashback.
 
-Primeiramente no ato da entrega, em caso das caixas estiverem rasgadas, abertas e avariadas recuse o recebimento informando no verso do Conhecimento de Transporte Rodoviário de Cargas (CTRC) o motivo de tal recusa e entre em contato com o Serviço de Atendimento ao Cliente.
-Se ainda assim, você receber o produto, por favor, entre em contato com o nosso Serviço de Atendimento ao Cliente em até 24 horas ou próximo dia útil.
-Se o motivo de troca se der pelo pedido em desacordo ou desistência, receba o pedido e entre em contato com o nosso Serviço de Atendimento ao Cliente em até 7 (sete) dias corridos. O produto deverá ser encaminhado na embalagem original intacta, sem indícios de uso, sem violação do lacre original do fabricante, acompanhado de nota fiscal, manual e de todos os seus acessórios.
-Obs.: Em caso do cliente que optou para retirar o produto em uma de nossas lojas, o mesmo terá o prazo de 3 (três) dias corridos para devolução e troca do produto.
-Todas as ocorrências que envolvam troca ou devolução devem ser comunicadas.
 
-Horário de atendimento:
-Serviço de Atendimento ao Cliente: (71) 3173-7300 - Segunda a Sexta das 08h às 18h e os Sábados das 08h às 12h.
-E-mail: atendimento@odontomaster.com.br
-Endereço: Alameda das Cajazeiras, 430 - Caminho das Árvores - Salvador/BA - CEP: 41.820-470.
+* Condições sujeitas a alterações sem aviso prévio.
+Caso tenha alguma dúvida, entre em contato com a gente pelo atendimento@odontomaster.com.br ou através do nosso suporte 71 9 8867-0812 whatsapp.
