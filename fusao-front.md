@@ -1,6 +1,652 @@
-</body>
-
 <style>
+
+/* ===== CONTROLE DOS BANNERS DO TOPO ===== */
+/* Banner Mobile Topo e Banner Topo - Controle de tamanho */
+section.fbits-section-home.fbits-banner-mobiletopo-home,
+section.fbits-section-home.fbits-banner-topo-home {
+    margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: transparent;
+}
+
+section.fbits-section-home.fbits-banner-mobiletopo-home .fbits-banner-item,
+section.fbits-section-home.fbits-banner-topo-home .fbits-banner-item {
+    padding: 0;
+}
+
+section.fbits-section-home.fbits-banner-mobiletopo-home img,
+section.fbits-section-home.fbits-banner-topo-home img {
+    max-width: 250px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+@@media (max-width: 1280px) {
+    section.fbits-section-home.fbits-banner-mobiletopo-home img,
+    section.fbits-section-home.fbits-banner-topo-home img {
+        max-width: 200px;
+    }
+}
+
+@@media (max-width: 768px) {
+    section.fbits-section-home.fbits-banner-mobiletopo-home,
+    section.fbits-section-home.fbits-banner-topo-home {
+        margin: 0;
+        padding: 0;
+        overflow: hidden !important;
+        background: transparent !important;
+    }
+    
+    section.fbits-section-home.fbits-banner-mobiletopo-home .row,
+    section.fbits-section-home.fbits-banner-topo-home .row {
+        overflow: hidden !important;
+    }
+    
+    section.fbits-section-home.fbits-banner-mobiletopo-home .slick-list,
+    section.fbits-section-home.fbits-banner-topo-home .slick-list {
+        overflow: hidden !important;
+    }
+    
+    section.fbits-section-home.fbits-banner-mobiletopo-home img,
+    section.fbits-section-home.fbits-banner-topo-home img {
+        max-width: 150px;
+    }
+}
+
+@@media (max-width: 480px) {
+    section.fbits-section-home.fbits-banner-mobiletopo-home,
+    section.fbits-section-home.fbits-banner-topo-home {
+        margin: 0;
+        padding: 0;
+        overflow: hidden !important;
+        background: transparent !important;
+    }
+    
+    section.fbits-section-home.fbits-banner-mobiletopo-home .row,
+    section.fbits-section-home.fbits-banner-topo-home .row {
+        overflow: hidden !important;
+    }
+    
+    section.fbits-section-home.fbits-banner-mobiletopo-home .slick-list,
+    section.fbits-section-home.fbits-banner-topo-home .slick-list {
+        overflow: hidden !important;
+    }
+    
+    section.fbits-section-home.fbits-banner-mobiletopo-home img,
+    section.fbits-section-home.fbits-banner-topo-home img {
+        max-width: 120px;
+    }
+}
+
+/* ===== EFEITOS HOVER BANNER TOPO - PREMIUM ===== */
+section.fbits-section-home.fbits-banner-mobiletopo-home .slick-list,
+section.fbits-section-home.fbits-banner-topo-home .slick-list {
+    margin: 0 auto;
+    padding: 10px 0 !important;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+section.fbits-section-home.fbits-banner-mobiletopo-home .slick-track,
+section.fbits-section-home.fbits-banner-topo-home .slick-track {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+section.fbits-section-home.fbits-banner-mobiletopo-home .slick-slide,
+section.fbits-section-home.fbits-banner-topo-home .slick-slide {
+    padding: 0 5px;
+    outline: none;
+}
+
+section.fbits-section-home.fbits-banner-mobiletopo-home .row,
+section.fbits-section-home.fbits-banner-topo-home .row {
+    max-width: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+    text-align: center;
+}
+
+section.fbits-section-home.fbits-banner-mobiletopo-home .row-fbits-banner-topo,
+section.fbits-section-home.fbits-banner-topo-home .row-fbits-banner-topo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section.fbits-section-home.fbits-banner-mobiletopo-home .fbits-banner-item,
+section.fbits-section-home.fbits-banner-topo-home .fbits-banner-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    cursor: pointer;
+    margin: 0 auto;
+    max-width: 100%;
+    height: 100%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                border-radius 0.3s ease;
+    will-change: transform;
+}
+
+section.fbits-section-home.fbits-banner-mobiletopo-home .fbits-banner-item img,
+section.fbits-section-home.fbits-banner-topo-home .fbits-banner-item img {
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    /* Transição refinada para zoom */
+    transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+                filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform, filter;
+}
+
+section.fbits-section-home.fbits-banner-mobiletopo-home .fbits-banner-item::before,
+section.fbits-section-home.fbits-banner-topo-home .fbits-banner-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(29, 101, 186, 0.06) 0%, 
+        rgba(29, 101, 186, 0.02) 50%,
+        rgba(29, 101, 186, 0.04) 100%);
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1;
+    pointer-events: none;
+}
+
+
+section.fbits-section-home.fbits-banner-mobiletopo-home .fbits-banner-item:hover,
+section.fbits-section-home.fbits-banner-topo-home .fbits-banner-item:hover {
+    transform: translateY(-10px) scale(1.03);
+    border-radius: 8px;
+}
+
+section.fbits-section-home.fbits-banner-mobiletopo-home .fbits-banner-item:hover::before,
+section.fbits-section-home.fbits-banner-topo-home .fbits-banner-item:hover::before {
+    opacity: 1;
+}
+
+section.fbits-section-home.fbits-banner-mobiletopo-home .fbits-banner-item:hover img,
+section.fbits-section-home.fbits-banner-topo-home .fbits-banner-item:hover img {
+    transform: scale(1.1);
+    filter: brightness(1.06) contrast(1.02);
+}
+
+
+section.fbits-section-home.fbits-banner-mobiletopo-home .fbits-banner-item:active,
+section.fbits-section-home.fbits-banner-topo-home .fbits-banner-item:active {
+    transform: translateY(-7px) scale(1.015);
+    transition-duration: 0.15s;
+}
+
+/* Animação de entrada dos banners */
+section.fbits-section-home.fbits-banner-mobiletopo-home .fbits-banner-item,
+section.fbits-section-home.fbits-banner-topo-home .fbits-banner-item {
+    animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    opacity: 0;
+}
+
+section.fbits-section-home.fbits-banner-mobiletopo-home .slick-slide:nth-child(1) .fbits-banner-item,
+section.fbits-section-home.fbits-banner-topo-home .slick-slide:nth-child(1) .fbits-banner-item { 
+    animation-delay: 0.1s; 
+}
+section.fbits-section-home.fbits-banner-mobiletopo-home .slick-slide:nth-child(2) .fbits-banner-item,
+section.fbits-section-home.fbits-banner-topo-home .slick-slide:nth-child(2) .fbits-banner-item { 
+    animation-delay: 0.2s; 
+}
+section.fbits-section-home.fbits-banner-mobiletopo-home .slick-slide:nth-child(3) .fbits-banner-item,
+section.fbits-section-home.fbits-banner-topo-home .slick-slide:nth-child(3) .fbits-banner-item { 
+    animation-delay: 0.3s; 
+}
+section.fbits-section-home.fbits-banner-mobiletopo-home .slick-slide:nth-child(4) .fbits-banner-item,
+section.fbits-section-home.fbits-banner-topo-home .slick-slide:nth-child(4) .fbits-banner-item { 
+    animation-delay: 0.4s; 
+}
+section.fbits-section-home.fbits-banner-mobiletopo-home .slick-slide:nth-child(5) .fbits-banner-item,
+section.fbits-section-home.fbits-banner-topo-home .slick-slide:nth-child(5) .fbits-banner-item { 
+    animation-delay: 0.5s; 
+}
+
+/* Responsivo - Mobile/Tablet */
+@@media (max-width: 1024px) {
+    section.fbits-section-home.fbits-banner-mobiletopo-home .fbits-banner-item,
+    section.fbits-section-home.fbits-banner-topo-home .fbits-banner-item {
+        cursor: default;
+        box-shadow: none;
+        transition: none;
+        will-change: auto;
+    }
+    
+    section.fbits-section-home.fbits-banner-mobiletopo-home .fbits-banner-item:hover,
+    section.fbits-section-home.fbits-banner-topo-home .fbits-banner-item:hover {
+        transform: none;
+    }
+    
+    section.fbits-section-home.fbits-banner-mobiletopo-home .fbits-banner-item:hover::before,
+    section.fbits-section-home.fbits-banner-topo-home .fbits-banner-item:hover::before {
+        opacity: 0;
+    }
+    
+    section.fbits-section-home.fbits-banner-mobiletopo-home .fbits-banner-item:hover img,
+    section.fbits-section-home.fbits-banner-topo-home .fbits-banner-item:hover img {
+        transform: none;
+        filter: none;
+    }
+    
+    section.fbits-section-home.fbits-banner-mobiletopo-home .slick-list,
+    section.fbits-section-home.fbits-banner-topo-home .slick-list {
+        padding: 5px 0 !important;
+    }
+}
+/* ===== FIM EFEITOS HOVER BANNER TOPO ===== */
+
+/* ===== BANNER CENTRO RESPONSIVO ===== */
+/* Controle de visibilidade Desktop/Mobile via CSS */
+section.fbits-banner-centro-home.bdesk {
+    display: block;
+}
+
+section.fbits-banner-centro-home.bmob {
+    display: none;
+}
+
+section.fbits-banner-centro-home {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background: transparent;
+}
+
+section.fbits-banner-centro-home .row-fbits-banner-centro {
+    margin: 0;
+}
+
+section.fbits-banner-centro-home .fbits-banner-item {
+    width: 100%;
+    max-width: 100%;
+}
+
+section.fbits-banner-centro-home .fbits-banner-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+/* Mobile - Banner Centro Full Width (Ocupa Todo Espaço) */
+@@media (max-width: 990px) {
+    /* Esconde desktop, mostra mobile */
+    section.fbits-banner-centro-home.bdesk {
+        display: none !important;
+    }
+    
+    section.fbits-banner-centro-home.bmob {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100vw !important;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw !important;
+        margin-right: -50vw !important;
+    }
+    
+    /* Container sem padding lateral */
+    section.fbits-banner-centro-home.bmob .container {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+    
+    section.fbits-banner-centro-home.bmob .row-fbits-banner-centro {
+        margin: 0 !important;
+        width: 100% !important;
+    }
+    
+    section.fbits-banner-centro-home.bmob .col-md-12 {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+    
+    section.fbits-banner-centro-home.bmob .fbits-banner-item {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+    
+    /* Imagem responsiva com altura controlada */
+    section.fbits-banner-centro-home.bmob .fbits-banner-item img {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 350px !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+        object-fit: cover;
+    }
+    
+    /* Slick Carousel - Controle de visibilidade */
+    section.fbits-banner-centro-home.bmob .slick-list {
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 350px !important;
+        overflow: hidden !important;
+    }
+    
+    section.fbits-banner-centro-home.bmob .slick-track {
+        margin: 0 !important;
+        height: 350px !important;
+    }
+    
+    section.fbits-banner-centro-home.bmob .slick-slide {
+        padding: 0 !important;
+        margin: 0 !important;
+        height: 350px !important;
+    }
+}
+
+/* Mobile Pequeno - Altura reduzida */
+@@media (max-width: 768px) {
+    section.fbits-banner-centro-home.bmob .fbits-banner-item img {
+        height: 280px !important;
+    }
+    
+    section.fbits-banner-centro-home.bmob .slick-list,
+    section.fbits-banner-centro-home.bmob .slick-track,
+    section.fbits-banner-centro-home.bmob .slick-slide {
+        height: 280px !important;
+    }
+}
+
+@@media (max-width: 480px) {
+    section.fbits-banner-centro-home.bmob .fbits-banner-item img {
+        height: 220px !important;
+    }
+    
+    section.fbits-banner-centro-home.bmob .slick-list,
+    section.fbits-banner-centro-home.bmob .slick-track,
+    section.fbits-banner-centro-home.bmob .slick-slide {
+        height: 220px !important;
+    }
+}
+/* ===== FIM BANNER CENTRO RESPONSIVO ===== */
+
+/* ===== BANNER MEIO RESPONSIVO (DESKTOP/MOBILE) ===== */
+section.fbits-banner-meio-home.bdesk {
+    display: block;
+}
+
+section.fbits-banner-meio-home.bmob {
+    display: none;
+}
+
+@@media (max-width: 990px) {
+    section.fbits-banner-meio-home.bdesk {
+        display: none !important;
+    }
+    
+    section.fbits-banner-meio-home.bmob {
+        display: block !important;
+        margin: 2em 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Banner Meio Mobile - Dimensões 1100x225 */
+    section.fbits-banner-meio-home.bmob .row-fbits-banner-meio {
+        margin: 0 !important;
+    }
+    
+    section.fbits-banner-meio-home.bmob .col-md-12 {
+        padding: 0 !important;
+    }
+    
+    section.fbits-banner-meio-home.bmob .fbits-banner-item {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    section.fbits-banner-meio-home.bmob .fbits-banner-item img {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1100 / 225 !important; /* Proporção 1100x225 */
+        object-fit: cover !important;
+        display: block !important;
+    }
+}
+
+/* Mobile Pequeno - Mantém proporção */
+@@media (max-width: 768px) {
+    section.fbits-banner-meio-home.bmob .fbits-banner-item img {
+        aspect-ratio: 1100 / 225 !important;
+        object-fit: cover !important;
+    }
+}
+/* ===== FIM BANNER MEIO RESPONSIVO ===== */
+
+/* ===== VITRINE COM BANNER RESPONSIVO (DESKTOP/MOBILE) ===== */
+section.fbits-vitrine-com-banner.bdesk {
+    display: block;
+}
+
+section.fbits-vitrine-com-banner.bmob {
+    display: none;
+}
+
+@@media (max-width: 990px) {
+    section.fbits-vitrine-com-banner.bdesk {
+        display: none !important;
+    }
+    
+    section.fbits-vitrine-com-banner.bmob {
+        display: block !important;
+    }
+    
+    /* Banner Lateral Mobile - Dimensões 1100x225 */
+    section.fbits-vitrine-com-banner.bmob .col-banner-ofertas {
+        width: 100% !important;
+        max-width: 100% !important;
+        float: none !important;
+        margin-bottom: 2em !important;
+        padding: 0 !important;
+    }
+    
+    section.fbits-vitrine-com-banner.bmob .col-banner-ofertas .fbits-banner-item {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+    }
+    
+    section.fbits-vitrine-com-banner.bmob .col-banner-ofertas .fbits-banner-item:first-child {
+        display: block !important;
+    }
+    
+    section.fbits-vitrine-com-banner.bmob .col-banner-ofertas .fbits-banner-item img {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1100 / 225 !important; /* Proporção 1100x225 */
+        object-fit: cover !important;
+        display: block !important;
+        border-radius: 0 !important;
+    }
+    
+    /* Carrossel abaixo do banner */
+    section.fbits-vitrine-com-banner.bmob .col-carrossel-ofertas {
+        width: 100% !important;
+        max-width: 100% !important;
+        float: none !important;
+        padding: 0 !important;
+    }
+}
+
+/* Mobile Pequeno - Mantém proporção */
+@@media (max-width: 768px) {
+    section.fbits-vitrine-com-banner.bmob .col-banner-ofertas .fbits-banner-item img {
+        aspect-ratio: 1100 / 225 !important;
+        object-fit: cover !important;
+    }
+}
+/* ===== FIM VITRINE COM BANNER RESPONSIVO ===== */
+
+/* ===== BANNER RODAPÉ  ===== */
+
+
+section.fbits-banner-rodape {
+    padding: 2em 0;
+}
+
+section.fbits-banner-rodape .slick-list {
+    margin: 0 -10px;
+    padding: 20px 0 !important;
+}
+
+section.fbits-banner-rodape .slick-slide {
+    padding: 0 10px;
+    outline: none;
+}
+
+section.fbits-banner-rodape .fbits-banner-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    margin: 0 auto;
+    max-width: 100%;
+    height: 100%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                border-radius 0.3s ease;
+    will-change: transform, box-shadow;
+}
+
+section.fbits-banner-rodape .fbits-banner-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    /* Transição refinada para zoom */
+    transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+                filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform, filter;
+}
+
+section.fbits-banner-rodape .fbits-banner-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(29, 101, 186, 0.06) 0%, 
+        rgba(29, 101, 186, 0.02) 50%,
+        rgba(29, 101, 186, 0.04) 100%);
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Hover - Animação fluida e elástica */
+section.fbits-banner-rodape .fbits-banner-item:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16), 
+                0 6px 18px rgba(29, 101, 186, 0.15);
+    border-radius: 16px;
+}
+
+section.fbits-banner-rodape .fbits-banner-item:hover::before {
+    opacity: 1;
+}
+
+section.fbits-banner-rodape .fbits-banner-item:hover img {
+    transform: scale(1.1);
+    filter: brightness(1.06) contrast(1.02);
+}
+
+/* Feedback ao clicar - bounce suave */
+section.fbits-banner-rodape .fbits-banner-item:active {
+    transform: translateY(-7px) scale(1.015);
+    transition-duration: 0.15s;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+}
+
+/* Animação de entrada dos banners */
+section.fbits-banner-rodape .fbits-banner-item {
+    animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    opacity: 0;
+}
+
+@@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+section.fbits-banner-rodape .slick-slide:nth-child(1) .fbits-banner-item { animation-delay: 0.1s; }
+section.fbits-banner-rodape .slick-slide:nth-child(2) .fbits-banner-item { animation-delay: 0.2s; }
+section.fbits-banner-rodape .slick-slide:nth-child(3) .fbits-banner-item { animation-delay: 0.3s; }
+section.fbits-banner-rodape .slick-slide:nth-child(4) .fbits-banner-item { animation-delay: 0.4s; }
+
+/* Responsivo - Mobile/Tablet */
+@@media (max-width: 1024px) {
+    section.fbits-banner-rodape .fbits-banner-item {
+        cursor: default;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        transition: none;
+        will-change: auto;
+    }
+    
+    section.fbits-banner-rodape .fbits-banner-item:hover {
+        transform: none;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+    }
+    
+    section.fbits-banner-rodape .fbits-banner-item:hover::before {
+        opacity: 0;
+    }
+    
+    section.fbits-banner-rodape .fbits-banner-item:hover img {
+        transform: none;
+        filter: none;
+    }
+    
+    section.fbits-banner-rodape .slick-list {
+        padding: 10px 0 !important;
+    }
+}
+/* ===== FIM BANNER RODAPÉ - REFINADO ===== */
 
 h3.title.big {
     color: #000;
@@ -115,8 +761,10 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
             float:right;
          }
         section.fbits-section-home.fbits-banner-mobiletopo-home img {
-            max-width:;
-            margin: 0 ;
+            max-width: 250px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
         }
          section.fbits-section-home.fbits-banner-mobiletopo-home .fbits-banner-item:first-child img {
             margin: 0;
@@ -173,15 +821,34 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
             padding: 1em 0;
         }
         
-        /* Melhores Ofertas com Banner - Tablet */
+        /* Melhores Ofertas com Banner - Mobile Horizontal (igual banner-meio) */
         section.fbits-vitrine-com-banner .col-banner-ofertas,
         section.fbits-vitrine-com-banner .col-carrossel-ofertas {
             width: 100%;
             max-width: 100%;
             float: none;
+            padding: 0 !important;
         }
+        
         section.fbits-vitrine-com-banner .col-banner-ofertas {
-            margin-bottom: 20px;
+            margin-bottom: 2em;
+            padding: 0 !important;
+        }
+        
+        /* Banner horizontal em mobile (como banner-meio) */
+        section.fbits-vitrine-com-banner .col-banner-ofertas .fbits-banner-item {
+            border-radius: 6px !important;
+            box-shadow: none !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        
+        section.fbits-vitrine-com-banner .col-banner-ofertas .fbits-banner-item img {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
+            border-radius: 6px !important;
+            object-fit: cover !important;
         }
     }
     
@@ -199,7 +866,10 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
             width: 100%;
         }
         section.fbits-section-home.fbits-banner-topo-home img {
-           
+            max-width: 250px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
         }
         body .fbits-banner-rodape img {
             float: none;
@@ -223,16 +893,69 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
             padding: 0 10px;
         }
         
-        /* Melhores Ofertas com Banner - Mobile */
+        /* Melhores Ofertas com Banner - Ajustes Responsivos */
         section.fbits-vitrine-com-banner .col-banner-ofertas,
         section.fbits-vitrine-com-banner .col-carrossel-ofertas {
             padding: 0 15px;
         }
+    }
+    
+    /* Mobile Extra - Banner Ofertas Horizontal Otimizado */
+    @@media (max-width: 768px) {
+        section.fbits-vitrine-com-banner .col-banner-ofertas {
+            margin-bottom: 1.5em;
+        }
+        
+        section.fbits-vitrine-com-banner .col-banner-ofertas .fbits-banner-item {
+            border-radius: 4px !important;
+        }
+        
         section.fbits-vitrine-com-banner .col-banner-ofertas .fbits-banner-item img {
-            width: 100%;
-            height: auto;
+            border-radius: 4px !important;
         }
     }
+    
+    @@media (max-width: 480px) {
+        section.fbits-vitrine-com-banner .col-banner-ofertas {
+            margin-bottom: 1em;
+        }
+        
+        section.fbits-vitrine-com-banner .col-banner-ofertas .fbits-banner-item,
+        section.fbits-vitrine-com-banner .col-banner-ofertas .fbits-banner-item img {
+            border-radius: 0 !important;
+        }
+    }
+    
+/* Remove background cinza dos containers */
+.main-container.col1-layout {
+    background: #fff !important;
+    padding: 0 !important;
+}
+
+.main-container .main.container {
+    background: #fff !important;
+    padding: 0 !important;
+}
+
+.main-container .col-main {
+    background: #fff !important;
+    padding: 0 !important;
+}
+
+/* Remove espaços cinzas em mobile */
+@@media (max-width: 990px) {
+    body {
+        background: #fff !important;
+    }
+    
+    .main-container.col1-layout,
+    .main-container .main.container,
+    .main-container .col-main {
+        background: #fff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
     
 </style>
  <div class="main-container col1-layout">
@@ -242,7 +965,7 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
     <!--BANNER TOPO-->
     <section class="fbits-section-home fbits-banner-topo-home">
         <div class="row row-fbits-banner-topo">
-            <div class="col-md-12">
+                            <div class="col-md-12">
                 <FBITS:Banner filtroPosicao="mobiletopo" idsBanners="" tipo="carrossel"  configuracaoCarrossel="{
                 
                   infinite: false,
@@ -281,36 +1004,49 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
                     }
                   ]
                 }" classeItens="" />
-            </div>
-        </div>
+                          </div> 
+                        </div>
     </section>  
-    </div>
-</div>
-
-    <div class="top-container">
-        <!--BANNER CENTRO-->
-        <section class="fbits-section-home fbits-banner-centro-home bdesk">
-            <div class="row row-fbits-banner-centro bcentro">
-                <FBITS:Banner filtroPosicao="centro" idsBanners="" tipo="estatico" configuracaoCarrossel="" classeItens="" />
-            </div>
-        </section>
-        
-         <section class="fbits-section-home fbits-banner-centro-home bmob">
-            <div class="row row-fbits-banner-centro bcentro2">
-                <FBITS:Banner filtroPosicao="Mobile Centro" idsBanners="" tipo="estatico" configuracaoCarrossel="" classeItens="" />
-            </div>
-        </section>
-    </div>
+                </div>
+            </div>   
+            
+    <!--BANNER CENTRO DESKTOP-->
+    <section class="fbits-section-home fbits-banner-centro-home bdesk">
+        <div class="container">
+            <div class="row row-fbits-banner-centro">
+                            <div class="col-md-12">
+                    <FBITS:Banner filtroPosicao="centro" idsBanners="" tipo="carrossel" configuracaoCarrossel="{
+                        dots: true,
+                        fade: true,
+                        autoplay: true,
+                        autoplaySpeed: 3000,
+                        arrows: true,
+                        infinite: true,
+                        speed: 500
+                    }" classeItens="" />
+                            </div>
+                          </div> 
+                        </div>
+    </section>
     
-    <script>
-    if (window.innerWidth>990){
-        $(".bcentro").slick({dots: true,fade: true, autoplay:true, arrows: true});
-        $(".bmob").remove();
-    } else {
-        $(".bcentro2").slick({dots: true,fade: true, autoplay:true, arrows: true});
-        $(".bdesk").remove();
-    }
-    </script>
+    <!--BANNER CENTRO MOBILE (mesma posição "centro")-->
+    <section class="fbits-section-home fbits-banner-centro-home bmob">
+        <div class="container">
+            <div class="row row-fbits-banner-centro">
+                <div class="col-md-12">
+                    <FBITS:Banner filtroPosicao="mobile centro" idsBanners="" tipo="carrossel" configuracaoCarrossel="{
+                        dots: true,
+                        fade: false,
+                        autoplay: true,
+                        autoplaySpeed: 3000,
+                        arrows: false,
+                        infinite: true,
+                        speed: 500
+                    }" classeItens="" />
+                </div>
+            </div>   
+        </div>
+    </section>
     <div class="main-container col1-layout">
         <div class="main container">
             <div class="col-main">
@@ -318,7 +1054,7 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
     <!--BANNER TOPO-->
     <section class="fbits-section-home fbits-banner-topo-home">
         <div class="row row-fbits-banner-topo">
-            <div class="col-md-12">
+                            <div class="col-md-12">
                 <FBITS:Banner filtroPosicao="topo" idsBanners="" tipo="carrossel"  configuracaoCarrossel="{
                   dots: false,
                   infinite: true,
@@ -357,24 +1093,77 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
                     }
                   ]
                 }" classeItens="" />
-            </div>
+                            </div>
     </section>  
     
-    <!--MELHORES OFERTAS COM BANNER LATERAL-->
-    <section class="fbits-section-home fbits-vitrine-home fbits-vitrine-com-banner">
+    <!--MELHORES OFERTAS COM BANNER LATERAL DESKTOP-->
+    <section class="fbits-section-home fbits-vitrine-home fbits-vitrine-com-banner bdesk">
         <div class="row row-vitrine-home">
             <div class="col-md-12">
                 <div class="line">
                     <h3 class="title big"> melhores ofertas</h3>
                     <span></span>
+                          </div> 
+                        </div>
                 </div>
-            </div>
-        </div>
         <div class="row row-vitrine-home">
-            <!-- Banner Vertical -->
+            <!-- Banner Vertical Desktop -->
             <div class="col-md-3 col-sm-12 col-banner-ofertas">
                 <FBITS:Banner filtroPosicao="Lateral Direita" idsBanners="" tipo="estatico" configuracaoCarrossel="" classeItens="banner-ofertas-lateral" />
+            </div>   
+            
+            <!-- Carrossel de Produtos -->
+            <div class="col-md-9 col-sm-12 col-carrossel-ofertas">
+                <FBITS:ListaSpots idsHotsites="117326" tipo="carrossel" configuracaoCarrossel="{
+                    dots: false,
+                    infinite: true,
+                    speed: '300',
+                    autoplay: true,
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    responsive: [
+                        {
+                            breakpoint: 1200,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 1
+                            }
+                        },
+                        {
+                            breakpoint: 990,
+                            settings: {
+                                slidesToShow: 2,
+                                slidesToScroll: 1
+                            }
+                        },
+                        {
+                            breakpoint: 767,
+                            settings: {
+                                slidesToShow: 2,
+                                slidesToScroll: 1
+                            }
+                        }
+                    ]
+                }" classeItens="componente-vitrine" />
             </div>
+        </div>
+    </section>
+    
+    <!--MELHORES OFERTAS COM BANNER LATERAL MOBILE-->
+    <section class="fbits-section-home fbits-vitrine-home fbits-vitrine-com-banner bmob">
+        <div class="row row-vitrine-home">
+            <div class="col-md-12">
+                <div class="line">
+                    <h3 class="title big"> melhores ofertas</h3>
+                    <span></span>
+                          </div> 
+                        </div>
+                </div>
+        <div class="row row-vitrine-home">
+            <!-- Banner Vertical Mobile -->
+            <div class="col-md-3 col-sm-12 col-banner-ofertas">
+                <FBITS:Banner filtroPosicao="Lateral Esquerda" idsBanners="" tipo="estatico" configuracaoCarrossel="" classeItens="banner-ofertas-lateral-mobile" />
+            </div>   
             
             <!-- Carrossel de Produtos -->
             <div class="col-md-9 col-sm-12 col-carrossel-ofertas">
@@ -382,7 +1171,7 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
                   dots: false,
                   infinite: true,
                   speed: 300,
-                  slidesToShow: 3,
+                  slidesToShow: 4,
                   slidesToScroll: 1,
                   responsive: [
                     {
@@ -402,14 +1191,14 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
                     {
                       breakpoint: 767,
                       settings: {
-                        slidesToShow: 1,
+                        slidesToShow: 2,
                         slidesToScroll: 1
                       }
                     }
                   ]
                 }" classeItens="componente-vitrine" />
-            </div>
-        </div>
+                          </div> 
+                        </div>
     </section>
 
     
@@ -420,7 +1209,7 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
                 <div class="line">
                     <h3 class="title big"> novidades! </h3>
                     <span></span>
-                </div>               
+                            </div>
                 <FBITS:ListaCustomizada idsBanners="" idsHotsites="117167" idsConteudos="" tipo="carrossel" configuracaoCarrossel="{
                   dots: false,
                   infinite: true,
@@ -446,14 +1235,14 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
                     {
                       breakpoint: 767,
                       settings: {
-                        slidesToShow: 1,
+                        slidesToShow: 2,
                         slidesToScroll: 1
                       }
                     }
                   ]
                 }" classeItens="componente-vitrine" />
-            </div>
-        </div>
+                          </div> 
+                        </div>
     </section>
     
 
@@ -461,11 +1250,11 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
    <!--BANNER RODAPE-->
     <section class="fbits-section-home fbits-banner-rodape" style="width: 100%;">
         <div class="row row-fbits-banner-rodape">
-            <div class="col-md-12">
+                            <div class="col-md-12">
                 <div class="line">
                     <h3 class="title big"> </h3>
                     <span></span>
-                </div> 
+                            </div>
                 <FBITS:Banner filtroPosicao="rodape" idsBanners="" tipo="carrossel" configuracaoCarrossel="{
                   dots: false,
                   infinite: true,
@@ -490,31 +1279,31 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
                     {
                       breakpoint: 767,
                       settings: {
-                        slidesToShow: 1,
+                        slidesToShow: 2,
                         slidesToScroll: 1
                       }
                     },
                     {
                       breakpoint: 400,
                       settings: {
-                        slidesToShow: 1,
+                        slidesToShow: 2,
                         slidesToScroll: 1
                       }
                     }
                   ]
                 }" classeItens="componente-banner-rodape" />
-            </div>
-        </div>
+                          </div> 
+                        </div>
     </section>
 
         <!--OFERTAS POR DEPARTAMENTO-->
     <section class="fbits-section-home fbits-ofertas-departamento">
         <div class="row row-ofertas-departamento">
-            <div class="col-md-12">
+                            <div class="col-md-12">
                 <div class="line">
                     <h3 class="title big">os melhores equipamentos! </h3>
                     <span></span>
-                </div>          
+                                    </div>
                 <FBITS:OfertasPorDepartamento idHotsite="117268" tipo="carrossel" configuracaoCarrossel="{
                   dots: false,
                   infinite: true,
@@ -539,23 +1328,33 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
                     {
                       breakpoint: 767,
                       settings: {
-                        slidesToShow: 1,
+                        slidesToShow: 2,
                         slidesToScroll: 1
                       }
                     }
                   ]
                 }" classeItens="componente-vitrine componente-ofertas-departamento" />
-            </div>           
-        </div>
+                          </div> 
+                        </div>
     </section>  
     
-    <!--BANNER MEIO - Entre Equipamentos e Clareador-->
-    <section class="fbits-section-home fbits-banner-meio-home">
+    <!-- Futuramente Mobile Centro Lower>
+    <!--BANNER MEIO DESKTOP - Entre Equipamentos e Clareador-->
+    <section class="fbits-section-home fbits-banner-meio-home bdesk">
         <div class="row row-fbits-banner-meio">
             <div class="col-md-12">
                 <FBITS:Banner filtroPosicao="Centro Lower" idsBanners="" tipo="estatico" configuracaoCarrossel="" classeItens="banner-meio-equipamentos" />
-            </div>
-        </div>
+                </div>
+            </div>   
+    </section>
+    
+    <!--BANNER MEIO MOBILE - Entre Equipamentos e Clareador-->
+    <section class="fbits-section-home fbits-banner-meio-home bmob">
+        <div class="row row-fbits-banner-meio">
+            <div class="col-md-12">
+                <FBITS:Banner filtroPosicao="Mobile Centro Lower" idsBanners="" tipo="estatico" configuracaoCarrossel="" classeItens="banner-meio-equipamentos-mobile" />
+                </div>
+            </div>   
     </section>
     
         <!--LUVAS-->
@@ -591,17 +1390,17 @@ section.fbits-vitrine-com-banner .col-carrossel-ofertas {
                     {
                       breakpoint: 767,
                       settings: {
-                        slidesToShow: 1,
+                        slidesToShow: 2,
                         slidesToScroll: 1
                       }
                     }
                   ]
                 }" classeItens="componente-vitrine" />
             </div>
-        </div>
+                </div>
     </section>
 
-        </div>
-    </div>
-</div>
+                        </div>
+                    </div>
+                    </div>
 
