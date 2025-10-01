@@ -32,6 +32,8 @@
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="640">
 <meta name="viewport" content="initial-scale = 1, maximum-scale = 1, user-scalable = no">
+
+
 <style>
 @@media (min-width: 576px) {
     .container {
@@ -57,6 +59,28 @@ section.fbits-section-home.fbits-banner-centro-home img {
     }
     span.minicart-txt-itens {
         display: none;
+    }
+    
+    /* Corrige duplicação do dropdown do carrinho */
+    .mini-cart .topCartContent {
+        display: none !important;
+    }
+    
+    /* Garante que apenas o wrapper do Wake Commerce seja visível */
+    .mini-cart .minicart-itens-wrapper {
+        display: block !important;
+    }
+    
+    /* Oculta elementos duplicados gerados pelo Wake Commerce */
+    .mini-cart .minicart-itens-wrapper .topCartContent,
+    .mini-cart .minicart-itens-wrapper .block-content,
+    .mini-cart .minicart-itens-wrapper .inner-wrapper {
+        display: none !important;
+    }
+    
+    /* Força exibição apenas do conteúdo principal do carrinho */
+    .mini-cart .minicart-itens-wrapper > *:not(.topCartContent):not(.block-content):not(.inner-wrapper) {
+        display: block !important;
     }
     .header-container.type2 .main-nav .menu-wrapper, .header-container.type3 .main-nav, .header-container.type3.header-newskin .main-nav, .header-container.type19 .main-nav, .header-container.type20 .main-nav, .header-container.type4.header-newskin .main-nav .menu-wrapper, .header-container.type4 .main-nav .menu-wrapper, .header-container.type9 .main-nav .menu-wrapper, .header-container.type10 .header-wrapper, .header-container.type10.header-newskin .header-wrapper, .header-container.type3.sticky-header .header-wrapper, .header-container.type3.header-newskin.sticky-header .header-wrapper, .header-container.type20.sticky-header .header-wrapper, .header-container.type4.header-newskin.sticky-header .header-wrapper, .header-container.type4.sticky-header .header-wrapper, .header-container.type10.sticky-header .header-wrapper, .header-container.type20 .header-wrapper {
         background-color: #1c5787;
@@ -146,17 +170,11 @@ section.fbits-section-home.fbits-banner-centro-home img {
                 </div>
                 
                 <div class="mini-cart">
-                    
                     <a href="javascript:void(0)" class="mybag-link"><i class="icon-mini-cart"></i><span>Item(s)</span></a>
-        <div class="topCartContent block-content theme-border-color">
-            <div class="inner-wrapper">                                                                    
-                        
-                        
+                    <div class="minicart-itens-wrapper">
                         @FBITSCarrinho.Add()
-                        
-                            </div>
-        </div>
-</div>
+                    </div>
+                </div>
         </div>
         <div class="search-area">
             <a href="javascript:void(0);" class="search-icon"><i class="icon-search"></i></a>
