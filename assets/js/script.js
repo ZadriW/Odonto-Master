@@ -29,7 +29,7 @@ const CONFIG = {
     },
     
     // Carrossel
-    CAROUSEL_AUTOPLAY_INTERVAL: 4000,
+    CAROUSEL_AUTOPLAY_INTERVAL: 3000,
     CAROUSEL_TRANSITION_DURATION: 400
 };
 
@@ -1045,7 +1045,9 @@ class Carousel {
         this.container = container;
         this.track = container.querySelector('.carousel-track');
         this.slides = container.querySelectorAll('.carousel-slide');
-        this.dots = container.querySelectorAll('.carousel-dot');
+        // Buscar dots no parent (nav-highlight-carousel) ao invés do container
+        const parentSection = container.closest('.nav-highlight-carousel');
+        this.dots = parentSection ? parentSection.querySelectorAll('.carousel-dot') : [];
         this.prevBtn = container.querySelector('.carousel-nav--prev');
         this.nextBtn = container.querySelector('.carousel-nav--next');
         
@@ -1150,12 +1152,13 @@ class Carousel {
     
     updateDots() {
         this.dots.forEach((dot, index) => {
+            // Remover ambas as classes para garantir
+            dot.classList.remove('is-active', 'active');
+            dot.setAttribute('aria-selected', 'false');
+            
             if (index === this.currentSlide) {
-                dot.classList.add('is-active');
+                dot.classList.add('is-active', 'active');
                 dot.setAttribute('aria-selected', 'true');
-            } else {
-                dot.classList.remove('is-active');
-                dot.setAttribute('aria-selected', 'false');
             }
         });
     }
@@ -1180,13 +1183,12 @@ class Carousel {
 // ===== CARROSSEL DE PRODUTOS (ATUALIZADO PARA USAR HTML ESTÁTICO) ================
 // =================================================================================
 class ProductsCarousel {
-    
-    constructor(trackId, dotsId) {
+
+    constructor(trackId) {
         this.track = document.getElementById(trackId);
-        this.dotsContainer = document.getElementById(dotsId);
         this.container = this.track ? this.track.closest('.products-carousel-container') : null;
-        
-        if (!this.container || !this.track || !this.dotsContainer) {
+
+        if (!this.container || !this.track) {
             Logger.warn(`Carrossel com trackId '${trackId}' não pôde ser inicializado.`);
             return;
         }
@@ -1201,13 +1203,15 @@ class ProductsCarousel {
         this.slides = this.track.querySelectorAll('.product-slide');
         this.totalSlides = this.slides.length;
 
+        // Para loop infinito, duplicamos os slides
+        this.duplicateSlides();
+
         this.init();
     }
 
     init() {
         this.bindEvents();
-        this.updateDots();
-        this.updateNavButtons();
+        // Removemos a criação de dots e botões de navegação desabilitados
     }
 
     getItemsPerView() {
@@ -1219,80 +1223,113 @@ class ProductsCarousel {
         return 4;
     }
 
-    bindEvents() {
-        this.prevBtn.addEventListener('click', () => this.prev());
-        this.nextBtn.addEventListener('click', () => this.next());
-        this.dotsContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('carousel-dot')) {
-                const index = parseInt(e.target.dataset.index);
-                this.goToGroup(index);
-            }
+    duplicateSlides() {
+        // Duplicar slides originais no início E no final para loop infinito suave
+        const originalSlides = Array.from(this.slides);
+        this.originalSlidesCount = originalSlides.length;
+
+        // Adicionar clones no início (para voltar suavemente)
+        for (let i = originalSlides.length - 1; i >= 0; i--) {
+            const clone = originalSlides[i].cloneNode(true);
+            clone.classList.add('clone-start');
+            this.track.insertBefore(clone, this.track.firstChild);
+        }
+
+        // Adicionar clones no final (para avançar suavemente)
+        originalSlides.forEach(slide => {
+            const clone = slide.cloneNode(true);
+            clone.classList.add('clone-end');
+            this.track.appendChild(clone);
         });
+
+        // Atualizar lista de slides
+        this.slides = this.track.querySelectorAll('.product-slide');
+        this.totalSlides = this.slides.length;
+
+        // Começar no primeiro conjunto de slides originais (após os clones iniciais)
+        this.currentIndex = this.originalSlidesCount;
+        
+        // Posicionar inicialmente sem animação
+        this.updatePosition(false);
+    }
+
+    bindEvents() {
+        if (this.prevBtn) {
+        this.prevBtn.addEventListener('click', () => this.prev());
+        }
+        
+        if (this.nextBtn) {
+        this.nextBtn.addEventListener('click', () => this.next());
+        }
+
         window.addEventListener('resize', Utils.debounce(() => {
             const newItemsPerView = this.getItemsPerView();
             if (newItemsPerView !== this.itemsPerView) {
                 this.itemsPerView = newItemsPerView;
-                this.updateDots();
             }
+            // Recalcular posição após resize
+            this.updatePosition(false);
         }, 250));
     }
 
     prev() {
         if (this.isTransitioning) return;
-        const maxIndex = Math.max(0, this.totalSlides - this.itemsPerView);
-        this.currentIndex = Math.max(0, this.currentIndex - this.itemsPerView);
-        this.updatePosition();
+
+        this.currentIndex--;
+
+        this.updatePosition(true);
+
+        // Se chegamos aos clones do início, voltar para os slides originais do final
+        if (this.currentIndex < this.originalSlidesCount) {
+            setTimeout(() => {
+                this.currentIndex = this.originalSlidesCount * 2 - 1;
+                this.updatePosition(false);
+            }, 400);
+        }
     }
 
     next() {
         if (this.isTransitioning) return;
-        const maxIndex = Math.max(0, this.totalSlides - this.itemsPerView);
-        this.currentIndex = Math.min(maxIndex, this.currentIndex + this.itemsPerView);
-        this.updatePosition();
-    }
 
-    goToGroup(groupIndex) {
-        if (this.isTransitioning) return;
-        this.currentIndex = Math.min(groupIndex * this.itemsPerView, Math.max(0, this.totalSlides - this.itemsPerView));
-        this.updatePosition();
+        this.currentIndex++;
+
+        this.updatePosition(true);
+
+        // Se chegamos aos clones do final, voltar para os slides originais do início
+        if (this.currentIndex >= this.originalSlidesCount * 2) {
+            setTimeout(() => {
+                this.currentIndex = this.originalSlidesCount;
+                this.updatePosition(false);
+            }, 400);
+        }
     }
 
     updatePosition(animate = true) {
-        this.isTransitioning = true;
-        const slideWidth = 100 / this.itemsPerView;
+        this.isTransitioning = animate;
+
+        // Calcular a largura de cada slide em pixels
+        const slideWidth = this.slides[0].offsetWidth;
         const offset = -(this.currentIndex * slideWidth);
+
+        // Aplicar transformação
         this.track.style.transition = animate ? 'transform 0.4s cubic-bezier(0.2, 0.6, 0.2, 1)' : 'none';
-        this.track.style.transform = `translateX(${offset}%)`;
-        setTimeout(() => { this.isTransitioning = false; }, animate ? 400 : 0);
-        this.updateDots();
-    }
+        this.track.style.transform = `translateX(${offset}px)`;
 
-    updateDots() {
-        const totalGroups = Math.ceil(this.totalSlides / this.itemsPerView);
-        
-        // Atualizar ou criar dots conforme necessário
-        if (this.dotsContainer.children.length !== totalGroups) {
-            this.dotsContainer.innerHTML = '';
-            for (let i = 0; i < totalGroups; i++) {
-                const dot = document.createElement('button');
-                dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
-                dot.dataset.index = i;
-                dot.setAttribute('aria-label', `Ir para grupo ${i + 1}`);
-                this.dotsContainer.appendChild(dot);
-            }
+        // Sempre liberar o estado de transição após aplicar a transformação
+        if (animate) {
+            setTimeout(() => {
+                this.isTransitioning = false;
+            }, 400);
+        } else {
+            // Para transformações instantâneas, liberar imediatamente após um pequeno delay
+            setTimeout(() => {
+            this.isTransitioning = false;
+            }, 50);
         }
-        
-        // Atualizar estado ativo dos dots
-        const dots = this.dotsContainer.querySelectorAll('.carousel-dot');
-        const currentGroup = Math.floor(this.currentIndex / this.itemsPerView);
-        dots.forEach((dot, index) => dot.classList.toggle('active', index === currentGroup));
     }
 
-    updateNavButtons() {
-        const maxIndex = Math.max(0, this.totalSlides - this.itemsPerView);
-        this.prevBtn.disabled = this.currentIndex <= 0;
-        this.nextBtn.disabled = this.currentIndex >= maxIndex || maxIndex <= 0;
-    }
+    // Métodos removidos: updateDots() e updateNavButtons()
+    // No modo infinito, os dots são removidos e os botões nunca são desabilitados
 
 }
 
@@ -1304,9 +1341,10 @@ class ProductsCarousel {
 
 // Inicialização dentro do DOMContentLoaded para garantir que os elementos existam
 document.addEventListener('DOMContentLoaded', () => {
-    new ProductsCarousel('productsTrack', 'carouselDots');
-    new ProductsCarousel('productsTrackLancamentos', 'carouselDotsLancamentos');
-    new ProductsCarousel('productsTrackEquipamentos', 'carouselDotsEquipamentos');
+    new ProductsCarousel('productsTrack');
+    new ProductsCarousel('productsTrackLancamentos');
+    new ProductsCarousel('productsTrackEquipamentos');
+    new ProductsCarousel('equipamentos-track');
 });
 
 // ===== SISTEMA DE MEGA MENU =====
@@ -1570,31 +1608,77 @@ class ProductDatabase {
             // this.products = await response.json();
             
             this.products = {
-                'prod1': { id: 'prod1', name: 'Kit Clareamento Dental Whiteness HP', price: 18990, discount: 27, price_original: 26000, price_current: 18990, installments: { count: 10, value: 18.99 }, image: '/images/clareador-whiteness.png', category: 'Clareamento Dental', brand: 'Whiteness' },
-                'prod2': { id: 'prod2', name: 'Resina Composta Z350 XT', price: 24590, discount: 15, price_original: 29000, price_current: 24590, installments: { count: 10, value: 24.59 }, image: '/images/resina-composta.png', category: 'Resina Composta', brand: 'Z350' },
-                'prod3': { id: 'prod3', name: 'Anestésico Mepivacaína 3%', price: 8990, discount: 30, price_original: 12900, price_current: 8990, installments: { count: 6, value: 14.98 }, image: '/images/anestesico.png', category: 'Anestésico', brand: 'Mepivacaína' },
-                'prod4': { id: 'prod4', name: 'Broca Carbide FG 245', price: 3490, discount: 10, price_original: 3900, price_current: 3490, installments: { count: 3, value: 11.63 }, image: '/images/broca.png', category: 'Broca', brand: 'Carbide' },
-                'prod5': { id: 'prod5', name: 'Fotopolimerizador LED Radii Plus', price: 89900, discount: 20, price_original: 112500, price_current: 89900, installments: { count: 12, value: 7491.67 }, image: '/images/fotopolimerizador.png', category: 'Fotopolimerizador', brand: 'Radii' },
-                'prod6': { id: 'prod6', name: 'Cimento de Ionômero de Vidro', price: 5690, discount: 18, price_original: 7000, price_current: 5690, installments: { count: 5, value: 11.38 }, image: '/images/ionomero.png', category: 'Cimento', brand: 'Vitro' },
-                'prod7': { id: 'prod7', name: 'Kit Endodontia Rotatória Avançado', price: 145000, discount: 25, price_original: 195000, price_current: 145000, installments: { count: 12, value: 12083.33 }, image: '/images/kit-endodontia.png', category: 'Kit', brand: 'Kerr' },
-                'prod8': { id: 'prod8', name: 'Ácido Fosfórico 37% Gel', price: 2290, discount: 12, price_original: 2600, price_current: 2290, installments: { count: 3, value: 7.63 }, image: '/images/acido.png', category: 'Ácido Fosfórico', brand: 'SDI' },
-                'prod9': { id: 'prod9', name: 'Autoclave Vitale Class CD 21 Litros', price: 450000, discount: 10, price_original: 500000, price_current: 450000, installments: { count: 12, value: 37500.00 }, image: '/images/autoclave.png', category: 'Autoclave', brand: 'Vitale' },
-                'prod10': { id: 'prod10', name: 'Cadeira Odontológica Kavo Unik', price: 2500000, discount: 15, price_original: 2950000, price_current: 2500000, installments: { count: 12, value: 208333.33 }, image: '/images/cadeira.png', category: 'Cadeira Odontológica', brand: 'Kavo' }
+                'prod1': { id: 'prod1', name: 'Kit Clareamento Dental Whiteness HP', price: 18990, discount: 27, price_original: 26000, price_current: 18990, installments: { count: 10, value: 1899 }, image: '/images/clareador-whiteness.png', category: 'Clareamento Dental', brand: 'Whiteness' },
+                'prod2': { id: 'prod2', name: 'Resina Composta Z350 XT - Solventum', price: 29900, discount: 15, price_original: 29900, price_current: 29900, installments: { count: 10, value: 2990 }, image: '/images/resina-composta.png', category: 'Resina Composta', brand: 'Solventum' },
+                'prod3': { id: 'prod3', name: 'Anestésico Mepivalem 3%', price: 22900, discount: 30, price_original: 12900, price_current: 22900, installments: { count: 6, value: 3817 }, image: '/images/anestesico.png', category: 'Anestésico', brand: 'Mepivalem' },
+                'prod4': { id: 'prod4', name: 'Broca Carbide FG 245', price: 1450, discount: 10, price_original: 3900, price_current: 1450, installments: { count: 3, value: 483 }, image: '/images/broca.png', category: 'Broca', brand: 'Carbide' },
+                'prod5': { id: 'prod5', name: 'Fotopolimerizador LED Radii Plus', price: 390000, discount: 20, price_original: 112500, price_current: 390000, installments: { count: 12, value: 32500 }, image: '/images/fotopolimerizador.png', category: 'Fotopolimerizador', brand: 'Radii' },
+                'prod6': { id: 'prod6', name: 'Cimento Endontico Pull Fill Kit - Biodinamica', price: 4990, discount: 18, price_original: 7000, price_current: 4990, installments: { count: 5, value: 998 }, image: 'https://odontomaster.fbitsstatic.net/img/p/cimento-endodontico-pulp-fill-kit-biodinamica-74784/266174.jpg?w=320&h=320&v=202508291601&qs=ignore', category: 'Cimento', brand: 'Biodinamica' },
+                'prod7': { id: 'prod7', name: 'Lima Manual Kendo K-File - VDW', price: 3540, discount: 25, price_original: 195000, price_current: 3540, installments: { count: 12, value: 295 }, image: 'https://odontomaster.fbitsstatic.net/img/p/lima-manual-kendo-k-file-vdw-74629/265800-1.jpg?w=320&h=320&v=202508271736&qs=ignore', category: 'Endodontia', brand: 'VDW' },
+                'prod8': { id: 'prod8', name: 'Clareador Whiteness Perfect 22% - FGM', price: 7990, discount: 12, price_original: 2600, price_current: 7990, installments: { count: 3, value: 2663 }, image: 'https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-perfect-22-fgm-72016/260704.jpg?w=320&h=320&v=no-change&qs=ignore', category: 'Clareamento Dental', brand: 'FGM' },
+                'prod9': { id: 'prod9', name: 'Autoclave Vitale Class 12L - Cristófoli', price: 7990, discount: 10, price_original: 500000, price_current: 7990, installments: { count: 12, value: 666 }, image: 'https://odontomaster.fbitsstatic.net/img/p/autoclave-vitale-class-12l-cristofoli-70901/258917.jpg?w=420&h=420&v=no-change&qs=ignore', category: 'Autoclave', brand: 'Cristófoli' },
+                'prod10': { id: 'prod10', name: 'Autoclave Vitale Class 21L - Cristófoli', price: 1937, discount: 15, price_original: 2950000, price_current: 1937, installments: { count: 12, value: 161 }, image: 'https://odontomaster.fbitsstatic.net/img/p/autoclave-vitale-class-12l-cristofoli-70901/258917.jpg?w=420&h=420&v=no-change&qs=ignore', category: 'Autoclave', brand: 'Cristófoli' },
+                'prod11': { id: 'prod11', name: 'Lima Reciprocante Reciproc - VDW', price: 40990, discount: 22, price_original: 160000, price_current: 40990, installments: { count: 12, value: 3416 }, image: 'https://odontomaster.fbitsstatic.net/img/p/lima-reciprocante-reciproc-vdw-70872/258882.jpg?w=320&h=320&v=no-change&qs=ignore', category: 'Endodontia', brand: 'VDW' },
+                'prod12': { id: 'prod12', name: 'Resina TPH Spectrum - Dentsply', price: 2370, discount: 18, price_original: 11000, price_current: 2370, installments: { count: 8, value: 296 }, image: 'https://odontomaster.fbitsstatic.net/img/p/resina-tph-spectrum-dentsply-73652/264075.jpg?w=320&h=320&v=no-change&qs=ignore', category: 'Resina Composta', brand: 'Dentsply' },
+                'prod13': { id: 'prod13', name: 'Kit Braquete de Aço Advanced Series Roth 022 - Orthometric', price: 2190, discount: 15, price_original: 223000, price_current: 2190, installments: { count: 12, value: 183 }, image: 'https://odontomaster.fbitsstatic.net/img/p/kit-braquete-de-aco-advanced-series-roth-022-orthometric-73253/263482.jpg?w=320&h=320&v=202501241014&qs=ignore', category: 'Ortodontia', brand: 'Orthometric' },
+                'prod14': { id: 'prod14', name: 'Ficha Clínica Simples - Preven', price: 41172, discount: 10, price_original: 500000, price_current: 41172, installments: { count: 12, value: 3431 }, image: 'https://odontomaster.fbitsstatic.net/img/p/ficha-clinica-simples-preven-74761/266131.jpg?w=320&h=320&v=202508201217&qs=ignore', category: 'Material de Escritório', brand: 'Preven' },
+                'prod15': { id: 'prod15', name: 'Clareador Whiteness Perfect 10% - FGM', price: 7990, discount: 25, price_original: 118000, price_current: 7990, installments: { count: 12, value: 666 }, image: 'https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-perfect-10-fgm-71914/260561.jpg?w=320&h=320&v=202502211159&qs=ignore', category: 'Clareamento Dental', brand: 'FGM' },
+                'prod16': { id: 'prod16', name: 'Localizador Apical Farominal E-Pex Pró - MK Life', price: 15590, discount: 20, price_original: 156000, price_current: 15590, installments: { count: 12, value: 1299 }, image: 'https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-hp-blue-calcium-35-mini-kit-fgm-72121/260864-1.jpg?w=320&h=320&v=202506141130&qs=ignore', category: 'Endodontia', brand: 'MK Life' },
+                'prod17': { id: 'prod17', name: 'Kit Braquete Metálico 100 Casos', price: 890, discount: 15, price_original: 1050, price_current: 890, installments: { count: 2, value: 445 }, image: 'https://odontomaster.fbitsstatic.net/img/p/fotopolimerizador-emitter-a-fit-com-ponteira-shuster-73208/263424.jpg?w=420&h=420&v=202502031032&qs=ignore', category: 'Ortodontia', brand: 'Diversos' },
+                'prod18': { id: 'prod18', name: 'Restaurador Provisório Fill Temp 25g - Biodinâmica', price: 185000, discount: 18, price_original: 226000, price_current: 185000, installments: { count: 12, value: 15416.67 }, image: '/images/ultrassom-piezo.png', category: 'Materiais Restauradores', brand: 'Biodinâmica' },
+                'prod19': { id: 'prod19', name: 'Kit Corredor de Classe II Iceram Clear Distalizer 23mm/25mm/27mm - Orthometric', price: 25000, discount: 12, price_original: 28500, price_current: 25000, installments: { count: 10, value: 2500.00 }, image: '/images/seringa-carpule.png', category: 'Ortodontia', brand: 'Orthometric' },
+                'prod20': { id: 'prod20', name: 'Clareador Whiteness HP Blue Calcium 35% Mini Kit - FGM', price: 12500, discount: 20, price_original: 15600, price_current: 12500, installments: { count: 8, value: 1562.50 }, image: '/images/cimento-resina.png', category: 'Clareamento Dental', brand: 'FGM' },
+                'prod21': { id: 'prod21', name: 'Fotopolimerizador Emitter a Fit com Ponteira - SHUSTER', price: 8900, discount: 15, price_original: 10500, price_current: 8900, installments: { count: 6, value: 1483.33 }, image: '/images/fresa-diamantada.png', category: 'Fotopolimerização', brand: 'SHUSTER' },
+                'prod22': { id: 'prod22', name: 'Clareador Whiteness HP Maxx 35% 1PAC - FGM', price: 285000, discount: 10, price_original: 317000, price_current: 285000, installments: { count: 12, value: 23750.00 }, image: '/images/raio-x-portatil.png', category: 'Clareamento Dental', brand: 'FGM' },
+                'prod23': { id: 'prod23', name: 'Clareador Whiteness HP Maxx 35% Mini Kit - FGM', price: 45000, discount: 25, price_original: 60000, price_current: 45000, installments: { count: 10, value: 4500.00 }, image: '/images/lampada-extra.png', category: 'Clareamento Dental', brand: 'FGM' },
+                'prod24': { id: 'prod24', name: 'Clareador Whiteness Perfect 16% - FGM', price: 1250, discount: 10, price_original: 1390, price_current: 1250, installments: { count: 3, value: 416.67 }, image: '/images/moldagem-facial.png', category: 'Clareamento Dental', brand: 'FGM' },
+                'prod25': { id: 'prod25', name: 'Clareador Potenza Bianco Pro 35% H202 - PHS', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833.33 }, image: '/images/unidade-odontologica.png', category: 'Clareamento Dental', brand: 'PHS' },
+                'equip1': { id: 'equip1', name: 'Motor Endodôntico E-Connect Pro - MK Life', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833 }, image: 'https://odontomaster.fbitsstatic.net/img/p/motor-endodontico-e-connect-pro-mk-life-73466/263819-1.jpg?w=320&h=320&v=no-change&qs=ignore', category: 'Equipamentos', brand: 'MK Life' },
+                'equip2': { id: 'equip2', name: 'Fotopolimerizador Emitter a Fit com Ponteira - SHUSTER', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833.33 }, image: '/images/fotopolimerizador-emitter.png', category: 'Equipamentos', brand: 'SHUSTER' },
+                'equip3': { id: 'equip3', name: 'Autoclave Vitale Class 12L - Cristófoli', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833.33 }, image: '/images/autoclave-12l.png', category: 'Equipamentos', brand: 'Cristófoli' },
+                'equip4': { id: 'equip4', name: 'Autoclave Vitale Class 21L - Cristófoli', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833.33 }, image: '/images/autoclave-21l.png', category: 'Equipamentos', brand: 'Cristófoli' },
+                'equip5': { id: 'equip5', name: 'Localizador Apical Farominal E-Pex Pró - MK Life', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833.33 }, image: '/images/localizador-apical.png', category: 'Equipamentos', brand: 'MK Life' },
+                'equip6': { id: 'equip6', name: 'Kit Acadêmico Prime - GNATUS', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833.33 }, image: '/images/kit-academico.png', category: 'Equipamentos', brand: 'GNATUS' },
+                'equip7': { id: 'equip7', name: 'Fotopolimerizador Led Grand Valo Sem Fio Black - Ultradent', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833.33 }, image: '/images/fotopolimerizador-grand-valo.png', category: 'Equipamentos', brand: 'Ultradent' },
+                'equip8': { id: 'equip8', name: 'Destilador de Água 5L/h', price: 134000, discount: 14, price_original: 156000, price_current: 134000, installments: { count: 12, value: 11166.67 }, image: '/images/destilador.png', category: 'Equipamentos', brand: 'Diversos' }
             };
         } catch (error) {
             Logger.error('Erro ao carregar produtos:', error);
             // Em caso de erro, usar dados padrão
             this.products = {
-                'prod1': { id: 'prod1', name: 'Kit Clareamento Dental Whiteness HP', price: 18990, discount: 27, price_original: 26000, price_current: 18990, installments: { count: 10, value: 18.99 }, image: '/images/clareador-whiteness.png', category: 'Clareamento Dental', brand: 'Whiteness' },
-                'prod2': { id: 'prod2', name: 'Resina Composta Z350 XT', price: 24590, discount: 15, price_original: 29000, price_current: 24590, installments: { count: 10, value: 24.59 }, image: '/images/resina-composta.png', category: 'Resina Composta', brand: 'Z350' },
-                'prod3': { id: 'prod3', name: 'Anestésico Mepivacaína 3%', price: 8990, discount: 30, price_original: 12900, price_current: 8990, installments: { count: 6, value: 14.98 }, image: '/images/anestesico.png', category: 'Anestésico', brand: 'Mepivacaína' },
-                'prod4': { id: 'prod4', name: 'Broca Carbide FG 245', price: 3490, discount: 10, price_original: 3900, price_current: 3490, installments: { count: 3, value: 11.63 }, image: '/images/broca.png', category: 'Broca', brand: 'Carbide' },
-                'prod5': { id: 'prod5', name: 'Fotopolimerizador LED Radii Plus', price: 89900, discount: 20, price_original: 112500, price_current: 89900, installments: { count: 12, value: 7491.67 }, image: '/images/fotopolimerizador.png', category: 'Fotopolimerizador', brand: 'Radii' },
-                'prod6': { id: 'prod6', name: 'Cimento de Ionômero de Vidro', price: 5690, discount: 18, price_original: 7000, price_current: 5690, installments: { count: 5, value: 11.38 }, image: '/images/ionomero.png', category: 'Cimento', brand: 'Vitro' },
-                'prod7': { id: 'prod7', name: 'Kit Endodontia Rotatória Avançado', price: 145000, discount: 25, price_original: 195000, price_current: 145000, installments: { count: 12, value: 12083.33 }, image: '/images/kit-endodontia.png', category: 'Kit', brand: 'Kerr' },
-                'prod8': { id: 'prod8', name: 'Ácido Fosfórico 37% Gel', price: 2290, discount: 12, price_original: 2600, price_current: 2290, installments: { count: 3, value: 7.63 }, image: '/images/acido.png', category: 'Ácido Fosfórico', brand: 'SDI' },
-                'prod9': { id: 'prod9', name: 'Autoclave Vitale Class CD 21 Litros', price: 450000, discount: 10, price_original: 500000, price_current: 450000, installments: { count: 12, value: 37500.00 }, image: '/images/autoclave.png', category: 'Autoclave', brand: 'Vitale' },
-                'prod10': { id: 'prod10', name: 'Cadeira Odontológica Kavo Unik', price: 2500000, discount: 15, price_original: 2950000, price_current: 2500000, installments: { count: 12, value: 208333.33 }, image: '/images/cadeira.png', category: 'Cadeira Odontológica', brand: 'Kavo' }
+                'prod1': { id: 'prod1', name: 'Kit Clareamento Dental Whiteness HP', price: 18990, discount: 27, price_original: 26000, price_current: 18990, installments: { count: 10, value: 1899 }, image: '/images/clareador-whiteness.png', category: 'Clareamento Dental', brand: 'Whiteness' },
+                'prod2': { id: 'prod2', name: 'Resina Composta Z350 XT - Solventum', price: 29900, discount: 15, price_original: 29900, price_current: 29900, installments: { count: 10, value: 2990 }, image: '/images/resina-composta.png', category: 'Resina Composta', brand: 'Solventum' },
+                'prod3': { id: 'prod3', name: 'Anestésico Mepivalem 3%', price: 22900, discount: 30, price_original: 12900, price_current: 22900, installments: { count: 6, value: 3817 }, image: '/images/anestesico.png', category: 'Anestésico', brand: 'Mepivalem' },
+                'prod4': { id: 'prod4', name: 'Broca Carbide FG 245', price: 1450, discount: 10, price_original: 3900, price_current: 1450, installments: { count: 3, value: 483 }, image: '/images/broca.png', category: 'Broca', brand: 'Carbide' },
+                'prod5': { id: 'prod5', name: 'Fotopolimerizador LED Radii Plus', price: 390000, discount: 20, price_original: 112500, price_current: 390000, installments: { count: 12, value: 32500 }, image: '/images/fotopolimerizador.png', category: 'Fotopolimerizador', brand: 'Radii' },
+                'prod6': { id: 'prod6', name: 'Cimento Endontico Pull Fill Kit - Biodinamica', price: 4990, discount: 18, price_original: 7000, price_current: 4990, installments: { count: 5, value: 998 }, image: 'https://odontomaster.fbitsstatic.net/img/p/cimento-endodontico-pulp-fill-kit-biodinamica-74784/266174.jpg?w=320&h=320&v=202508291601&qs=ignore', category: 'Cimento', brand: 'Biodinamica' },
+                'prod7': { id: 'prod7', name: 'Lima Manual Kendo K-File - VDW', price: 3540, discount: 25, price_original: 195000, price_current: 3540, installments: { count: 12, value: 295 }, image: 'https://odontomaster.fbitsstatic.net/img/p/lima-manual-kendo-k-file-vdw-74629/265800-1.jpg?w=320&h=320&v=202508271736&qs=ignore', category: 'Endodontia', brand: 'VDW' },
+                'prod8': { id: 'prod8', name: 'Clareador Whiteness Perfect 22% - FGM', price: 7990, discount: 12, price_original: 2600, price_current: 7990, installments: { count: 3, value: 2663 }, image: 'https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-perfect-22-fgm-72016/260704.jpg?w=320&h=320&v=no-change&qs=ignore', category: 'Clareamento Dental', brand: 'FGM' },
+                'prod9': { id: 'prod9', name: 'Autoclave Vitale Class 12L - Cristófoli', price: 7990, discount: 10, price_original: 500000, price_current: 7990, installments: { count: 12, value: 666 }, image: 'https://odontomaster.fbitsstatic.net/img/p/autoclave-vitale-class-12l-cristofoli-70901/258917.jpg?w=420&h=420&v=no-change&qs=ignore', category: 'Autoclave', brand: 'Cristófoli' },
+                'prod10': { id: 'prod10', name: 'Autoclave Vitale Class 21L - Cristófoli', price: 1937, discount: 15, price_original: 2950000, price_current: 1937, installments: { count: 12, value: 161 }, image: 'https://odontomaster.fbitsstatic.net/img/p/autoclave-vitale-class-12l-cristofoli-70901/258917.jpg?w=420&h=420&v=no-change&qs=ignore', category: 'Autoclave', brand: 'Cristófoli' },
+                'prod11': { id: 'prod11', name: 'Lima Reciprocante Reciproc - VDW', price: 40990, discount: 22, price_original: 160000, price_current: 40990, installments: { count: 12, value: 3416 }, image: 'https://odontomaster.fbitsstatic.net/img/p/lima-reciprocante-reciproc-vdw-70872/258882.jpg?w=320&h=320&v=no-change&qs=ignore', category: 'Endodontia', brand: 'VDW' },
+                'prod12': { id: 'prod12', name: 'Resina TPH Spectrum - Dentsply', price: 2370, discount: 18, price_original: 11000, price_current: 2370, installments: { count: 8, value: 296 }, image: 'https://odontomaster.fbitsstatic.net/img/p/resina-tph-spectrum-dentsply-73652/264075.jpg?w=320&h=320&v=no-change&qs=ignore', category: 'Resina Composta', brand: 'Dentsply' },
+                'prod13': { id: 'prod13', name: 'Kit Braquete de Aço Advanced Series Roth 022 - Orthometric', price: 2190, discount: 15, price_original: 223000, price_current: 2190, installments: { count: 12, value: 183 }, image: 'https://odontomaster.fbitsstatic.net/img/p/kit-braquete-de-aco-advanced-series-roth-022-orthometric-73253/263482.jpg?w=320&h=320&v=202501241014&qs=ignore', category: 'Ortodontia', brand: 'Orthometric' },
+                'prod14': { id: 'prod14', name: 'Ficha Clínica Simples - Preven', price: 41172, discount: 10, price_original: 500000, price_current: 41172, installments: { count: 12, value: 3431 }, image: 'https://odontomaster.fbitsstatic.net/img/p/ficha-clinica-simples-preven-74761/266131.jpg?w=320&h=320&v=202508201217&qs=ignore', category: 'Material de Escritório', brand: 'Preven' },
+                'prod15': { id: 'prod15', name: 'Clareador Whiteness Perfect 10% - FGM', price: 7990, discount: 25, price_original: 118000, price_current: 7990, installments: { count: 12, value: 666 }, image: 'https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-perfect-10-fgm-71914/260561.jpg?w=320&h=320&v=202502211159&qs=ignore', category: 'Clareamento Dental', brand: 'FGM' },
+                'prod16': { id: 'prod16', name: 'Localizador Apical Farominal E-Pex Pró - MK Life', price: 15590, discount: 20, price_original: 156000, price_current: 15590, installments: { count: 12, value: 1299 }, image: 'https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-hp-blue-calcium-35-mini-kit-fgm-72121/260864-1.jpg?w=320&h=320&v=202506141130&qs=ignore', category: 'Endodontia', brand: 'MK Life' },
+                'prod17': { id: 'prod17', name: 'Kit Braquete Metálico 100 Casos', price: 890, discount: 15, price_original: 1050, price_current: 890, installments: { count: 2, value: 445 }, image: 'https://odontomaster.fbitsstatic.net/img/p/fotopolimerizador-emitter-a-fit-com-ponteira-shuster-73208/263424.jpg?w=420&h=420&v=202502031032&qs=ignore', category: 'Ortodontia', brand: 'Diversos' },
+                'prod18': { id: 'prod18', name: 'Restaurador Provisório Fill Temp 25g - Biodinâmica', price: 185000, discount: 18, price_original: 226000, price_current: 185000, installments: { count: 12, value: 15416.67 }, image: '/images/ultrassom-piezo.png', category: 'Materiais Restauradores', brand: 'Biodinâmica' },
+                'prod19': { id: 'prod19', name: 'Kit Corredor de Classe II Iceram Clear Distalizer 23mm/25mm/27mm - Orthometric', price: 25000, discount: 12, price_original: 28500, price_current: 25000, installments: { count: 10, value: 2500.00 }, image: '/images/seringa-carpule.png', category: 'Ortodontia', brand: 'Orthometric' },
+                'prod20': { id: 'prod20', name: 'Clareador Whiteness HP Blue Calcium 35% Mini Kit - FGM', price: 12500, discount: 20, price_original: 15600, price_current: 12500, installments: { count: 8, value: 1562.50 }, image: '/images/cimento-resina.png', category: 'Clareamento Dental', brand: 'FGM' },
+                'prod21': { id: 'prod21', name: 'Fotopolimerizador Emitter a Fit com Ponteira - SHUSTER', price: 8900, discount: 15, price_original: 10500, price_current: 8900, installments: { count: 6, value: 1483.33 }, image: '/images/fresa-diamantada.png', category: 'Fotopolimerização', brand: 'SHUSTER' },
+                'prod22': { id: 'prod22', name: 'Clareador Whiteness HP Maxx 35% 1PAC - FGM', price: 285000, discount: 10, price_original: 317000, price_current: 285000, installments: { count: 12, value: 23750.00 }, image: '/images/raio-x-portatil.png', category: 'Clareamento Dental', brand: 'FGM' },
+                'prod23': { id: 'prod23', name: 'Clareador Whiteness HP Maxx 35% Mini Kit - FGM', price: 45000, discount: 25, price_original: 60000, price_current: 45000, installments: { count: 10, value: 4500.00 }, image: '/images/lampada-extra.png', category: 'Clareamento Dental', brand: 'FGM' },
+                'prod24': { id: 'prod24', name: 'Clareador Whiteness Perfect 16% - FGM', price: 1250, discount: 10, price_original: 1390, price_current: 1250, installments: { count: 3, value: 416.67 }, image: '/images/moldagem-facial.png', category: 'Clareamento Dental', brand: 'FGM' },
+                'prod25': { id: 'prod25', name: 'Clareador Potenza Bianco Pro 35% H202 - PHS', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833.33 }, image: '/images/unidade-odontologica.png', category: 'Clareamento Dental', brand: 'PHS' },
+                'equip1': { id: 'equip1', name: 'Motor Endodôntico E-Connect Pro - MK Life', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833 }, image: 'https://odontomaster.fbitsstatic.net/img/p/motor-endodontico-e-connect-pro-mk-life-73466/263819-1.jpg?w=320&h=320&v=no-change&qs=ignore', category: 'Equipamentos', brand: 'MK Life' },
+                'equip2': { id: 'equip2', name: 'Fotopolimerizador Emitter a Fit com Ponteira - SHUSTER', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833.33 }, image: '/images/fotopolimerizador-emitter.png', category: 'Equipamentos', brand: 'SHUSTER' },
+                'equip3': { id: 'equip3', name: 'Autoclave Vitale Class 12L - Cristófoli', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833.33 }, image: '/images/autoclave-12l.png', category: 'Equipamentos', brand: 'Cristófoli' },
+                'equip4': { id: 'equip4', name: 'Autoclave Vitale Class 21L - Cristófoli', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833.33 }, image: '/images/autoclave-21l.png', category: 'Equipamentos', brand: 'Cristófoli' },
+                'equip5': { id: 'equip5', name: 'Localizador Apical Farominal E-Pex Pró - MK Life', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833.33 }, image: '/images/localizador-apical.png', category: 'Equipamentos', brand: 'MK Life' },
+                'equip6': { id: 'equip6', name: 'Kit Acadêmico Prime - GNATUS', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833.33 }, image: '/images/kit-academico.png', category: 'Equipamentos', brand: 'GNATUS' },
+                'equip7': { id: 'equip7', name: 'Fotopolimerizador Led Grand Valo Sem Fio Black - Ultradent', price: 850000, discount: 12, price_original: 968000, price_current: 850000, installments: { count: 12, value: 70833.33 }, image: '/images/fotopolimerizador-grand-valo.png', category: 'Equipamentos', brand: 'Ultradent' },
+                'equip8': { id: 'equip8', name: 'Destilador de Água 5L/h', price: 134000, discount: 14, price_original: 156000, price_current: 134000, installments: { count: 12, value: 11166.67 }, image: '/images/destilador.png', category: 'Equipamentos', brand: 'Diversos' }
             };
         }
     }
@@ -1757,7 +1841,43 @@ class OdontoMasterApp {
                 scrollY: window.scrollY,
                 scrollX: window.scrollX
             });
+            
+            // Controlar visibilidade do botão "Voltar ao Topo"
+            this.handleBackToTopButton();
         }, 100));
+        
+        // Inicializar botão "Voltar ao Topo"
+        this.initBackToTopButton();
+    }
+    
+    /**
+     * Inicializa o botão "Voltar ao Topo"
+     */
+    initBackToTopButton() {
+        const backToTopBtn = document.getElementById('backToTop');
+        if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                Logger.info('Voltando ao topo da página');
+            });
+        }
+    }
+    
+    /**
+     * Controla a visibilidade do botão "Voltar ao Topo"
+     */
+    handleBackToTopButton() {
+        const backToTopBtn = document.getElementById('backToTop');
+        if (backToTopBtn) {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        }
     }
     
     /**

@@ -269,20 +269,7 @@
         <!-- Submenu Overlay -->
         <div class="submenu-overlay"></div>
     </header>
-
-     <!-- Breadcrumb -->
-    <div class="breadcrumbs">
-        <div class="container">
-            <ul class="breadcrumb__list">
-                <li class="breadcrumb__item">
-                    <a href="/pages/home/index.html" class="breadcrumb__link">Home</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
     <!-- Cards e Carrossel abaixo da navegação -->
-    
     <section class="home-cards-section">
         <div class="container">
             <div class="home-cards-grid">
@@ -296,12 +283,17 @@
             </a>
 
             <a href="#" class="home-card">
-                <img src="https://via.placeholder.com/600x200/8e24aa/fff?text=Banner+Card+3" alt="Card Promocional 3">
+                <img src="https://odontomaster.fbitsstatic.net/img/b/04c5b686-ed0e-4e72-909b-04380eb1eab3.png" alt="Card Promocional 3">
             </a>
 
             <a href="#" class="home-card">
-                <img src="https://via.placeholder.com/600x200/00bcd4/fff?text=Banner+Card+4" alt="Card Promocional 4">
+                <img src="https://odontomaster.fbitsstatic.net/img/b/c75c321b-ae15-4eb5-bea4-24b33abc98af.png" alt="Card Promocional 4">
             </a>
+
+            <a href="#" class="home-card">
+                <img src="https://odontomaster.fbitsstatic.net/img/b/3990c7e0-b93d-4c8d-a337-52819921218c.png" alt="Card Promocional 5">
+            </a>
+
 
              </div>
             </div>
@@ -317,10 +309,10 @@
                 <div class="carousel-viewport">
                     <ul class="carousel-track">
                         <li class="carousel-slide">
-                            <img src="https://odontomaster.fbitsstatic.net/img/b/92029d20-a890-41c0-8d65-bf5a3484e1ac.png" alt="Semana Biofest">
+                            <img src="https://odontomaster.fbitsstatic.net/img/b/2535718d-eb0e-4866-8793-ca89a9408963.png" alt="Semana Biofest">
                         </li>
                         <li class="carousel-slide">
-                            <img src="https://odontomaster.fbitsstatic.net/img/b/da753e52-31bb-4863-b659-1c4ba7347725.png" alt="Promo MK LIFE">
+                            <img src="https://odontomaster.fbitsstatic.net/img/b/d9fb4c62-9073-446a-a9b6-d845b78350c2.png" alt="Promo MK LIFE">
                         </li>
                         <li class="carousel-slide">
                             <img src="https://odontomaster.fbitsstatic.net/img/b/bfc589d2-39d8-46d9-b6d2-9f5aa5cf1408.png" alt="Cupom Estudante">
@@ -333,12 +325,36 @@
                 <button class="carousel-nav carousel-nav--next" aria-label="Próximo">
                     <i class="fas fa-chevron-right"></i>
                 </button>
+            </div>
+            
+            <!-- Dots de navegação -->
+            <div class="carousel-dots">
+                <button class="carousel-dot active" aria-label="Ir para slide 1" data-slide="0"></button>
+                <button class="carousel-dot" aria-label="Ir para slide 2" data-slide="1"></button>
+                <button class="carousel-dot" aria-label="Ir para slide 3" data-slide="2"></button>
+                <button class="carousel-dot" aria-label="Ir para slide 4" data-slide="3"></button>
+            </div>
+        </div>
+            </section>
 
-                <div class="carousel-dots" role="tablist" aria-label="Seletores de slide">
-                    <button class="carousel-dot is-active" role="tab" aria-selected="true" aria-label="Slide 1"></button>
-                    <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Slide 2"></button>
-                    <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Slide 3"></button>
-                    <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Slide 4"></button>
+    <!-- Banners de Marcas/Categorias -->
+    <section class="brand-banners-section">
+        <div class="container">
+            <div class="brand-banners-carousel">
+                <div class="brand-banner-item">
+                    <a href="#">
+                        <img src="https://odontomaster.fbitsstatic.net/img/b/ca671e99-dad2-4d0b-a94c-58121f5ba4e7.png" alt="Banner Marca 1">
+                    </a>
+                </div>
+                <div class="brand-banner-item">
+                    <a href="#">
+                        <img src="https://odontomaster.fbitsstatic.net/img/b/5fb73d34-ba7b-4b9e-af19-9fa9fcd4d89a.png" alt="Banner Marca 3">
+                    </a>
+                </div>
+                <div class="brand-banner-item">
+                    <a href="#">
+                        <img src="https://odontomaster.fbitsstatic.net/img/b/7679132e-3faf-4717-a46f-5dc5a034f60e.png" alt="Banner Marca 4">
+                    </a>
                 </div>
             </div>
         </div>
@@ -349,11 +365,20 @@
         
 
         <!-- Carrosel Produtos -->
-        <section class="products">
+        <section class="products products-with-banner">
             <div class="container">
             <h2 class="section-title">MELHORES OFERTAS</h2>
             
-            <div class="products-carousel-container js-product-carousel aria" aria-roledescription="carousel" aria-label="Produtos em Destaque">
+            <div class="products-banner-layout">
+                <!-- Banner Vertical -->
+                <div class="vertical-banner">
+                    <a href="#">
+                        <img src="https://odontomaster.fbitsstatic.net/img/b/08fdf532-10e7-4a1e-b2bf-f0d378b1428f.png" alt="Banner Promocional">
+                    </a>
+                </div>
+                
+                <!-- Carrossel de Produtos -->
+            <div class="products-carousel-container products-carousel-container--with-banner js-product-carousel aria" aria-roledescription="carousel" aria-label="Produtos em Destaque">
                 <button class="carousel-nav carousel-nav--prev" aria-label="Anterior">
                     <i class="fas fa-chevron-left"></i>
                 </button>
@@ -365,10 +390,10 @@
                                 <a href="/pages/produto/produto.html?category=Clareamento+Dental&brand=Whiteness&id=prod1" class="product-card-link">
                                     <div class="product-card__image">
                                         <img src="/images/clareador-whiteness.png" alt="Kit Clareamento Dental Whiteness HP">
-                                        <div class="product-badge product-badge--discount">27% OFF</div>
-                                    </div>
+                        </div>
                                     <div class="product-card__content">
                                         <h3 class="product-title">Kit Clareamento Dental Whiteness HP</h3>
+                                        <p class="product-description">Embalagem com 1 Kit.</p>
                                         <div class="product-pricing">
                                             <span class="product-price--current">R$ 189,90</span>
                                         </div>
@@ -379,15 +404,16 @@
                         </div>
                         <div class="product-slide">
                             <article class="product-card" data-product-id="prod2">
-                                <a href="/pages/produto/produto.html?category=Resina+Composta&brand=Z350&id=prod2" class="product-card-link">
+                                <a href="/pages/produto/produto.html?category=Resina+Composta&brand=Solventum&id=prod2" class="product-card-link">
                                     <div class="product-card__image">
                                         <img src="/images/resina-composta.png" alt="Resina Composta Z350 XT">
                                         <div class="product-badge product-badge--discount">15% OFF</div>
                                     </div>
                                     <div class="product-card__content">
-                                        <h3 class="product-title">Resina Composta Z350 XT</h3>
+                                        <h3 class="product-title">Resina Composta Z350 XT - Solventum</h3>
+                                        <p class="product-description">Embalagem com 1 seringa de 4g.</p>
                                         <div class="product-pricing">
-                                            <span class="product-price--current">R$ 245,90</span>
+                                            <span class="product-price--current">R$ 299,00</span>
                                         </div>
                                         <button class="product-button">ADICIONAR AO CARRINHO</button>
                                     </div>
@@ -396,15 +422,15 @@
                         </div>
                         <div class="product-slide">
                             <article class="product-card" data-product-id="prod3">
-                                <a href="/pages/produto/produto.html?category=Anestésico&brand=Mepivacaína&id=prod3" class="product-card-link">
+                                <a href="/pages/produto/produto.html?category=Anestésico&brand=Mepivalem&id=prod3" class="product-card-link">
                                     <div class="product-card__image">
                                         <img src="/images/anestesico.png" alt="Anestésico Mepivacaína 3%">
-                                        <div class="product-badge product-badge--discount">30% OFF</div>
                                     </div>
                                     <div class="product-card__content">
-                                        <h3 class="product-title">Anestésico Mepivacaína 3%</h3>
+                                        <h3 class="product-title">Anestésico Mepivalem 3%</h3>
+                                        <p class="product-description">50 Carpules (Tubetes). Mepivacaina 3%. Sem Vaso.</p>
                                         <div class="product-pricing">
-                                            <span class="product-price--current">R$ 89,90</span>
+                                            <span class="product-price--current">R$ 229,00</span>
                                         </div>
                                         <button class="product-button">ADICIONAR AO CARRINHO</button>
                                     </div>
@@ -420,8 +446,9 @@
                                     </div>
                                     <div class="product-card__content">
                                         <h3 class="product-title">Broca Carbide FG 245</h3>
+                                        <p class="product-description">Embalagem com 1 unidade.</p>
                                         <div class="product-pricing">
-                                            <span class="product-price--current">R$ 34,90</span>
+                                            <span class="product-price--current">R$ 14,50</span>
                                         </div>
                                         <button class="product-button">ADICIONAR AO CARRINHO</button>
                                     </div>
@@ -437,8 +464,82 @@
                                     </div>
                                     <div class="product-card__content">
                                         <h3 class="product-title">Fotopolimerizador LED Radii Plus</h3>
+                                        <p class="product-description">1 Unidade.</p>
                                         <div class="product-pricing">
-                                            <span class="product-price--current">R$ 899,00</span>
+                                            <span class="product-price--current">R$ 3.900,00</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="prod11">
+                                <a href="/pages/produto/produto.html?category=Endodontia&brand=VDW&id=prod11" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/lima-reciprocante-reciproc-vdw-70872/258882.jpg?w=320&h=320&v=no-change&qs=ignore" alt="Lima Reciprocante Reciproc">
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Lima Reciprocante Reciproc - VDW</h3>
+                                        <p class="product-description">Embalagem com 4 Unidades.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 409,90</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="prod12">
+                                <a href="/pages/produto/produto.html?category=Resina+Composta&brand=3M&id=prod12" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/resina-tph-spectrum-dentsply-73652/264075.jpg?w=320&h=320&v=no-change&qs=ignore" alt="Resina TPH Spectrum">
+                                        <div class="product-badge product-badge--discount">18% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Resina TPH Spectrum - Dentsply</h3>
+                                        <p class="product-description">Embalagem com 1 Unidade.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 23,70</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="prod17">
+                                <a href="/pages/produto/produto.html?category=Ortodontia&brand=Diversos&id=prod17" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/kit-braquete-de-aco-advanced-series-roth-022-orthometric-73253/263482.jpg?w=320&h=320&v=202501241014&qs=ignore" alt="Kit Braquete de Aço Advanced Series Roth 022">
+                                        <div class="product-badge product-badge--discount">15% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Kit Braquete de Aço Advanced Series Roth 022 - Orthometric</h3>
+                                        <p class="product-description">Embalagem com 2000 (100 Casos) de bráquete + 120 Tubos Simples.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 1.599,00</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="prod24">
+                                <a href="/pages/produto/produto.html?category=Clareamento+Dental&brand=FGM&id=prod24" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/fotopolimerizador-emitter-a-fit-com-ponteira-shuster-73208/263424.jpg?w=420&h=420&v=202502031032&qs=ignore" alt="Fotopolimerizador Emitter a Fit com Ponteira - SHUSTER">
+                                        <div class="product-badge product-badge--discount">15% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Fotopolimerizador Emitter a Fit com Ponteira - SHUSTER</h3>
+                                        <p class="product-description">Embalagem com caneta aplicadora, 1 protetor ocular, 1 ponteira de polimerização,
+                                            fonte de alimentação e manual de instruções
+                                        </p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 1.075,82</span>
                                         </div>
                                         <button class="product-button">ADICIONAR AO CARRINHO</button>
                                     </div>
@@ -451,16 +552,12 @@
                 <button class="carousel-nav carousel-nav--next" aria-label="Próximo">
                     <i class="fas fa-chevron-right"></i>
                 </button>
-                
-                <div class="carousel-dots" id="carouselDots">
-                    <button class="carousel-dot active" data-index="0" aria-label="Ir para grupo 1"></button>
-                    <button class="carousel-dot" data-index="1" aria-label="Ir para grupo 2"></button>
+            </div>
                 </div>
             </div>
         </section>
 
         
-
         <section class="products">
             <div class="container">
             <h2 class="section-title">LANÇAMENTOS</h2>
@@ -477,15 +574,16 @@
                     <div class="products-carousel-track" id="productsTrackLancamentos">
                         <div class="product-slide">
                             <article class="product-card" data-product-id="prod6">
-                                <a href="/pages/produto/produto.html?category=Cimento&brand=Marca&id=prod6" class="product-card-link">
+                                <a href="/pages/produto/produto.html?category=Cimento&brand=Biodinamica&id=prod6" class="product-card-link">
                                     <div class="product-card__image">
-                                        <img src="/images/ionomero.png" alt="Cimento de Ionômero de Vidro">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/cimento-endodontico-pulp-fill-kit-biodinamica-74784/266174.jpg?w=320&h=320&v=202508291601&qs=ignore" alt="Cimento Endontico Pull Fill Kit Biodinamica">
                                         <div class="product-badge product-badge--discount">18% OFF</div>
-                                    </div>
+                        </div>
                                     <div class="product-card__content">
-                                        <h3 class="product-title">Cimento de Ionômero de Vidro</h3>
+                                        <h3 class="product-title">Cimento Endontico Pull Fill Kit - Biodinamica</h3>
+                                        <p class="product-description">Kit contém 12g de Pó + 10Ml de Líquido.</p>
                                         <div class="product-pricing">
-                                            <span class="product-price--current">R$ 56,90</span>
+                                            <span class="product-price--current">R$ 49,90</span>
                                         </div>
                                         <button class="product-button">ADICIONAR AO CARRINHO</button>
                                     </div>
@@ -494,15 +592,16 @@
                         </div>
                         <div class="product-slide">
                             <article class="product-card" data-product-id="prod7">
-                                <a href="/pages/produto/produto.html?category=Kit&brand=Kit&id=prod7" class="product-card-link">
+                                <a href="/pages/produto/produto.html?category=Endodontia&brand=VDW&id=prod7" class="product-card-link">
                                     <div class="product-card__image">
-                                        <img src="/images/kit-endodontia.png" alt="Kit Endodontia Rotatória Avançado">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/lima-manual-kendo-k-file-vdw-74629/265800-1.jpg?w=320&h=320&v=202508271736&qs=ignore" alt="Lima Manual Kendo K-File - VDW">
                                         <div class="product-badge product-badge--discount">25% OFF</div>
                                     </div>
                                     <div class="product-card__content">
-                                        <h3 class="product-title">Kit Endodontia Rotatória Avançado</h3>
+                                        <h3 class="product-title">Lima Manual Kendo K-File - VDW</h3>
+                                        <p class="product-description">Embalagem com 6 Unidades.</p>
                                         <div class="product-pricing">
-                                            <span class="product-price--current">R$ 1.450,00</span>
+                                            <span class="product-price--current">R$ 35,40</span>
                                         </div>
                                         <button class="product-button">ADICIONAR AO CARRINHO</button>
                                     </div>
@@ -511,15 +610,89 @@
                         </div>
                         <div class="product-slide">
                             <article class="product-card" data-product-id="prod8">
-                                <a href="/pages/produto/produto.html?category=%C3%81cido+Fosf%C3%B3rico&brand=Marca&id=prod8" class="product-card-link">
+                                <a href="/pages/produto/produto.html?category=Clareamento+Dental&brand=FGM&id=prod8" class="product-card-link">
                                     <div class="product-card__image">
-                                        <img src="/images/acido.png" alt="Ácido Fosfórico 37% Gel">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-perfect-22-fgm-72016/260704.jpg?w=320&h=320&v=no-change&qs=ignore" alt="Ácido Fosfórico 37% Gel">
                                         <div class="product-badge product-badge--discount">12% OFF</div>
                                     </div>
                                     <div class="product-card__content">
-                                        <h3 class="product-title">Ácido Fosfórico 37% Gel</h3>
+                                        <h3 class="product-title">Clareador Whiteness Perfect 22% - FGM</h3>
+                                        <p class="product-description">Embalagem com 1 Kit.</p>
                                         <div class="product-pricing">
-                                            <span class="product-price--current">R$ 22,90</span>
+                                            <span class="product-price--current">R$ 79,90</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="prod13">
+                                <a href="/pages/produto/produto.html?category=Ortodontia&brand=Orthometric&id=prod13" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-perfect-10-fgm-71914/260561.jpg?w=320&h=320&v=202502211159&qs=ignore" alt="Kit Ortodôntico Auto-ligante">
+                                        <div class="product-badge product-badge--discount">15% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Clareador Whiteness Perfect 10% - FGM</h3>
+                                        <p class="product-description">Embalagem com 1 Kit.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 79,90</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="prod14">
+                                <a href="/pages/produto/produto.html?category=Material+de+Escritorio&brand=Preven&id=prod14" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/ficha-clinica-simples-preven-74761/266131.jpg?w=320&h=320&v=202508201217&qs=ignore" alt="Ficha Médica Simples - Preven">
+                                        <div class="product-badge product-badge--discount">10% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Ficha Clínica Simples - Preven</h3>
+                                        <p class="product-description">Embalagem com 100 folhas. 15 x 10,4 cm.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 19,37</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="prod15">
+                                <a href="/pages/produto/produto.html?category=Clareamento+Dental&brand=FGM&id=prod15" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/restaurador-provisorio-fill-temp-25g-biodinamica-74783/266173.jpg?w=320&h=320&v=202508291544&qs=ignore" alt="Restaurador Provisório Fill Temp 25g - Biodinâmica">
+                                        <div class="product-badge product-badge--discount">25% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Restaurador Provisório Fill Temp 25g - Biodinâmica</h3>
+                                        <p class="product-description">Embalagem com 25g.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 21,90</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="prod18">
+                                <a href="/pages/produto/produto.html?category=Ultrassom&brand=Woodpecker&id=prod18" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/kit-corretor-de-classe-ii-iceram-clear-distalizer-23mm-25mm-27mm-orthometric-74765/266136.jpg?w=420&h=420&v=202508201212&qs=ignore alt="Kit Corretor de Classe II Iceram
+                                         Clear Distalizer 23mm/25mm/27mm - Orthometric">
+                                        <div class="product-badge product-badge--discount">18% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Kit Corredor de Classe II Iceram Clear Distalizer 23mm/25mm/27mm - Orthometric</h3>
+                                        <p class="product-description">Embalagem com 06 unidades, sendo 02 unidades de cada tamanho 23, 25, e 27mm.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 411,72</span>
                                         </div>
                                         <button class="product-button">ADICIONAR AO CARRINHO</button>
                                     </div>
@@ -532,10 +705,6 @@
                 <button class="carousel-nav carousel-nav--next" aria-label="Próximo">
                     <i class="fas fa-chevron-right"></i>
                 </button>
-                
-                <div class="carousel-dots" id="carouselDotsLancamentos">
-                    <button class="carousel-dot active" data-index="0" aria-label="Ir para grupo 1"></button>
-                </div>
             </div>
             </div>
         </section>
@@ -568,12 +737,23 @@
             </div>
         </section>
 
+        <!-- Banner Horizontal antes de "Os Melhores Preços" -->
+        <section class="horizontal-banner-section">
+            <div class="container">
+                <div class="horizontal-banner">
+                    <a href="#" class="horizontal-banner__link">
+                        <img src="https://odontomaster.fbitsstatic.net/img/b/cba1038e-bd40-4d75-8c8b-220c8550a8a7.png" alt="Banner Promocional">
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <section class="products">
-            <h2 class="section-title">OS MELHORES PREÇOS</h2>
+            <h2 class="section-title">OS MELHORES PREÇOS EM CLAREADOR</h2>
             
             <div class="products-carousel-container js-product-carousel" 
                  aria-roledescription="carousel" 
-                 aria-label="Equipamentos em Oferta">
+                 aria-label="Os melhores preços em clareador">
                 
                 <button class="carousel-nav carousel-nav--prev" aria-label="Anterior">
                     <i class="fas fa-chevron-left"></i>
@@ -583,15 +763,16 @@
                      <div class="products-carousel-track" id="productsTrackEquipamentos">
                         <div class="product-slide">
                             <article class="product-card" data-product-id="prod9">
-                                <a href="/pages/produto/produto.html?category=Autoclave&brand=Vitale&id=prod9" class="product-card-link">
+                                <a href="/pages/produto/produto.html?category=Autoclave&brand=Cristofoli&id=prod9" class="product-card-link">
                                     <div class="product-card__image">
-                                        <img src="/images/autoclave.png" alt="Autoclave Vitale Class CD 21 Litros">
-                                        <div class="product-badge product-badge--discount">10% OFF</div>
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-perfect-22-fgm-72016/260704.jpg?w=320&h=320&v=no-change&qs=ignore" alt="Ácido Fosfórico 37% Gel">
+                                        <div class="product-badge product-badge--discount">12% OFF</div>
                                     </div>
                                     <div class="product-card__content">
-                                        <h3 class="product-title">Autoclave Vitale Class CD 21 Litros</h3>
+                                        <h3 class="product-title">Clareador Whiteness Perfect 22% - FGM</h3>
+                                        <p class="product-description">Embalagem com 1 Kit.</p>
                                         <div class="product-pricing">
-                                            <span class="product-price--current">R$ 4.500,00</span>
+                                            <span class="product-price--current">R$ 79,90</span>
                                         </div>
                                         <button class="product-button">ADICIONAR AO CARRINHO</button>
                                     </div>
@@ -600,15 +781,122 @@
                         </div>
                         <div class="product-slide">
                             <article class="product-card" data-product-id="prod10">
-                                <a href="/pages/produto/produto.html?category=Cadeira+Odontológica&brand=Kavo&id=prod10" class="product-card-link">
+                                <a href="/pages/produto/produto.html?category=Autoclave&brand=Cristofoli&id=prod10" class="product-card-link">
                                     <div class="product-card__image">
-                                        <img src="/images/cadeira.png" alt="Cadeira Odontológica Kavo Unik">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-perfect-10-fgm-71914/260561.jpg?w=320&h=320&v=202502211159&qs=ignore" alt="Kit Ortodôntico Auto-ligante">
                                         <div class="product-badge product-badge--discount">15% OFF</div>
                                     </div>
                                     <div class="product-card__content">
-                                        <h3 class="product-title">Cadeira Odontológica Kavo Unik</h3>
+                                        <h3 class="product-title">Clareador Whiteness Perfect 10% - FGM</h3>
+                                        <p class="product-description">Embalagem com 1 Kit.</p>
                                         <div class="product-pricing">
-                                            <span class="product-price--current">R$ 25.000,00</span>
+                                            <span class="product-price--current">R$ 79,90</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="prod16">
+                                <a href="/pages/produto/produto.html?category=Endodontia&brand=MK+Life&id=prod16" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-hp-blue-calcium-35-mini-kit-fgm-72121/260864-1.jpg?w=320&h=320&v=202506141130&qs=ignore" alt="Clareador Whiteness HP Blue Calcium 35% Mini Kit - FGM">
+                                        <div class="product-badge product-badge--discount">20% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Clareador Whiteness HP Blue Calcium 35% Mini Kit - FGM</h3>
+                                        <p class="product-description">Embalagem com 1 Mini Kit.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 89,99</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="prod19">
+                                <a href="/pages/produto/produto.html?category=Ortodontia&brand=Orthometric&id=prod19" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/clareador-potenza-bianco-individual-phs-72949/262939.jpg?w=420&h=420&v=202508081651&qs=ignore" alt="Clareador Potenza Bianco Individual - PHS">
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Clareador Potenza Bianco Individual - PHS</h3>
+                                        <p class="product-description">Embalagem com 1 seringa de 3g.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 15,59</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="prod20">
+                                <a href="/pages/produto/produto.html?category=Cimento&brand=RelyX&id=prod20" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-hp-maxx-35-1pac-fgm-71994/260670-1.jpg?w=420&h=420&v=202506141129&qs=ignore" alt="Clareador Whiteness HP Maxx 35% 1PAC - FGM">
+                                        <div class="product-badge product-badge--discount">20% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Clareador Whiteness HP Maxx 35% 1PAC - FGM</h3>
+                                        <p class="product-description">Embalagem com 1 Mini Kit.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 91,99</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="prod22">
+                                <a href="/pages/produto/produto.html?category=Clareamento+Dental&brand=FGM&id=prod22" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-hp-35-mini-kit-fgm-71983/260653-1.jpg?w=320&h=320&v=no-change&qs=ignore" alt="Clareador Whiteness HP Maxx 35% Mini Kit - FGM">
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Clareador Whiteness HP Maxx 35% Mini Kit - FGM</h3>
+                                        <p class="product-description">Embalagem com 1 kit.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 62,71</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="prod23">
+                                <a href="/pages/produto/produto.html?category=Clareamento+Dental&brand=FGM&id=prod23" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-perfect-16-fgm-71916/260564.jpg?w=320&h=320&v=no-change&qs=ignore" alt="Clareador Whiteness Perfect 16% - FGM">
+                                        <div class="product-badge product-badge--discount">25% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Clareador Whiteness Perfect 16% - FGM</h3>
+                                        <p class="product-description">Embalagem com 1 Kit.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 79,90</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="prod25">
+                                <a href="/pages/produto/produto.html?category=Clareamento+Dental&brand=PHS&id=prod25" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/clareador-potenza-bianco-pro-35-h202-phs-73961/264617.jpg?w=420&h=420&v=no-change&qs=ignore" alt="Unidade Odontológica Completa">
+                                        <div class="product-badge product-badge--discount">12% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Clareador Potenza Bianco Pro 35% H202 - PHS</h3>
+                                        <p class="product-description">Embalagem com 1 kit.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 155,90</span>
                                         </div>
                                         <button class="product-button">ADICIONAR AO CARRINHO</button>
                                     </div>
@@ -621,10 +909,154 @@
                 <button class="carousel-nav carousel-nav--next" aria-label="Próximo">
                     <i class="fas fa-chevron-right"></i>
                 </button>
+            </div>
+        </section>
+
+        <!-- OS MELHORES EQUIPAMENTOS Section -->
+        <section class="products">
+            <h2 class="section-title">OS MELHORES EQUIPAMENTOS</h2>
+            <div class="products-carousel-container js-product-carousel" aria-roledescription="carousel" aria-label="Os Melhores Equipamentos">
+                <button class="carousel-nav carousel-nav--prev" aria-label="Anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
                 
-                <div class="carousel-dots" id="carouselDotsEquipamentos">
-                    <button class="carousel-dot active" data-index="0" aria-label="Ir para grupo 1"></button>
+                <div class="products-carousel-wrapper">
+                    <div class="products-carousel-track" id="equipamentos-track">
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="equip1">
+                                <a href="/pages/produto/produto.html?category=Equipamentos&brand=MK+Life&id=equip1" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/motor-endodontico-e-connect-pro-mk-life-73466/263819-1.jpg?w=320&h=320&v=no-change&qs=ignore" alt="Motor Endodôntico E-Connect Pro - MK Life">
+                                        <div class="product-badge product-badge--discount">15% OFF</div>
                 </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Motor Endodôntico E-Connect Pro - MK Life</h3>
+                                        <p class="product-description">Embalagem com 1 contra ângulo, 1 endomotor, 1 base e 1 fonte de energia. Bivolt.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 5.590,00</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="equip2">
+                                <a href="/pages/produto/produto.html?category=Equipamentos&brand=SHUSTER&id=equip2" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/fotopolimerizador-emitter-a-fit-com-ponteira-shuster-73208/263424.jpg?w=420&h=420&v=202502031032&qs=ignore" alt="Fotopolimerizador Emitter a Fit com Ponteira - SHUSTER">
+                                        <div class="product-badge product-badge--discount">15% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Fotopolimerizador Emitter a Fit com Ponteira - SHUSTER</h3>
+                                        <p class="product-description">Embalagem com caneta aplicadora, 1 protetor ocular, 1 ponteira de polimerização,
+                                            fonte de alimentação e manual de instruções
+                                        </p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 1.075,82</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="equip3">
+                                <a href="/pages/produto/produto.html?category=Equipamentos&brand=Cristofoli&id=equip3" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/autoclave-vitale-class-12l-cristofoli-70901/258917.jpg?w=420&h=420&v=no-change&qs=ignore" alt="Autoclave Vitale Class 12L - Cristófoli">
+                                        <div class="product-badge product-badge--discount">10% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Autoclave Vitale Class 12L - Cristófoli</h3>
+                                        <p class="product-description">Unidade. Bivolt.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 6.298,74</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="equip4">
+                                <a href="/pages/produto/produto.html?category=Equipamentos&brand=Cristofoli&id=equip4" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/autoclave-vitale-class-12l-cristofoli-70901/258917.jpg?w=420&h=420&v=no-change&qs=ignore" alt="Autoclave Vitale Class 21L - Cristófoli">
+                                        <div class="product-badge product-badge--discount">10% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Autoclave Vitale Class 21L - Cristófoli</h3>
+                                        <p class="product-description">Embalagem com 1 autoclave de 21 litros inox, bivolt.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 7.790,00</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="equip5">
+                                <a href="/pages/produto/produto.html?category=Equipamentos&brand=MK+Life&id=equip5" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/localizador-apical-farominal-e-pex-pro-mk-life-73169/263372.jpg?w=320&h=320&v=no-change&qs=ignore" alt="Localizador Apical Farominal E-Pex Pró - MK Life">
+                                        <div class="product-badge product-badge--discount">22% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Localizador Apical Farominal E-Pex Pró - MK Life</h3>
+                                        <p class="product-description">Embalagem com 1 unidade.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 1.768,00</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="equip7">
+                                <a href="/pages/produto/produto.html?category=Equipamentos&brand=Ultradent&id=equip7" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/kit-academico-prime-gnatus-73045/263168-4.jpg?w=420&h=420&v=202502051119&qs=ignore" alt="Kit Acadêmico Prime - GNATUS">
+                                        <div class="product-badge product-badge--discount">8% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Kit Acadêmico Prime - GNATUS</h3>
+                                        <p class="product-description">Embalagem com 1 Kit Acadêmico.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">R$ 1.900,00</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="product-slide">
+                            <article class="product-card" data-product-id="equip8">
+                                <a href="/pages/produto/produto.html?category=Equipamentos&brand=Diversos&id=equip8" class="product-card-link">
+                                    <div class="product-card__image">
+                                        <img src="https://odontomaster.fbitsstatic.net/img/p/fotopolimerizador-led-grand-valo-sem-fio-black-ultradent-73030/263129-6.jpg?w=420&h=420&v=no-change&qs=ignore" alt="Fotopolimerizador Led Grand Valo Sem Fio Black - Ultradent">
+                                        <div class="product-badge product-badge--discount">14% OFF</div>
+                                    </div>
+                                    <div class="product-card__content">
+                                        <h3 class="product-title">Fotopolimerizador Led Grand Valo Sem Fio Black - Ultradent</h3>
+                                        <p class="product-description">Kit Grand Valo.</p>
+                                        <div class="product-pricing">
+                                            <span class="product-price--current">Produto Indisponivel</span>
+                                        </div>
+                                        <button class="product-button">ADICIONAR AO CARRINHO</button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="carousel-nav carousel-nav--next" aria-label="Próximo">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </section>
     </div>
@@ -675,7 +1107,7 @@
                 <div class="footer-column">
                     <h4 class="footer-column__title">ATENDIMENTO</h4>
                     <ul class="footer-column__list">
-                        <li><a href="https://api.whatsapp.com/send?phone=5571988670812" class="footer-link">Chat Online</a></li>
+                        <li><a href="https://api.whatsapp.com/send?phone=5571988670812" class="footer-link" target="_blank">Chat Online</a></li>
                         <li><a href="tel:7131737300" class="footer-link">(71) 3173-7300</a></li>
                         <li><a href="mailto:atendimento@odontomaster.com.br" class="footer-link">atendimento@odontomaster.com.br</a></li>
                     </ul>
@@ -728,7 +1160,10 @@
         </div>
     </footer>
 
-     
+    <!-- Botão Voltar ao Topo -->
+    <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo" title="Voltar ao topo">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
     <script src="/assets/js/script.js"></script>
     <script src="/pages/home/home.js"></script>

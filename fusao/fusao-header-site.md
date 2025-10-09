@@ -32,17 +32,8 @@
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="640">
 <meta name="viewport" content="initial-scale = 1, maximum-scale = 1, user-scalable = no">
-
-
+<meta name="facebook-domain-verification" content="zabjml6v8381ddzqyy3zffdgkz81mt" />
 <style>
-@@media (min-width: 576px) {
-    .container {
-        max-width: 100vw!important;
-    }
-}
-section.fbits-section-home.fbits-banner-centro-home img {
-    margin: 0 auto!important;
-}
     div#loading {
         background: #fff;
         height: 100vh;
@@ -82,11 +73,68 @@ section.fbits-section-home.fbits-banner-centro-home img {
     .mini-cart .minicart-itens-wrapper > *:not(.topCartContent):not(.block-content):not(.inner-wrapper) {
         display: block !important;
     }
+    
+    /* Dropdown do carrinho vazio */
+    .mini-cart {
+        position: relative;
+    }
+    
+    .cart-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        min-width: 280px;
+        z-index: 1000;
+        display: none !important;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        visibility: hidden;
+    }
+    
+    .cart-dropdown.show {
+        display: block !important;
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+    }
+    
+    .cart-dropdown-content {
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .cart-empty-message {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 15px;
+        line-height: 1.4;
+    }
+    
+    .cart-empty-icon {
+        font-size: 48px;
+        color: #ccc;
+        margin-bottom: 15px;
+    }
+    
+    .cart-dropdown-actions {
+        margin-top: 15px;
+    }
+    
     .header-container.type2 .main-nav .menu-wrapper, .header-container.type3 .main-nav, .header-container.type3.header-newskin .main-nav, .header-container.type19 .main-nav, .header-container.type20 .main-nav, .header-container.type4.header-newskin .main-nav .menu-wrapper, .header-container.type4 .main-nav .menu-wrapper, .header-container.type9 .main-nav .menu-wrapper, .header-container.type10 .header-wrapper, .header-container.type10.header-newskin .header-wrapper, .header-container.type3.sticky-header .header-wrapper, .header-container.type3.header-newskin.sticky-header .header-wrapper, .header-container.type20.sticky-header .header-wrapper, .header-container.type4.header-newskin.sticky-header .header-wrapper, .header-container.type4.sticky-header .header-wrapper, .header-container.type10.sticky-header .header-wrapper, .header-container.type20 .header-wrapper {
         background-color: #1c5787;
     }
     .header-container.type4 .main-nav {
         background: #1c5787!important;
+    }
+    @@media (min-width: 576px) {
+        .container {
+            max-width: 100vw!important;
+        }
     }
     
     @@media (min-width: 1280px) {
@@ -111,7 +159,25 @@ section.fbits-section-home.fbits-banner-centro-home img {
         }
     }
     body li.item.raiz.item0.estudante {
-        background: url(https://recursos.odontomaster.com.br/i/odonto/area-estudante.svg) #3434E3!important;
+        background: url(https://recursos.odontomaster.com.br/i/odonto/area-estudante.svg) #CA69F5!important;
+    }
+    
+    .logo img,
+    .main-nav .logo img,
+    h1.logo img {
+        transition: transform 0.3s ease;
+    }
+    
+    .logo img:hover,
+    .main-nav .logo img:hover,
+    h1.logo img:hover {
+        transform: scale(1.05);
+    }
+    
+    .logo a,
+    .main-nav .logo a,
+    h1.logo a {
+        display: inline-block;
     }
 </style>
 
@@ -127,7 +193,7 @@ section.fbits-section-home.fbits-banner-centro-home img {
     <div class="top-links-container">
         <div class="top-links container">
                         
-     <span class="textleft"><b>ATENÇÃO!</b> Os produtos desse site são restritos à Dentistas com CRO, Clínicas Odontológicas e Estudantes de Graduação em Odontologia.<a></a></span>    
+             <span class="textleft"><b>ATENÇÃO!</b> Os produtos desse site são restritos à Dentistas com CRO, Clínicas Odontológicas e Estudantes de Graduação em Odontologia.</span>
              <span class="textright">@FBITSLogin.Add()</span>  
             
         </div>
@@ -136,9 +202,11 @@ section.fbits-section-home.fbits-banner-centro-home img {
                 <h1 class="logo"><a href="/" class="logo"><img src="https://recursos.odontomaster.com.br/i/logo_odonto.png"></a></h1>
                 <div class="cart-area">
             <div class="custom-block">
-                <span style="color:#787d7f;display:block;">TELEVENDAS
+                <span style="margin-top:4px;color:#787d7f;display:block;">TELEVENDAS
+                    <br>
+                    <b style="color:#606669;font-size:16px;font-weight:600;display:block;line-height:20px;">0800 672 1105</b>
                     <b style="color:#606669;font-size:16px;font-weight:600;display:block;line-height:20px;">(71) 3173-7300</b>
-                </span></div>            
+                </span> </div>            
                 
                 <div class="icoatendimento">
                     <div class="dropatend">
@@ -148,8 +216,7 @@ section.fbits-section-home.fbits-banner-centro-home img {
 				         <p>(79) 3085-0710 - Aracaju/SE</p>
 				         
 				         <b>Pelo WhatsApp:</b>
-				         <p>(71) 98867-0812</p>
-				         <p>(71) 99401-9924</p>
+				         <p>(71) 9401-9924</p>
 				         
 				         <b>Horário de Atendimento:</b>
 				         <p>Segunda a Sexta das 08:00 às 18:00</p>
@@ -170,9 +237,27 @@ section.fbits-section-home.fbits-banner-centro-home img {
                 </div>
                 
                 <div class="mini-cart">
-                    <a href="javascript:void(0)" class="mybag-link"><i class="icon-mini-cart"></i><span>Item(s)</span></a>
+                    <a href="javascript:void(0)" class="mybag-link">
+                        <i class="icon-mini-cart"></i>
+                        <span class="cart-info">
+                            <span class="cart-qty">0</span>
+                            <span>Item(s)</span>
+                        </span>
+                    </a>
                     <div class="minicart-itens-wrapper">
                         @FBITSCarrinho.Add()
+                    </div>
+                    
+                    <!-- Dropdown do carrinho vazio -->
+                    <div class="cart-dropdown" id="cartEmptyDropdown">
+                        <div class="cart-dropdown-content">
+                            <div class="cart-empty-icon">
+                                <i class="icon-mini-cart"></i>
+                            </div>
+                            <div class="cart-empty-message">
+                                Sua sacola de compras está vazia
+                            </div>
+                        </div>
                     </div>
                 </div>
         </div>
@@ -200,39 +285,86 @@ section.fbits-section-home.fbits-banner-centro-home img {
                 
               </div>
                 
-               @* <select id="cat" name="cat">
+             @*   <select id="cat" name="cat">
             
             
-                </select>*@
+                </select> *@
                 
                 <script>
                     $("#cat").html($("#escolhaFrabricante").html());
                     
-                    function updateCartVisibility() {
-                        var cartItemCountElement = $(".minicart-qtde-itens");
-                         if (cartItemCountElement.length > 0) {
-                            var itemCount = cartItemCountElement.html();
-
-                                        if (itemCount !== "0" && itemCount !== "") {
+                    // Sincronizar quantidade do carrinho e controlar dropdown
+                    function atualizarCarrinho(){
+                        // Buscar quantidade em múltiplos locais possíveis
+                        var qtd = $(".minicart-itens-wrapper .minicart-qtde-itens").first().text() || 
+                                 $(".minicart-qtde-itens").first().text() || 
+                                 $(".cart-qty").first().text() || 
+                                 "0";
+                        
+                        // Limpar e normalizar quantidade
+                        qtd = qtd.toString().trim();
+                        if (qtd === "" || isNaN(qtd)) {
+                            qtd = "0";
+                        }
+                        
+                        // Atualizar contador visual
+                        $(".cart-qty").text(qtd);
+                        
+                        // Controlar dropdown do carrinho vazio
+                        if (qtd === "0" || qtd === "") {
                             $(".cart-empty").hide();
-                    } else {
-                        $(".cart-empty").show(); // Adicionado para o caso de o carrinho ser esvaziado
+                           
+                        } else {
+                            $(".cart-empty").show();
+                            // Esconder dropdown do carrinho vazio
+                            $("#cartEmptyDropdown").removeClass("show");
+                        }
+                        
+                        console.log("Carrinho atualizado - Quantidade:", qtd);
                     }
-
-                    $(".cart-qty").html(itemCount);
-        }
-    }
-                    $(document).ready(function() {
-                        updateCartVisibility();
-    });
+                    
+                    $(document).ready(function(){
+                        // Garantir que o dropdown esteja escondido no carregamento
+                        $("#cartEmptyDropdown").removeClass("show");
+                        
+                        // Atualizar após carregar
+                        setTimeout(atualizarCarrinho, 500);
+                        
+                        // Atualizar quando hover no carrinho
+                        $(".mini-cart").on("mouseenter", function(){
+                            setTimeout(atualizarCarrinho, 100);
                             
-                      
-                    
-                   $(document).ajaxComplete(function() {
-        updateCartVisibility();
+                            // Mostrar dropdown quando entrar no carrinho (se vazio)
+                            var qtd = $(".minicart-itens-wrapper .minicart-qtde-itens").first().text() || 
+                                     $(".minicart-qtde-itens").first().text() || 
+                                     $(".cart-qty").first().text() || 
+                                     "0";
+                            qtd = qtd.toString().trim();
+                            
+                            if (qtd === "0" || qtd === "") {
+                                setTimeout(function(){
+                                    $("#cartEmptyDropdown").addClass("show");
+                                }, 100);
+                            }
+                        });
+                        
+                        // Esconder dropdown quando sair do carrinho
+                        $(".mini-cart").on("mouseleave", function(){
+                            setTimeout(function(){
+                                $("#cartEmptyDropdown").removeClass("show");
+                            }, 300);
+                        });
+                        
+                        // Atualizar carrinho quando houver mudanças via AJAX
+                        $(document).ajaxComplete(function() {
+                            setTimeout(atualizarCarrinho, 200);
+                        });
+                        
+                        // Atualizar carrinho periodicamente (fallback)
+                        setInterval(function() {
+                            atualizarCarrinho();
+                        }, 5000);
                     });
-                    
-                    
                 </script>
                 
                 <button type="submit" title="Search" class="button"><i class="icon-search"></i></button>

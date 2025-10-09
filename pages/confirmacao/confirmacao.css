@@ -125,7 +125,7 @@
 
 .address-info-section:hover {
     box-shadow: var(--shadow-lg);
-    transform: translateY(-2px);
+
 }
 
 .section-header {
@@ -210,6 +210,7 @@ label {
 }
 
 /* Forma de Envio */
+/* ===== SHIPPING SECTION ===== */
 .shipping-section {
     background: #fff;
     padding: var(--spacing-xl);
@@ -220,72 +221,214 @@ label {
 
 .shipping-section:hover {
     box-shadow: var(--shadow-lg);
-    transform: translateY(-2px);
 }
 
+/* ===== SHIPPING OPTIONS CONTAINER ===== */
 .shipping-options {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: var(--spacing-lg);
 }
 
+/* ===== INDIVIDUAL SHIPPING OPTION ===== */
 .shipping-option {
+    /* Layout & Structure */
+    position: relative;
     border: 2px solid var(--cor-borda);
     border-radius: var(--border-radius-md);
     padding: var(--spacing-md);
-    transition: all var(--transition-fast);
-    position: relative;
     background: var(--cor-fundo-secundaria);
+
+    /* Interactions */
+    transition: all var(--transition-fast);
+    cursor: pointer;
 }
 
+/* Hover States */
 .shipping-option:hover {
     border-color: var(--cor-primaria);
     box-shadow: var(--shadow-sm);
     background: #fff;
+    
+    transform: translateY(-2px);
 }
 
-.shipping-option.selected {
+
+.shipping-option--selected,
+.shipping-option:has(input[type="radio"]:checked) {
     border-color: var(--cor-primaria);
     box-shadow: var(--shadow-md);
-    background-color: var(--cor-primaria-light);
+    background-color: rgba(0, 65, 133, 0.05);
 }
 
+/* Radio Button - Hidden */
 .shipping-option input[type="radio"] {
     position: absolute;
     opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
-.shipping-option input[type="radio"]:checked + .shipping-label {
-    border-color: var(--cor-primaria);
+/* ===== CUSTOM RADIO BUTTON STYLING ===== */
+.shipping-option input[type="radio"] + .shipping-label {
+    /* Reset label default styles */
+    display: block;
+    width: 100%;
+    cursor: pointer;
+
+    /* Remove focus outline from label */
+    outline: none;
 }
 
-.shipping-header {
+/* Radio Button Indicator */
+.shipping-option input[type="radio"] + .shipping-label::before {
+    content: '';
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--cor-borda);
+    border-radius: 50%;
+    background: #fff;
+    transition: all var(--transition-fast);
+    z-index: 2;
+}
+
+/* Radio Button Checked State */
+.shipping-option input[type="radio"]:checked + .shipping-label::before {
+    border-color: var(--cor-sucesso);
+    background: var(--cor-sucesso);
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+}
+
+/* Checkmark Icon */
+.shipping-option input[type="radio"]:checked + .shipping-label::after {
+    content: '✓';
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--spacing-xs);
+    justify-content: center;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* ===== SHIPPING OPTION CONTENT ===== */
+.shipping-header {
+    margin-bottom: var(--spacing-sm);
 }
 
 .shipping-name {
+    font-size: var(--font-size-lg);
     font-weight: 600;
     color: var(--cor-texto-primaria);
-}
-
-.shipping-price {
-    font-weight: 700;
-    color: var(--cor-primaria);
+    margin: 0;
+    line-height: 1.3;
 }
 
 .shipping-description {
     color: var(--cor-texto-secundaria);
     font-size: var(--font-size-sm);
-    margin-bottom: var(--spacing-xs);
+    line-height: 1.4;
+    margin: var(--spacing-xs) 0;
 }
 
 .shipping-eta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
     color: var(--cor-sucesso);
     font-size: var(--font-size-sm);
     font-weight: 500;
+}
+
+.eta-label {
+    font-weight: 600;
+    color: var(--cor-texto-secundaria);
+}
+
+.eta-date {
+    font-weight: 700;
+    color: var(--cor-sucesso);
+}
+
+/* ===== SHIPPING PRICE BADGE ===== */
+.shipping-price {
+    position: absolute;
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    min-width: 75px;
+    box-shadow: 0 4px 12px rgba(0, 65, 133, 0.3);
+    border: none;
+    z-index: 4;
+
+    /* Improve readability */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.5px;
+}
+
+/* Special styling for free shipping */
+.shipping-option[data-shipping-method="pickup"] .shipping-price {
+    background: linear-gradient(135deg, var(--cor-sucesso), #28a745);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 768px) {
+    .shipping-options {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .shipping-option {
+        padding: var(--spacing-md);
+    }
+
+    .shipping-price {
+        bottom: var(--spacing-sm);
+        right: var(--spacing-sm);
+        padding: 6px 12px;
+        font-size: 12px;
+        min-width: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .shipping-section {
+        padding: var(--spacing-lg);
+    }
+
+    .shipping-options {
+        gap: var(--spacing-sm);
+    }
+
+    .shipping-option {
+        padding: var(--spacing-sm);
+    }
+
+    .shipping-name {
+        font-size: var(--font-size-base);
+    }
 }
 
 /* Resumo do Pedido */

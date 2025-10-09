@@ -15,7 +15,6 @@
         <div class="loading-spinner"></div>
     </div>
 
-    <!-- Header with Logo (same as checkout page) -->
     <header class="checkout-header-container">
         <div class="container">
             <div class="logo-container">
@@ -171,6 +170,22 @@
                             </label>
                         </div>
                         
+                        <div class="shipping-option">
+                            <input type="radio" id="shipping-pac" name="shipping" value="pac">
+                            <label for="shipping-pac" class="shipping-label">
+                                <div class="shipping-header">
+                                    <span class="shipping-name">Correios PAC</span>
+                                    <span class="shipping-price">R$ 18,90</span>
+                                </div>
+                                <div class="shipping-description">
+                                    Entrega econômica em 5-7 dias úteis
+                                </div>
+                                <div class="shipping-eta">
+                                    Chega até <strong id="eta-pac">-</strong>
+                                </div>
+                            </label>
+                        </div>
+
                         <div class="shipping-option">
                             <input type="radio" id="shipping-pickup" name="shipping" value="pickup">
                             <label for="shipping-pickup" class="shipping-label">

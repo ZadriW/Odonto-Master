@@ -454,8 +454,6 @@ section.fbits-banner-meio-home.bmob {
 /* ===== FIM BANNER MEIO RESPONSIVO ===== */
 
 /* ===== VITRINE COM BANNER RESPONSIVO (DESKTOP/MOBILE) ===== */
-
-/* Desktop - Sempre visível acima de 990px */
 section.fbits-vitrine-com-banner.bdesk {
     display: block !important;
 }
@@ -464,18 +462,6 @@ section.fbits-vitrine-com-banner.bmob {
     display: none !important;
 }
 
-/* Reforça exibição desktop em telas grandes */
-@@media (min-width: 991px) {
-    section.fbits-vitrine-com-banner.bdesk {
-        display: block !important;
-    }
-    
-    section.fbits-vitrine-com-banner.bmob {
-        display: none !important;
-    }
-}
-
-/* Mobile - Inverte a exibição em telas pequenas */
 @@media (max-width: 990px) {
     section.fbits-vitrine-com-banner.bdesk {
         display: none !important;
@@ -553,7 +539,7 @@ section.fbits-banner-rodape .fbits-banner-item {
     overflow: hidden;
     border-radius: 12px;
     background: #fff;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
     cursor: pointer;
     margin: 0 auto;
     max-width: 100%;
@@ -561,9 +547,10 @@ section.fbits-banner-rodape .fbits-banner-item {
     display: flex !important;
     align-items: center;
     justify-content: center;
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    will-change: transform, box-shadow, border-radius;
-    transform-origin: center center;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                border-radius 0.3s ease;
+    will-change: transform, box-shadow;
 }
 
 section.fbits-banner-rodape .fbits-banner-item img {
@@ -573,9 +560,10 @@ section.fbits-banner-rodape .fbits-banner-item img {
     object-fit: contain;
     backface-visibility: hidden;
     -webkit-font-smoothing: antialiased;
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    /* Transição refinada para zoom */
+    transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+                filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     will-change: transform, filter;
-    transform-origin: center center;
 }
 
 section.fbits-banner-rodape .fbits-banner-item::before {
@@ -586,37 +574,18 @@ section.fbits-banner-rodape .fbits-banner-item::before {
     right: 0;
     bottom: 0;
     background: linear-gradient(135deg, 
-        rgba(29, 101, 186, 0.08) 0%, 
-        rgba(29, 101, 186, 0.04) 50%,
-        rgba(29, 101, 186, 0.06) 100%);
+        rgba(29, 101, 186, 0.06) 0%, 
+        rgba(29, 101, 186, 0.02) 50%,
+        rgba(29, 101, 186, 0.04) 100%);
     opacity: 0;
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     z-index: 1;
     pointer-events: none;
-    border-radius: inherit;
 }
 
-section.fbits-banner-rodape .fbits-banner-item::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.1) 0%, 
-        rgba(255, 255, 255, 0.05) 50%,
-        rgba(255, 255, 255, 0.08) 100%);
-    opacity: 0;
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    z-index: 2;
-    pointer-events: none;
-    border-radius: inherit;
-}
-
-/* Hover - Animação premium e fluida */
+/* Hover - Animação fluida e elástica */
 section.fbits-banner-rodape .fbits-banner-item:hover {
-    transform: translateY(-12px) scale(1.02);
+    transform: translateY(-10px) scale(1.03);
     border-radius: 16px;
 }
 
@@ -624,21 +593,16 @@ section.fbits-banner-rodape .fbits-banner-item:hover::before {
     opacity: 1;
 }
 
-section.fbits-banner-rodape .fbits-banner-item:hover::after {
-    opacity: 1;
-}
-
 section.fbits-banner-rodape .fbits-banner-item:hover img {
-    transform: scale(1.05);
-    filter: brightness(1.08) contrast(1.05) saturate(1.1);
+    transform: scale(1.1);
+    filter: brightness(1.06) contrast(1.02);
 }
 
-/* Feedback ao clicar - micro-interação elegante */
+/* Feedback ao clicar - bounce suave */
 section.fbits-banner-rodape .fbits-banner-item:active {
-    transform: translateY(-8px) scale(1.01);
-    transition-duration: 0.2s;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1), 
-                0 4px 12px rgba(29, 101, 186, 0.06);
+    transform: translateY(-7px) scale(1.015);
+    transition-duration: 0.15s;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
 }
 
 /* Animação de entrada dos banners */
@@ -667,19 +631,18 @@ section.fbits-banner-rodape .slick-slide:nth-child(4) .fbits-banner-item { anima
 @@media (max-width: 1024px) {
     section.fbits-banner-rodape .fbits-banner-item {
         cursor: default;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
         transition: none;
         will-change: auto;
     }
     
     section.fbits-banner-rodape .fbits-banner-item:hover {
         transform: none;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
         border-radius: 12px;
     }
     
-    section.fbits-banner-rodape .fbits-banner-item:hover::before,
-    section.fbits-banner-rodape .fbits-banner-item:hover::after {
+    section.fbits-banner-rodape .fbits-banner-item:hover::before {
         opacity: 0;
     }
     
@@ -734,7 +697,6 @@ section.fbits-vitrine-com-banner.bdesk .col-banner-ofertas {
     float: left !important;
     width: 25% !important;
     padding-right: 15px !important;
-    display: block !important;
 }
 
 section.fbits-vitrine-com-banner.bdesk .col-carrossel-ofertas {
@@ -749,44 +711,21 @@ section.fbits-vitrine-com-banner.bdesk .col-banner-ofertas .fbits-banner-item {
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     transition: box-shadow 0.3s ease;
+    display: none !important;
+}
+
+section.fbits-vitrine-com-banner.bdesk .col-banner-ofertas .fbits-banner-item:first-child {
     display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    width: 100% !important;
 }
 
 section.fbits-vitrine-com-banner.bdesk .col-banner-ofertas .fbits-banner-item:hover {
     box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
 
-/* Imagem do banner - Dimensão 541x935 (proporção 1:1.73) */
 section.fbits-vitrine-com-banner.bdesk .col-banner-ofertas .fbits-banner-item img {
-    width: 100% !important;
-    height: auto !important;
-    display: block !important;
-    aspect-ratio: 541 / 935 !important; /* Proporção exata da imagem */
-    object-fit: cover !important;
-}
-
-/* Força exibição de todos os elementos dentro do banner */
-section.fbits-vitrine-com-banner.bdesk .col-banner-ofertas a,
-section.fbits-vitrine-com-banner.bdesk .col-banner-ofertas a img {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-
-/* Garante que o banner desktop seja visível */
-@@media (min-width: 991px) {
-    section.fbits-vitrine-com-banner.bdesk .col-banner-ofertas {
-        display: block !important;
-    }
-    
-    section.fbits-vitrine-com-banner.bdesk .col-banner-ofertas .fbits-banner-item {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-    }
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 .product-name {
@@ -1283,7 +1222,7 @@ section.fbits-vitrine-com-banner.bdesk .col-banner-ofertas a img {
         <div class="row row-vitrine-home">
             <!-- Banner Vertical Desktop -->
             <div class="col-md-3 col-sm-12 col-banner-ofertas">
-                <FBITS:Banner filtroPosicao="lateral direita" idsBanners="" tipo="estatico" configuracaoCarrossel="" classeItens="banner-ofertas-lateral" />
+                <FBITS:Banner filtroPosicao="Lateral Direita" idsBanners="" tipo="estatico" configuracaoCarrossel="" classeItens="banner-ofertas-lateral" />
             </div>   
             
             <!-- Carrossel de Produtos -->

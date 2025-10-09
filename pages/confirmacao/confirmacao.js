@@ -102,7 +102,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (sedexElement) {
                 sedexElement.textContent = formatDate(sedexDelivery);
             }
-            
+
+            // Correios PAC: 5-7 dias
+            const pacDelivery = new Date(today);
+            pacDelivery.setDate(today.getDate() + 7);
+            const pacElement = document.getElementById('eta-pac');
+            if (pacElement) {
+                pacElement.textContent = formatDate(pacDelivery);
+            }
+
             // Retirada: 1 dia
             const pickupDelivery = new Date(today);
             pickupDelivery.setDate(today.getDate() + 1);
@@ -610,6 +618,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Valores de frete atualizados
         const shippingCosts = {
             sedex: 25.00,
+            pac: 18.90,
             pickup: 0.00
         };
         

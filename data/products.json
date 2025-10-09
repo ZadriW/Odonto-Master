@@ -8,7 +8,7 @@
     "price_current": 18990,
     "installments": {
       "count": 10,
-      "value": 18.99
+      "value": 1899
     },
     "image": "/images/clareador-whiteness.png",
     "category": "Clareamento Dental",
@@ -29,18 +29,18 @@
   },
   "prod2": {
     "id": "prod2",
-    "name": "Resina Composta Z350 XT",
-    "price": 24590,
+    "name": "Resina Composta Z350 XT - Solventum",
+    "price": 29900,
     "discount": 15,
-    "price_original": 29000,
-    "price_current": 24590,
+    "price_original": 29900,
+    "price_current": 29900,
     "installments": {
       "count": 10,
-      "value": 24.59
+      "value": 2990
     },
     "image": "/images/resina-composta.png",
     "category": "Resina Composta",
-    "brand": "Z350",
+    "brand": "Solventum",
     "description": "Resina composta de última geração para restaurações estéticas com excelente acabamento e durabilidade.",
     "inStock": true,
     "additionalImages": [
@@ -55,18 +55,18 @@
   },
   "prod3": {
     "id": "prod3",
-    "name": "Anestésico Mepivacaína 3%",
-    "price": 8990,
+    "name": "Anestésico Mepivalem 3%",
+    "price": 22900,
     "discount": 30,
     "price_original": 12900,
-    "price_current": 8990,
+    "price_current": 22900,
     "installments": {
       "count": 6,
-      "value": 14.98
+      "value": 3817
     },
     "image": "/images/anestesico.png",
     "category": "Anestésico",
-    "brand": "Mepivacaína",
+    "brand": "Mepivalem",
     "description": "Anestésico local sem vasoconstritor para procedimentos odontológicos, ideal para pacientes com restrições cardiovasculares.",
     "inStock": true,
     "additionalImages": [
@@ -74,20 +74,20 @@
     ],
     "specifications": {
       "concentracao": "3%",
-      "apresentacao": "100 carpules de 1,8ml",
+      "apresentacao": "50 carpules de 1,8ml",
       "duracao": "45-90 minutos"
     }
   },
   "prod4": {
     "id": "prod4",
     "name": "Broca Carbide FG 245",
-    "price": 3490,
+    "price": 1450,
     "discount": 10,
     "price_original": 3900,
-    "price_current": 3490,
+    "price_current": 1450,
     "installments": {
       "count": 3,
-      "value": 11.63
+      "value": 483
     },
     "image": "/images/broca.png",
     "category": "Broca",
@@ -106,13 +106,13 @@
   "prod5": {
     "id": "prod5",
     "name": "Fotopolimerizador LED Radii Plus",
-    "price": 89900,
+    "price": 390000,
     "discount": 20,
     "price_original": 112500,
-    "price_current": 89900,
+    "price_current": 390000,
     "installments": {
       "count": 12,
-      "value": 7491.67
+      "value": 32500
     },
     "image": "/images/fotopolimerizador.png",
     "category": "Fotopolimerizador",
@@ -128,115 +128,118 @@
   },
   "prod6": {
     "id": "prod6",
-    "name": "Cimento de Ionômero de Vidro",
-    "price": 5690,
+    "name": "Cimento Endontico Pull Fill Kit - Biodinamica",
+    "price": 4990,
     "discount": 18,
     "price_original": 7000,
-    "price_current": 5690,
+    "price_current": 4990,
     "installments": {
       "count": 5,
-      "value": 11.38
+      "value": 998
     },
-    "image": "/images/ionomero.png",
+    "image": "https://odontomaster.fbitsstatic.net/img/p/cimento-endodontico-pulp-fill-kit-biodinamica-74784/266174.jpg?w=320&h=320&v=202508291601&qs=ignore",
     "category": "Cimento",
-    "brand": "Vitro",
-    "description": "Cimento de ionômero de vidro para cimentação e forramento com liberação contínua de flúor.",
+    "brand": "Biodinamica",
+    "description": "Cimento endodôntico para obturação de canais radiculares com técnica de preenchimento único.",
     "inStock": true,
     "additionalImages": [
       "/images/ionomero-2.png"
     ],
     "specifications": {
-      "tipo": "Ionômero de vidro",
-      "apresentacao": "2 pastas de 15g",
-      "tempo": "3-5 minutos"
+      "apresentacao": "12g de pó + 10ml de líquido",
+      "tecnica": "preenchimento único",
+      "tempo": "5-10 minutos"
     }
   },
   "prod7": {
     "id": "prod7",
-    "name": "Kit Endodontia Rotatória Avançado",
-    "price": 145000,
+    "name": "Lima Manual Kendo K-File - VDW",
+    "price": 3540,
     "discount": 25,
     "price_original": 195000,
-    "price_current": 145000,
+    "price_current": 3540,
     "installments": {
       "count": 12,
-      "value": 12083.33
+      "value": 295
     },
-    "image": "/images/kit-endodontia.png",
+    "image": "https://odontomaster.fbitsstatic.net/img/p/lima-manual-kendo-k-file-vdw-74629/265800-1.jpg?w=320&h=320&v=202508271736&qs=ignore",
     "category": "Kit",
-    "brand": "Kerr",
-    "description": "Kit completo para terapia endodôntica com sistema rotatório e instrumentais de alta qualidade.",
+    "brand": "VDW",
+    "description": "Lima manual Kendo K-File para preparo de canais radiculares com alta flexibilidade e resistência.",
     "inStock": true,
     "additionalImages": [],
     "specifications": {
-      "itens": "60 instrumentos",
+      "quantidade": "6 unidades",
       "tamanhos": "10-40",
-      "tipo": "NiTi rotatório"
+      "tipo": "K-File",
+      "material": "níquel-titânio"
     }
   },
   "prod8": {
     "id": "prod8",
-    "name": "Ácido Fosfórico 37% Gel",
-    "price": 2290,
+    "name": "Clareador Whiteness Perfect 22% - FGM",
+    "price": 7990,
     "discount": 12,
     "price_original": 2600,
-    "price_current": 2290,
+    "price_current": 7990,
     "installments": {
       "count": 3,
-      "value": 7.63
+      "value": 2663
     },
-    "image": "/images/acido.png",
-    "category": "Ácido Fosfórico",
-    "brand": "SDI",
-    "description": "Ácido fosfórico gel para condicionamento ácido da estrutura dental antes de restaurações adesivas.",
+    "image": "https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-perfect-22-fgm-72016/260704.jpg?w=320&h=320&v=no-change&qs=ignore",
+    "category": "Clareamento Dental",
+    "brand": "FGM",
+    "description": "Clareador dental Whiteness Perfect 22% para clareamento caseiro supervisionado por profissional.",
     "inStock": true,
     "additionalImages": [
       "/images/acido-2.png"
     ],
     "specifications": {
-      "concentracao": "37%",
-      "apresentacao": "10 seringas de 1,2ml",
-      "tempo": "15 segundos"
+      "concentracao": "22%",
+      "apresentacao": "1 kit completo",
+      "duracao": "14 dias",
+      "peroxido": "carbamida"
     }
   },
   "prod9": {
     "id": "prod9",
-    "name": "Autoclave Vitale Class CD 21 Litros",
-    "price": 450000,
+    "name": "Autoclave Vitale Class 12L - Cristófoli",
+    "price": 7990,
     "discount": 10,
     "price_original": 500000,
-    "price_current": 450000,
+    "price_current": 7990,
     "installments": {
       "count": 12,
-      "value": 37500.00
+      "value": 666
     },
     "image": "/images/autoclave.png",
     "category": "Autoclave",
-    "brand": "Vitale",
-    "description": "Autoclave classe B para esterilização de instrumentos odontológicos com câmara de 21 litros.",
+    "brand": "Cristófoli",
+    "description": "Autoclave classe B para esterilização de instrumentos odontológicos com câmara de 12 litros.",
     "inStock": true,
     "additionalImages": [],
     "specifications": {
-      "capacidade": "21 litros",
+      "capacidade": "12 litros",
       "temperatura": "134°C",
-      "programas": "8 pré-programados"
+      "programas": "8 pré-programados",
+      "tensao": "bivolt"
     }
   },
   "prod10": {
     "id": "prod10",
-    "name": "Cadeira Odontológica Kavo Unik",
-    "price": 2500000,
+    "name": "Autoclave Vitale Class 21L - Cristófoli",
+    "price": 1937,
     "discount": 15,
     "price_original": 2950000,
-    "price_current": 2500000,
+    "price_current": 1937,
     "installments": {
       "count": 12,
-      "value": 208333.33
+      "value": 161
     },
     "image": "/images/cadeira.png",
-    "category": "Cadeira Odontológica",
-    "brand": "Kavo",
-    "description": "Cadeira odontológica elétrica com sistema de controle avançado e design ergonômico.",
+    "category": "Autoclave",
+    "brand": "Cristófoli",
+    "description": "Autoclave classe B para esterilização de instrumentos odontológicos com câmara de 21 litros.",
     "inStock": true,
     "additionalImages": [
       "/images/cadeira-2.png",
@@ -244,9 +247,573 @@
       "/images/cadeira-4.png"
     ],
     "specifications": {
-      "motor": "elétrico silencioso",
-      "apoios": "cabeça, braços, pernas",
-      "funcoes": "10 motores independentes"
+      "capacidade": "21 litros",
+      "temperatura": "134°C",
+      "programas": "8 pré-programados",
+      "tensao": "bivolt"
+    }
+  },
+  "prod11": {
+    "id": "prod11",
+    "name": "Lima Reciprocante Reciproc - VDW",
+    "price": 40990,
+    "discount": 22,
+    "price_original": 160000,
+    "price_current": 40990,
+    "installments": {
+      "count": 12,
+      "value": 3416
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/lima-reciprocante-reciproc-vdw-70872/258882.jpg?w=320&h=320&v=no-change&qs=ignore",
+    "category": "Endodontia",
+    "brand": "VDW",
+    "description": "Lima reciprocante Reciproc para preparo de canais radiculares com movimento único e alta eficiência.",
+    "inStock": true,
+    "additionalImages": [
+      "/images/iluminacao-led-2.png"
+    ],
+    "specifications": {
+      "quantidade": "4 unidades",
+      "tamanhos": "R25, R40, R50",
+      "movimento": "reciprocante",
+      "material": "M-Wire"
+    }
+  },
+  "prod12": {
+    "id": "prod12",
+    "name": "Resina TPH Spectrum - Dentsply",
+    "price": 2370,
+    "discount": 18,
+    "price_original": 11000,
+    "price_current": 2370,
+    "installments": {
+      "count": 8,
+      "value": 296
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/resina-tph-spectrum-dentsply-73652/264075.jpg?w=320&h=320&v=no-change&qs=ignore",
+    "category": "Resina Composta",
+    "brand": "Dentsply",
+    "description": "Resina composta TPH Spectrum para restaurações estéticas com alta durabilidade e acabamento natural.",
+    "inStock": true,
+    "additionalImages": [
+      "/images/resina-bulk-2.png"
+    ],
+    "specifications": {
+      "tipo": "nanohíbrida",
+      "cores": "A1, A2, A3, A3.5, B1, B2, C2",
+      "apresentacao": "4 seringas de 4g",
+      "radiopacidade": "alta"
+    }
+  },
+  "prod13": {
+    "id": "prod13",
+    "name": "Kit Braquete de Aço Advanced Series Roth 022 - Orthometric",
+    "price": 2190,
+    "discount": 15,
+    "price_original": 223000,
+    "price_current": 2190,
+    "installments": {
+      "count": 12,
+      "value": 183
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/kit-braquete-de-aco-advanced-series-roth-022-orthometric-73253/263482.jpg?w=320&h=320&v=202501241014&qs=ignore",
+    "category": "Ortodontia",
+    "brand": "Orthometric",
+    "description": "Kit completo de braquetes de aço Advanced Series Roth 022 com 2000 unidades (100 casos) + 120 tubos simples.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "material": "aço inoxidável",
+      "prescricao": "Roth 022",
+      "quantidade": "2000 braquetes + 120 tubos",
+      "casos": "100 casos completos"
+    }
+  },
+  "prod14": {
+    "id": "prod14",
+    "name": "Ficha Clínica Simples - Preven",
+    "price": 41172,
+    "discount": 10,
+    "price_original": 500000,
+    "price_current": 41172,
+    "installments": {
+      "count": 12,
+      "value": 3431
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/ficha-clinica-simples-preven-74761/266131.jpg?w=320&h=320&v=202508201217&qs=ignore",
+    "category": "Material de Escritório",
+    "brand": "Preven",
+    "description": "Ficha clínica simples para registro de pacientes odontológicos com formato padrão.",
+    "inStock": true,
+    "additionalImages": [
+      "/images/scanner-intraoral-2.png"
+    ],
+    "specifications": {
+      "quantidade": "100 folhas",
+      "formato": "15 x 10,4 cm",
+      "tipo": "simples",
+      "uso": "registro clínico"
+    }
+  },
+  "prod15": {
+    "id": "prod15",
+    "name": "Clareador Whiteness Perfect 10% - FGM",
+    "price": 7990,
+    "discount": 25,
+    "price_original": 118000,
+    "price_current": 7990,
+    "installments": {
+      "count": 12,
+      "value": 666
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-perfect-10-fgm-71914/260561.jpg?w=320&h=320&v=202502211159&qs=ignore",
+    "category": "Clareamento Dental",
+    "brand": "FGM",
+    "description": "Clareador dental Whiteness Perfect 10% para manutenção e clareamento caseiro de longa duração.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "concentracao": "10%",
+      "apresentacao": "1 kit completo",
+      "duracao": "30 dias",
+      "peroxido": "carbamida"
+    }
+  },
+  "prod16": {
+    "id": "prod16",
+    "name": "Localizador Apical Farominal E-Pex Pró - MK Life",
+    "price": 15590,
+    "discount": 20,
+    "price_original": 156000,
+    "price_current": 15590,
+    "installments": {
+      "count": 12,
+      "value": 1299
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/clareador-whiteness-hp-blue-calcium-35-mini-kit-fgm-72121/260864-1.jpg?w=320&h=320&v=202506141130&qs=ignore",
+    "category": "Endodontia",
+    "brand": "MK Life",
+    "description": "Localizador apical eletrônico Farominal E-Pex Pró para determinação precisa do comprimento de trabalho.",
+    "inStock": true,
+    "additionalImages": [
+      "/images/compressor-2.png"
+    ],
+    "specifications": {
+      "precisao": "0.1mm",
+      "display": "LCD colorido",
+      "bateria": "rechargeable",
+      "conectividade": "USB"
+    }
+  },
+  "prod17": {
+    "id": "prod17",
+    "name": "Kit Braquete Metálico 100 Casos",
+    "price": 890,
+    "discount": 15,
+    "price_original": 1050,
+    "price_current": 890,
+    "installments": {
+      "count": 2,
+      "value": 445
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/fotopolimerizador-emitter-a-fit-com-ponteira-shuster-73208/263424.jpg?w=420&h=420&v=202502031032&qs=ignore",
+    "category": "Ortodontia",
+    "brand": "Diversos",
+    "description": "Kit completo de braquetes metálicos para tratamento ortodôntico com 100 casos completos.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "material": "aço inoxidável",
+      "quantidade": "100 casos completos",
+      "inclui": "braquetes + arcos + bandas",
+      "tipo": "convencional"
+    }
+  },
+  "prod18": {
+    "id": "prod18",
+    "name": "Restaurador Provisório Fill Temp 25g - Biodinâmica",
+    "price": 185000,
+    "discount": 18,
+    "price_original": 226000,
+    "price_current": 185000,
+    "installments": {
+      "count": 12,
+      "value": 15417
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/restaurador-provisorio-fill-temp-25g-biodinamica-74783/266173.jpg?w=320&h=320&v=202508291544&qs=ignore",
+    "category": "Materiais Restauradores",
+    "brand": "Biodinâmica",
+    "description": "Restaurador provisório Fill Temp para restaurações temporárias com alta resistência e estética.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "apresentacao": "25g",
+      "tipo": "resina acrílica",
+      "cura": "química",
+      "duracao": "até 1 ano"
+    }
+  },
+  "prod19": {
+    "id": "prod19",
+    "name": "Kit Corredor de Classe II Iceram Clear Distalizer 23mm/25mm/27mm - Orthometric",
+    "price": 25000,
+    "discount": 12,
+    "price_original": 28500,
+    "price_current": 25000,
+    "installments": {
+      "count": 10,
+      "value": 2500
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/kit-corretor-de-classe-ii-iceram-clear-distalizer-23mm-25mm-27mm-orthometric-74765/266136.jpg?w=420&h=420&v=202508201212&qs=ignore",
+    "category": "Ortodontia",
+    "brand": "Orthometric",
+    "description": "Kit de corretores de classe II Iceram Clear com tamanhos 23mm, 25mm e 27mm (2 unidades de cada).",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "tipo": "distalizer",
+      "material": "Iceram Clear",
+      "tamanhos": "23mm, 25mm, 27mm",
+      "quantidade": "6 unidades (2 de cada)"
+    }
+  },
+  "prod20": {
+    "id": "prod20",
+    "name": "Clareador Whiteness HP Blue Calcium 35% Mini Kit - FGM",
+    "price": 12500,
+    "discount": 20,
+    "price_original": 15600,
+    "price_current": 12500,
+    "installments": {
+      "count": 8,
+      "value": 1562.50
+    },
+    "image": "/images/cimento-resina.png",
+    "category": "Clareamento Dental",
+    "brand": "FGM",
+    "description": "Mini kit clareador Whiteness HP Blue Calcium 35% com tecnologia exclusiva para clareamento profissional.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "concentracao": "35%",
+      "tipo": "mini kit",
+      "peroxido": "hidrogênio",
+      "tecnologia": "Blue Calcium"
+    }
+  },
+  "prod21": {
+    "id": "prod21",
+    "name": "Fotopolimerizador Emitter a Fit com Ponteira - SHUSTER",
+    "price": 8900,
+    "discount": 15,
+    "price_original": 10500,
+    "price_current": 8900,
+    "installments": {
+      "count": 6,
+      "value": 1483.33
+    },
+    "image": "/images/fresa-diamantada.png",
+    "category": "Fotopolimerização",
+    "brand": "SHUSTER",
+    "description": "Fotopolimerizador LED Emitter a Fit com ponteira intercambiável e sistema de polimerização eficiente.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "potencia": "1200mW/cm²",
+      "comprimento": "450-470nm",
+      "fonte": "LED",
+      "inclui": "caneta aplicadora + ponteira"
+    }
+  },
+  "prod22": {
+    "id": "prod22",
+    "name": "Clareador Whiteness HP Maxx 35% 1PAC - FGM",
+    "price": 285000,
+    "discount": 10,
+    "price_original": 317000,
+    "price_current": 285000,
+    "installments": {
+      "count": 12,
+      "value": 23750.00
+    },
+    "image": "/images/raio-x-portatil.png",
+    "category": "Clareamento Dental",
+    "brand": "FGM",
+    "description": "Clareador Whiteness HP Maxx 35% 1PAC para clareamento dental profissional de alta potência.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "concentracao": "35%",
+      "tipo": "1PAC",
+      "peroxido": "hidrogênio",
+      "apresentacao": "mini kit"
+    }
+  },
+  "prod23": {
+    "id": "prod23",
+    "name": "Clareador Whiteness HP Maxx 35% Mini Kit - FGM",
+    "price": 45000,
+    "discount": 25,
+    "price_original": 60000,
+    "price_current": 45000,
+    "installments": {
+      "count": 10,
+      "value": 4500.00
+    },
+    "image": "/images/lampada-extra.png",
+    "category": "Clareamento Dental",
+    "brand": "FGM",
+    "description": "Mini kit clareador Whiteness HP Maxx 35% para procedimentos de clareamento profissional.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "concentracao": "35%",
+      "tipo": "mini kit",
+      "peroxido": "hidrogênio",
+      "apresentacao": "kit profissional"
+    }
+  },
+  "prod24": {
+    "id": "prod24",
+    "name": "Clareador Whiteness Perfect 16% - FGM",
+    "price": 1250,
+    "discount": 10,
+    "price_original": 1390,
+    "price_current": 1250,
+    "installments": {
+      "count": 3,
+      "value": 416.67
+    },
+    "image": "/images/moldagem-facial.png",
+    "category": "Clareamento Dental",
+    "brand": "FGM",
+    "description": "Clareador dental Whiteness Perfect 16% para clareamento caseiro com supervisão profissional.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "concentracao": "16%",
+      "apresentacao": "1 kit completo",
+      "duracao": "21 dias",
+      "peroxido": "carbamida"
+    }
+  },
+  "prod25": {
+    "id": "prod25",
+    "name": "Clareador Potenza Bianco Pro 35% H202 - PHS",
+    "price": 850000,
+    "discount": 12,
+    "price_original": 968000,
+    "price_current": 850000,
+    "installments": {
+      "count": 12,
+      "value": 70833
+    },
+    "image": "/images/unidade-odontologica.png",
+    "category": "Clareamento Dental",
+    "brand": "PHS",
+    "description": "Clareador Potenza Bianco Pro 35% H2O2 para clareamento dental profissional de alta performance.",
+    "inStock": true,
+    "additionalImages": [
+      "/images/unidade-odontologica-2.png",
+      "/images/unidade-odontologica-3.png"
+    ],
+    "specifications": {
+      "concentracao": "35%",
+      "peroxido": "hidrogênio",
+      "apresentacao": "1 kit profissional",
+      "tecnologia": "Potenza Bianco"
+    }
+  },
+  "equip1": {
+    "id": "equip1",
+    "name": "Motor Endodôntico E-Connect Pro - MK Life",
+    "price": 850000,
+    "discount": 12,
+    "price_original": 968000,
+    "price_current": 850000,
+    "installments": {
+      "count": 12,
+      "value": 70833
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/motor-endodontico-e-connect-pro-mk-life-73466/263819-1.jpg?w=320&h=320&v=no-change&qs=ignore",
+    "category": "Equipamentos",
+    "brand": "MK Life",
+    "description": "Motor endodôntico E-Connect Pro com contra-ângulo, endomotor, base e fonte de energia bivolt.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "potencia": "0.3-5.2 N.cm",
+      "velocidade": "100-1000 rpm",
+      "rotacao": "continua/reversa",
+      "tensao": "bivolt"
+    }
+  },
+  "equip2": {
+    "id": "equip2",
+    "name": "Fotopolimerizador Emitter a Fit com Ponteira - SHUSTER",
+    "price": 850000,
+    "discount": 12,
+    "price_original": 968000,
+    "price_current": 850000,
+    "installments": {
+      "count": 12,
+      "value": 70833
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/fotopolimerizador-emitter-a-fit-com-ponteira-shuster-73208/263424.jpg?w=420&h=420&v=202502031032&qs=ignore",
+    "category": "Equipamentos",
+    "brand": "SHUSTER",
+    "description": "Fotopolimerizador LED Emitter a Fit com caneta aplicadora, protetor ocular e ponteira de polimerização.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "potencia": "1200mW/cm²",
+      "comprimento": "450-470nm",
+      "tempo": "3-60 segundos",
+      "bateria": "rechargeable"
+    }
+  },
+  "equip3": {
+    "id": "equip3",
+    "name": "Autoclave Vitale Class 12L - Cristófoli",
+    "price": 850000,
+    "discount": 12,
+    "price_original": 968000,
+    "price_current": 850000,
+    "installments": {
+      "count": 12,
+      "value": 70833
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/autoclave-vitale-class-12l-cristofoli-70901/258917.jpg?w=420&h=420&v=no-change&qs=ignore",
+    "category": "Equipamentos",
+    "brand": "Cristófoli",
+    "description": "Autoclave Vitale Class com câmara de 12 litros inox, bivolt, para esterilização de instrumentos.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "capacidade": "12 litros",
+      "pressao": "2.1 bar",
+      "temperatura": "134°C",
+      "tensao": "bivolt"
+    }
+  },
+  "equip4": {
+    "id": "equip4",
+    "name": "Autoclave Vitale Class 21L - Cristófoli",
+    "price": 850000,
+    "discount": 12,
+    "price_original": 968000,
+    "price_current": 850000,
+    "installments": {
+      "count": 12,
+      "value": 70833
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/autoclave-vitale-class-12l-cristofoli-70901/258917.jpg?w=420&h=420&v=no-change&qs=ignore",
+    "category": "Equipamentos",
+    "brand": "Cristófoli",
+    "description": "Autoclave Vitale Class com câmara de 21 litros inox, bivolt, para esterilização de instrumentos.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "capacidade": "21 litros",
+      "pressao": "2.1 bar",
+      "temperatura": "134°C",
+      "tensao": "bivolt"
+    }
+  },
+  "equip5": {
+    "id": "equip5",
+    "name": "Localizador Apical Farominal E-Pex Pró - MK Life",
+    "price": 850000,
+    "discount": 12,
+    "price_original": 968000,
+    "price_current": 850000,
+    "installments": {
+      "count": 12,
+      "value": 70833
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/localizador-apical-farominal-e-pex-pro-mk-life-73169/263372.jpg?w=320&h=320&v=no-change&qs=ignore",
+    "category": "Equipamentos",
+    "brand": "MK Life",
+    "description": "Localizador apical eletrônico Farominal E-Pex Pró para determinação precisa do comprimento de trabalho.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "precisao": "0.1mm",
+      "display": "LCD colorido",
+      "bateria": "rechargeable",
+      "conectividade": "USB"
+    }
+  },
+  "equip6": {
+    "id": "equip6",
+    "name": "Kit Acadêmico Prime - GNATUS",
+    "price": 850000,
+    "discount": 12,
+    "price_original": 968000,
+    "price_current": 850000,
+    "installments": {
+      "count": 12,
+      "value": 70833
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/kit-academico-prime-gnatus-73045/263168-4.jpg?w=420&h=420&v=202502051119&qs=ignore",
+    "category": "Equipamentos",
+    "brand": "GNATUS",
+    "description": "Kit acadêmico Prime completo para prática odontológica com instrumentos essenciais.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "inclui": "instrumentos básicos",
+      "material": "aço cirúrgico",
+      "esterilizacao": "autoclavável",
+      "uso": "acadêmico"
+    }
+  },
+  "equip7": {
+    "id": "equip7",
+    "name": "Fotopolimerizador Led Grand Valo Sem Fio Black - Ultradent",
+    "price": 850000,
+    "discount": 12,
+    "price_original": 968000,
+    "price_current": 850000,
+    "installments": {
+      "count": 12,
+      "value": 70833
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/fotopolimerizador-led-grand-valo-sem-fio-black-ultradent-73030/263129-6.jpg?w=420&h=420&v=no-change&qs=ignore",
+    "category": "Equipamentos",
+    "brand": "Ultradent",
+    "description": "Fotopolimerizador LED Grand Valo sem fio na cor black com alta potência e eficiência.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "potencia": "1000mW/cm²",
+      "comprimento": "395-480nm",
+      "bateria": "Li-ion",
+      "peso": "140g"
+    }
+  },
+  "equip8": {
+    "id": "equip8",
+    "name": "Destilador de Água 5L/h",
+    "price": 134000,
+    "discount": 14,
+    "price_original": 156000,
+    "price_current": 134000,
+    "installments": {
+      "count": 12,
+      "value": 11167
+    },
+    "image": "https://odontomaster.fbitsstatic.net/img/p/fotopolimerizador-led-grand-valo-sem-fio-black-ultradent-73030/263129-6.jpg?w=420&h=420&v=no-change&qs=ignore",
+    "category": "Equipamentos",
+    "brand": "Diversos",
+    "description": "Destilador automático de água com produção de 5 litros por hora e desligamento automático.",
+    "inStock": true,
+    "additionalImages": [],
+    "specifications": {
+      "producao": "5L/h",
+      "capacidade": "4 litros",
+      "material": "aço inox",
+      "potencia": "750W"
     }
   }
 }

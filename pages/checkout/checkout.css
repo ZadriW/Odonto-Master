@@ -345,12 +345,12 @@
 }
 
 .btn-secondary {
-  background: var(--cor-fundo-escura);
+  background: var(--cor-destaque);
   color: #fff;
 }
 
 .btn-secondary:hover {
-  background: #1a2530;
+  background: var(--cor-destaque-escura);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
